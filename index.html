@@ -2,67 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI Matrix</title>
+<title>SATDNAI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-body{
-  background:black;
-  overflow:hidden;
+body {
+    background: radial-gradient(circle at center, #02090f, #000);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
-canvas{
-  position:fixed;
-  inset:0;
+/* LOGO */
+#logo {
+    width:420px;
+    filter: 
+        drop-shadow(0 0 25px rgba(0,255,200,.7))
+        drop-shadow(0 0 60px rgba(0,255,200,.35));
+    animation:
+        float 6s ease-in-out infinite,
+        glow 3s ease-in-out infinite alternate,
+        wave 10s linear infinite;
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 20px #00ffd5) drop-shadow(0 0 40px #00ffd5); }
+    to   { filter: drop-shadow(0 0 40px #00ffd5) drop-shadow(0 0 90px #00ffd5); }
+}
+
+@keyframes wave {
+    0%   { transform: translateY(0) rotate(0deg); }
+    25%  { transform: translateY(-10px) rotate(0.25deg); }
+    50%  { transform: translateY(0) rotate(0deg); }
+    75%  { transform: translateY(10px) rotate(-0.25deg); }
+    100% { transform: translateY(0) rotate(0deg); }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
-
-<script>
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-let fontSize = 16;
-let letters = "01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
-let columns;
-let drops;
-
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  columns = Math.floor(canvas.width / fontSize);
-  drops = Array(columns).fill(0);
-}
-
-resize();
-window.addEventListener("resize", resize);
-
-function draw(){
-  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = "#00ff88";
-  ctx.font = fontSize + "px monospace";
-
-  for(let i = 0; i < drops.length; i++){
-    const text = letters[Math.floor(Math.random() * letters.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975){
-      drops[i] = 0;
-    }
-    drops[i]++;
-  }
-}
-
-setInterval(draw, 33);
-</script>
+<img src="Logo.png.jpeg" id="logo" alt="SATDNAI">
 
 </body>
 </html>
