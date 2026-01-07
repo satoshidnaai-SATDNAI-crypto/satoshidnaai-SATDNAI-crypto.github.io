@@ -6,33 +6,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 html,body{
-  margin:0;
   width:100%;
   height:100%;
   background:black;
   overflow:hidden;
+  font-family:Segoe UI,Arial,sans-serif;
 }
 
+/* MATRIX */
 canvas{
   position:fixed;
   inset:0;
+  z-index:1;
 }
 
+/* LOGO */
 #logo{
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  width:480px;
-  z-index:3;
-  animation:pulse 4s ease-in-out infinite;
+  font-size:120px;
+  font-weight:900;
+  letter-spacing:5px;
+  background:linear-gradient(90deg,#00f,#00c8ff,#00ffd5,#00c8ff,#00f);
+  background-size:400% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 25px #00ffd5);
+  animation:shine 6s linear infinite, float 4s ease-in-out infinite;
+  z-index:5;
 }
 
-@keyframes pulse{
-  0%{filter:drop-shadow(0 0 25px #00ff99)}
-  50%{filter:drop-shadow(0 0 60px #00ffd5)}
-  100%{filter:drop-shadow(0 0 25px #00ff99)}
+@keyframes shine{
+  from{background-position:0%}
+  to{background-position:400%}
+}
+@keyframes float{
+  0%,100%{transform:translate(-50%,-50%)}
+  50%{transform:translate(-50%,-58%)}
+}
+
+/* PARTICLES */
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:#00ffd5;
+  pointer-events:none;
+  z-index:4;
+  animation:particle 2s linear forwards;
+}
+
+@keyframes particle{
+  from{opacity:1;transform:translate(0,0) scale(1)}
+  to{opacity:0;transform:translate(var(--x),var(--y)) scale(0)}
 }
 </style>
 </head>
@@ -40,75 +71,57 @@ canvas{
 <body>
 
 <canvas id="matrix"></canvas>
-<canvas id="particles"></canvas>
-<img src="logo.png" id="logo">
+
+<div id="logo">SATDNAI</div>
 
 <script>
-/* MATRIX */
-const m = document.getElementById("matrix");
-const mtx = m.getContext("2d");
-m.width=innerWidth; m.height=innerHeight;
+/* MATRIX BACKGROUND */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
 
-const letters = "01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO";
-const fontSize = 18;
-const columns = m.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
+let fontSize=18;
+let letters="SATDNAI AI BLOCKCHAIN CRYPTO 01 ";
+let drops=[];
 
-function drawMatrix(){
-  mtx.fillStyle="rgba(0,0,0,0.05)";
-  mtx.fillRect(0,0,m.width,m.height);
-
-  mtx.fillStyle="#00ff99";
-  mtx.font=fontSize+"px monospace";
-
-  for(let i=0;i<drops.length;i++){
-    const text = letters[Math.floor(Math.random()*letters.length)];
-    mtx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-    if(drops[i]*fontSize > m.height && Math.random()>0.975)
-      drops[i]=0;
-    drops[i]++;
-  }
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+  drops=Array(Math.floor(canvas.width/fontSize)).fill(0);
 }
+resize();
+addEventListener("resize",resize);
 
-/* PARTICLES */
-const p = document.getElementById("particles");
-const px = p.getContext("2d");
-p.width=innerWidth; p.height=innerHeight;
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-const sparks=[];
-for(let i=0;i<160;i++){
-  sparks.push({
-    x:Math.random()*p.width,
-    y:Math.random()*p.height,
-    v:Math.random()*0.6+0.2,
-    s:Math.random()*2+0.5
+  ctx.fillStyle="#00ffd5";
+  ctx.font=fontSize+"px monospace";
+
+  drops.forEach((y,i)=>{
+    const text=letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,y*fontSize);
+    if(y*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
   });
 }
+setInterval(draw,33);
 
-function drawParticles(){
-  px.clearRect(0,0,p.width,p.height);
-  for(const s of sparks){
-    s.y -= s.v;
-    if(s.y<0) s.y=p.height;
-
-    px.fillStyle="#00ffd5";
-    px.fillRect(s.x,s.y,s.s,s.s);
+/* DIGITAL PARTICLES */
+const logo=document.getElementById("logo");
+setInterval(()=>{
+  const r=logo.getBoundingClientRect();
+  for(let i=0;i<12;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=r.left+r.width/2+"px";
+    p.style.top=r.top+r.height/2+"px";
+    p.style.setProperty("--x",(Math.random()*300-150)+"px");
+    p.style.setProperty("--y",(Math.random()*300-150)+"px");
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2000);
   }
-}
-
-/* LOOP */
-function animate(){
-  drawMatrix();
-  drawParticles();
-  requestAnimationFrame(animate);
-}
-animate();
-
-window.addEventListener("resize",()=>{
-  m.width=p.width=innerWidth;
-  m.height=p.height=innerHeight;
-});
+},180);
 </script>
 
 </body>
