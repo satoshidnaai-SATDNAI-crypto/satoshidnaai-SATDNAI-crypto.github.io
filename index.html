@@ -15,12 +15,14 @@ body{
   color:white;
 }
 
+/* MATRIX BACKGROUND */
 #matrix{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
+/* MAIN CONTAINER */
 .container{
   position:absolute;
   inset:0;
@@ -33,10 +35,15 @@ body{
   z-index:2;
 }
 
+/* LOGO ANIMATION */
 #logo{
-  width:260px;
-  margin-bottom:25px;
-  animation:float 4s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
+  width:420px;
+  margin-bottom:30px;
+  filter: drop-shadow(0 0 15px rgba(0,255,200,0.7));
+  animation:
+    float 5s ease-in-out infinite,
+    glow 2.5s ease-in-out infinite alternate,
+    wave 8s linear infinite;
 }
 
 h1{
@@ -53,6 +60,7 @@ p{
   margin-bottom:35px;
 }
 
+/* BUTTON */
 .button{
   margin-top:35px;
   padding:14px 36px;
@@ -66,6 +74,7 @@ p{
 
 .button:hover{transform:scale(1.08)}
 
+/* ANIMATIONS */
 @keyframes float{
   0%{transform:translateY(0)}
   50%{transform:translateY(-20px)}
@@ -81,6 +90,14 @@ p{
   from{opacity:0;transform:translateY(40px)}
   to{opacity:1;transform:translateY(0)}
 }
+
+@keyframes wave{
+  0%   { transform: translateY(0) rotate(0deg); }
+  25%  { transform: translateY(-12px) rotate(0.3deg); }
+  50%  { transform: translateY(0) rotate(0deg); }
+  75%  { transform: translateY(12px) rotate(-0.3deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
 </style>
 </head>
 
@@ -92,49 +109,48 @@ p{
   <img src="Logo.png.jpeg" id="logo" alt="SATDNAI Logo">
   <h1>SATDNAI</h1>
   <p>
-    SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin, now reimagined and revived through the power of artificial intelligence.
+    SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin,
+    now reimagined and revived through the power of artificial intelligence.
   </p>
   <a class="button" href="#">Coming Soon on Solana</a>
 </div>
 
 <script>
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
 
-let fontSize = 16;
-let letters = "01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
+let fontSize=16;
+let letters="01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
 let columns;
 let drops;
 
 function resize(){
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-  columns = Math.floor(canvas.width / fontSize);
-  drops = Array(columns).fill(0);
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+  columns=Math.floor(canvas.width/fontSize);
+  drops=Array(columns).fill(0);
 }
 
 resize();
-addEventListener("resize", resize);
+addEventListener("resize",resize);
 
 function draw(){
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillStyle="rgba(0,0,0,0.05)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = "#00ff88";
-  ctx.font = fontSize + "px monospace";
+  ctx.fillStyle="#00ff88";
+  ctx.font=fontSize+"px monospace";
 
   for(let i=0;i<drops.length;i++){
-    const text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-      drops[i] = 0;
-
+    const text=letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+      drops[i]=0;
     drops[i]++;
   }
 }
 
-setInterval(draw, 33);
+setInterval(draw,33);
 </script>
 
 </body>
