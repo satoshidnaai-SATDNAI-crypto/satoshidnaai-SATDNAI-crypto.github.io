@@ -1,84 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>DNA Bitcoin</title>
-<style>
-html,body{
-    margin:0;
-    padding:0;
-    background:black;
-    overflow:hidden;
-}
-canvas{display:block}
-</style>
-</head>
-<body>
-
-<canvas id="cv"></canvas>
-
-<script>
-const c = document.getElementById("cv");
-const ctx = c.getContext("2d");
-
-function resize(){
-    c.width = innerWidth;
-    c.height = innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-let t = 0;
-
-function draw(){
-    ctx.clearRect(0,0,c.width,c.height);
-
-    const cx = c.width/2;
-    const cy = c.height/2;
-
-    for(let i=-300;i<300;i++){
-        const y = i*3;
-        const a = i*0.15 + t;
-        const x = Math.sin(a)*120;
-
-        // glow
-        ctx.strokeStyle = "rgba(0,255,120,0.3)";
-        ctx.lineWidth = 8;
-        ctx.beginPath();
-        ctx.moveTo(cx+x, cy+y);
-        ctx.lineTo(cx-x, cy+y);
-        ctx.stroke();
-
-        // core
-        ctx.strokeStyle = "rgb(0,255,0)";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(cx+x, cy+y);
-        ctx.lineTo(cx-x, cy+y);
-        ctx.stroke();
-
-        // particles
-        ctx.fillStyle = "rgba(0,255,0,0.6)";
-        ctx.fillRect(cx+x-2, cy+y-2, 3, 3);
-        ctx.fillRect(cx-x-2, cy+y-2, 3, 3);
+  <meta charset="UTF-8" />
+  <title>SATDNAI – Crypto DNA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    // Bitcoin symbol
-    ctx.font = "bold 140px Arial";
-    ctx.fillStyle = "gold";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.shadowColor = "gold";
-    ctx.shadowBlur = 40;
-    ctx.fillText("₿", cx, cy);
-    ctx.shadowBlur = 0;
+    body {
+      background: #000;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
 
-    t += 0.03;
-    requestAnimationFrame(draw);
-}
+    /* پس‌زمینه ماتریکس */
+    .matrix-bg {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #022, #000 60%);
+      z-index: 0;
+      overflow: hidden;
+    }
 
-draw();
-</script>
+    .matrix-column {
+      position: absolute;
+      top: -100vh;
+      width: 20px;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 16px;
+      opacity: 0.6;
+      animation: rain 8s linear infinite;
+      white-space: pre;
+    }
 
+    @keyframes rain {
+      0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* کانتینر اصلی */
+    .scene {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* DNA نئونی */
+    .dna {
+      position: relative;
+      width: 260px;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 18px #0f0);
+    }
+
+    .dna-line {
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(#0f0, #ffeb3b, #0f0);
+      border-radius: 999px;
+    }
+
+    .dna-line.left {
+      left: 60px;
+    }
+
+    .dna-line.right {
+      right: 60px;
+    }
+
+    .dna-rung {
+      position: absolute;
+      width: 140px;
+      height: 2px;
+      background: linear-gradient(90deg, #0f0, #ffeb3b, #0f0);
+      opacity: 0.9;
+      border-radius: 999px;
+    }
+
+    /* موج سینوسی برای ردیف‌های DNA */
+    /* ۱۲ پله */
+    .dna-rung:nth-child(1)  { top: 8%;  transform: rotate(18deg); }
+    .dna-rung:nth-child(2)  { top: 16%; transform: rotate(-18deg); }
+    .dna-rung:nth-child(3)  { top: 24%; transform: rotate(18deg); }
+    .dna-rung:nth-child(4)  { top: 32%; transform: rotate(-18deg); }
+    .dna-rung:nth-child(5)  { top: 40%; transform: rotate(18deg); }
+    .dna-rung:nth-child(6)  { top: 48%; transform: rotate(-18deg); }
+    .dna-rung:nth-child(7)  { top: 56%; transform: rotate(18deg); }
+    .dna-rung:nth-child(8)  { top: 64%; transform: rotate(-18deg); }
+    .dna-rung:nth-child(9)  { top: 72%; transform: rotate(18deg); }
+    .dna-rung:nth-child(10) { top: 80%; transform: rotate(-18deg); }
+    .dna-rung:nth-child(11) { top: 88%; transform: rotate(18deg); }
+    .dna-rung:nth-child(12) { top: 96%; transform: rotate(-18deg); }
+
+    /* نماد بیت‌کوین وسط DNA */
+    .btc {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeb3b, #f9a825 60%, #f57f17 100%);
+      box-shadow:
+        0 0 25px rgba(255, 235, 59, 0.9),
+        0 0 60px rgba(255, 235, 59, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-weight: 900;
+      font-size: 64px;
+      color: #3e2723;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    .btc::before,
+    .btc::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 80%;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+    }
+
+    .btc::before {
+      transform: translateX(-18px);
+    }
+
+    .btc::after {
+      transform: translateX(18px);
+    }
+
+    .btc span {
+      position: relative;
+      z-index: 1;
+    }@keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow:
+          0 0 25px rgba(255, 235, 59, 0.9),
+          0 0 60px rgba(255, 235, 59, 0.6);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow:
+          0 0 40px rgba(255, 235, 59, 1),
+          0 0 90px rgba(255, 235, 59, 0.9);
+      }
+    }
+
+    /* متن برند پایین صفحه */
+    .brand {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8bc34a;
+      opacity: 0.8;
+    }
+
+    .brand strong {
+      color: #cddc39;
+    }
+  </style>
+</head>
+<body>
+  <!-- پس‌زمینه ماتریکسی -->
+  <div class="matrix-bg" id="matrix"></div>
+
+  <!-- صحنه اصلی -->
+  <div class="scene">
+    <div class="dna">
+      <div class="dna-line left"></div>
+      <div class="dna-line right"></div>
+
+      <!-- پله‌های DNA -->
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+      <div class="dna-rung"></div>
+
+      <!-- نماد بیت‌کوین -->
+      <div class="btc">
+        <span>₿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- متن برند -->
+  <div class="brand">
+    Official website of <strong>SATDNAI</strong> — Satoshi’s idea reborn with AI
+  </div>
+
+  <script>
+    // تولید ستون‌های ماتریکس به صورت ساده
+    const matrix = document.getElementById("matrix");
+    const cols = 30;
+    const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@&%";
+
+    for (let i = 0; i < cols; i++) {
+      const col = document.createElement("div");
+      col.className = "matrix-column";
+      col.style.left = (i / cols) * 100 + "vw";
+      col.style.animationDelay = (Math.random() * 8) + "s";
+      col.style.fontSize = (12 + Math.random() * 10) + "px";
+
+      let text = "";
+      const length = 30 + Math.floor(Math.random() * 40);
+      for (let j = 0; j < length; j++) {
+        text += chars.charAt(Math.floor(Math.random() * chars.length)) + "\n";
+      }
+      col.textContent = text;
+      matrix.appendChild(col);
+    }
+  </script>
 </body>
 </html>
