@@ -1,78 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>DNA Bitcoin Matrix</title>
+<title>DNA Bitcoin</title>
 <style>
-body{
+html,body{
     margin:0;
+    padding:0;
     background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
     overflow:hidden;
 }
-
-canvas{
-    filter: drop-shadow(0 0 20px gold);
-}
+canvas{display:block}
 </style>
 </head>
 <body>
 
-<canvas id="c"></canvas>
+<canvas id="cv"></canvas>
 
 <script>
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const c = document.getElementById("cv");
+const ctx = c.getContext("2d");
+
+function resize(){
+    c.width = innerWidth;
+    c.height = innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
 
 let t = 0;
 
-function drawDNA(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    const cx = canvas.width/2;
-    const cy = canvas.height/2;
+function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
 
-    for(let i=0;i<300;i++){
-        const y = i*5 - 750;
-        const angle = i*0.15 + t;
-        const x = Math.sin(angle)*120;
+    const cx = c.width/2;
+    const cy = c.height/2;
 
-        const hue = 120 + Math.sin(angle)*60;
-        ctx.strokeStyle = hsl(${hue},100%,50%);
-        ctx.lineWidth = 4;
+    for(let i=-300;i<300;i++){
+        const y = i*3;
+        const a = i*0.15 + t;
+        const x = Math.sin(a)*120;
 
+        // glow
+        ctx.strokeStyle = "rgba(0,255,120,0.3)";
+        ctx.lineWidth = 8;
         ctx.beginPath();
-        ctx.moveTo(cx + x, cy + y);
-        ctx.lineTo(cx - x, cy + y);
+        ctx.moveTo(cx+x, cy+y);
+        ctx.lineTo(cx-x, cy+y);
         ctx.stroke();
 
+        // core
+        ctx.strokeStyle = "rgb(0,255,0)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(cx+x, cy+y);
+        ctx.lineTo(cx-x, cy+y);
+        ctx.stroke();
+
+        // particles
         ctx.fillStyle = "rgba(0,255,0,0.6)";
-        ctx.fillRect(cx + x - 2, cy + y - 2, 4, 4);
-        ctx.fillRect(cx - x - 2, cy + y - 2, 4, 4);
+        ctx.fillRect(cx+x-2, cy+y-2, 3, 3);
+        ctx.fillRect(cx-x-2, cy+y-2, 3, 3);
     }
 
-    // Bitcoin
-    ctx.font = "120px Arial Black";
+    // Bitcoin symbol
+    ctx.font = "bold 140px Arial";
     ctx.fillStyle = "gold";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "gold";
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 40;
     ctx.fillText("₿", cx, cy);
     ctx.shadowBlur = 0;
-}
 
-function animate(){
     t += 0.03;
-    drawDNA();
-    requestAnimationFrame(animate);
+    requestAnimationFrame(draw);
 }
 
-animate();
+draw();
 </script>
+
 </body>
 </html>
