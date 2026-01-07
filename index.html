@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SATDNAI — Satoshi’s Idea Reborn With AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:black;
+  overflow:hidden;
+  font-family:Arial, Helvetica, sans-serif;
+  color:white;
+}
+
+/* Matrix background */
+#matrix {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+/* Content */
+.content {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+}
+
+h1 {
+  font-size:64px;
+  letter-spacing:6px;
+  margin-bottom:20px;
+}
+
+p {
+  max-width:900px;
+  font-size:20px;
+  line-height:1.6;
+  color:#b5f5d5;
+}
+
+.button {
+  margin-top:30px;
+  padding:14px 36px;
+  border-radius:40px;
+  background:linear-gradient(90deg,#00ffc6,#00ff88);
+  color:black;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.button:hover {
+  transform:scale(1.05);
+}
+</style>
+</head>
+
+<canvas id="matrix"></canvas>
+
+<div class="content">
+  <h1>SATDNAI</h1>
+  <p>
+    SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin,
+    now reimagined through the power of artificial intelligence.
+  </p>
+  <a class="button" href="#">Coming Soon on Solana</a>
+</div>
+
+<script>
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+
+const letters = "010101 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(0);
+
+function draw(){
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff88";
+  ctx.font = fontSize + "px monospace";
+
+  for(let i=0;i<drops.length;i++){
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.98){
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(draw,33);
+window.addEventListener("resize", resize);
+</script>
+
+</body>
+</html>
