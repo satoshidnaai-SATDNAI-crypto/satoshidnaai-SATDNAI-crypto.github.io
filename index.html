@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNA Bitcoin Matrix</title>
 <style>
-html,body{
+body{
     margin:0;
-    width:100%;
-    height:100%;
     background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
     overflow:hidden;
 }
+
 canvas{
-    display:block;
+    filter: drop-shadow(0 0 20px gold);
 }
 </style>
 </head>
@@ -24,93 +26,53 @@ canvas{
 <script>
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function resize(){
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-addEventListener("resize", resize);
-resize();
-
-// -------- MATRIX BACKGROUND --------
-const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let drops = [];
-
-function initMatrix(){
-  const cols = Math.floor(canvas.width / 16);
-  drops = Array(cols).fill(0);
-}
-initMatrix();
-
-function drawMatrix(){
-  ctx.fillStyle = "rgba(0,0,0,0.15)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle = "#00ff88";
-  ctx.font = "16px monospace";
-
-  for(let i=0;i<drops.length;i++){
-    const text = chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(text, i*16, drops[i]*16);
-    if(drops[i]*16 > canvas.height && Math.random() > 0.98) drops[i]=0;
-    drops[i]++;
-  }
-}
-
-// -------- DNA HELIX --------
 let t = 0;
 
 function drawDNA(){
-  const cx = canvas.width/2;
-  const cy = canvas.height/2;
-  const scale = 1.0;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx = canvas.width/2;
+    const cy = canvas.height/2;
 
-  for(let i=-160;i<160;i++){
-    const y = cy + i*2;
-    const angle = i*0.08 + t;
-    const x1 = cx + Math.sin(angle)*90;
-    const x2 = cx - Math.sin(angle)*90;
+    for(let i=0;i<300;i++){
+        const y = i*5 - 750;
+        const angle = i*0.15 + t;
+        const x = Math.sin(angle)*120;
 
-    // golden glow
-    ctx.strokeStyle = "rgba(255,190,60,0.8)";
-    ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.moveTo(x1,y);
-    ctx.lineTo(x2,y);
-    ctx.stroke();
+        const hue = 120 + Math.sin(angle)*60;
+        ctx.strokeStyle = hsl(${hue},100%,50%);
+        ctx.lineWidth = 4;
 
-    // green core
-    ctx.strokeStyle = "rgba(0,255,160,0.9)";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(x1,y);
-    ctx.lineTo(x2,y);
-    ctx.stroke();
-  }
+        ctx.beginPath();
+        ctx.moveTo(cx + x, cy + y);
+        ctx.lineTo(cx - x, cy + y);
+        ctx.stroke();
 
-  // bitcoin core
-  ctx.save();
-  ctx.translate(cx,cy);
-  ctx.shadowColor = "#ffcc55";
-  ctx.shadowBlur = 30;
-  ctx.fillStyle = "#ffcc55";
-  ctx.font = "bold 120px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("₿",0,0);
-  ctx.restore();
+        ctx.fillStyle = "rgba(0,255,0,0.6)";
+        ctx.fillRect(cx + x - 2, cy + y - 2, 4, 4);
+        ctx.fillRect(cx - x - 2, cy + y - 2, 4, 4);
+    }
+
+    // Bitcoin
+    ctx.font = "120px Arial Black";
+    ctx.fillStyle = "gold";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.shadowColor = "gold";
+    ctx.shadowBlur = 30;
+    ctx.fillText("₿", cx, cy);
+    ctx.shadowBlur = 0;
 }
 
-// -------- MAIN LOOP --------
-function loop(){
-  drawMatrix();
-  drawDNA();
-  t += 0.02;
-  requestAnimationFrame(loop);
+function animate(){
+    t += 0.03;
+    drawDNA();
+    requestAnimationFrame(animate);
 }
 
-loop();
+animate();
 </script>
-
 </body>
 </html>
