@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI — Satoshi’s Idea Reborn With AI</title>
+<title>SATDNAI — Satoshi's Idea Reborn With AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
   background:black;
-  color:white;
   overflow:hidden;
   font-family:Arial,Helvetica,sans-serif;
+  color:white;
 }
 
-/* Matrix background */
 #matrix{
   position:fixed;
-  top:0;left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   z-index:0;
 }
 
-/* Content */
 .container{
   position:absolute;
   inset:0;
@@ -34,20 +31,26 @@ body{
   text-align:center;
   padding:40px;
   z-index:2;
-  animation:fadeIn 2.5s ease forwards;
+}
+
+#logo{
+  width:260px;
+  margin-bottom:25px;
+  animation:float 4s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
 }
 
 h1{
   font-size:64px;
   letter-spacing:6px;
-  margin:25px 0;
+  margin-bottom:25px;
+  animation:fadeIn 2s ease forwards;
 }
 
 p{
   max-width:900px;
   font-size:20px;
   line-height:1.6;
-  color:#b5f5d5;
+  margin-bottom:35px;
 }
 
 .button{
@@ -56,36 +59,27 @@ p{
   border-radius:40px;
   background:linear-gradient(90deg,#00ffc6,#00ff88);
   color:black;
-  text-decoration:none;
   font-weight:bold;
+  text-decoration:none;
   transition:.3s;
 }
 
-.button:hover{
-  transform:scale(1.08);
-}
+.button:hover{transform:scale(1.08)}
 
-/* Logo */
-#logo{
-  width:260px;
-  animation:float 4s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
-}
-
-/* Animations */
 @keyframes float{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-20px);}
-  100%{transform:translateY(0);}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-20px)}
+  100%{transform:translateY(0)}
 }
 
 @keyframes glow{
-  from{filter:drop-shadow(0 0 12px #00ff88);}
-  to{filter:drop-shadow(0 0 35px #00ff88);}
+  from{filter:drop-shadow(0 0 12px #00ff88)}
+  to{filter:drop-shadow(0 0 35px #00ff88)}
 }
 
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(40px);}
-  to{opacity:1; transform:translateY(0);}
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
@@ -95,15 +89,11 @@ p{
 <canvas id="matrix"></canvas>
 
 <div class="container">
-  <img src="logo.png" id="logo">
-
+  <img src="Logo.png.jpeg" id="logo" alt="SATDNAI Logo">
   <h1>SATDNAI</h1>
-
   <p>
-  SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin,
-  now reimagined and revived through the power of artificial intelligence.
+    SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin, now reimagined and revived through the power of artificial intelligence.
   </p>
-
   <a class="button" href="#">Coming Soon on Solana</a>
 </div>
 
@@ -111,17 +101,20 @@ p{
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
+let fontSize = 16;
+let letters = "01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
+let columns;
+let drops;
+
 function resize(){
   canvas.width = innerWidth;
   canvas.height = innerHeight;
+  columns = Math.floor(canvas.width / fontSize);
+  drops = Array(columns).fill(0);
 }
-resize();
-addEventListener("resize",resize);
 
-const letters = "01 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
-const fontSize = 16;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(0);
+resize();
+addEventListener("resize", resize);
 
 function draw(){
   ctx.fillStyle = "rgba(0,0,0,0.05)";
@@ -132,16 +125,16 @@ function draw(){
 
   for(let i=0;i<drops.length;i++){
     const text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.98)
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
       drops[i] = 0;
 
     drops[i]++;
   }
 }
 
-setInterval(draw,33);
+setInterval(draw, 33);
 </script>
 
 </body>
