@@ -14,7 +14,6 @@ html,body{
     font-family:Arial,Helvetica,sans-serif;
 }
 
-/* لوگوی اصلی */
 .logo-bg{
     position:fixed;
     inset:0;
@@ -23,7 +22,6 @@ html,body{
     z-index:1;
 }
 
-/* محافظ ملایم */
 .logo-protect{
     position:fixed;
     inset:0;
@@ -31,7 +29,6 @@ html,body{
     z-index:2;
 }
 
-/* ماتریکس */
 canvas{
     position:fixed;
     inset:0;
@@ -40,25 +37,14 @@ canvas{
     opacity:0.22;
 }
 
-/* متن زیر لوگو */
 .caption{
     position:fixed;
     bottom:40px;
     width:100%;
     text-align:center;
     z-index:5;
-    animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-
-.caption span{
-    font-size:24px;
-    letter-spacing:1px;
     color:#8fd3ff;
+    font-size:24px;
 }
 
 .solana{
@@ -66,12 +52,6 @@ canvas{
     background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
 }
 
 /* شبکه‌های اجتماعی */
@@ -94,19 +74,6 @@ canvas{
     justify-content:center;
     border-radius:50%;
     background:rgba(255,255,255,0.08);
-    animation: pulse 2.5s infinite;
-    transition:0.3s;
-}
-
-@keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.12)}
-    100%{transform:scale(1)}
-}
-
-.socials a:hover{
-    background:rgba(0,255,163,0.25);
-    transform:scale(1.25);
 }
 
 .socials img{
@@ -123,25 +90,44 @@ canvas{
 <canvas id="matrix"></canvas>
 
 <div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+    Coming Soon on the <span class="solana">Solana</span> Blockchain
 </div>
 
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
+<div class="socials" id="socials">
+    <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png"></a>
+    <a href="https://www.youtube.com/@SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+    <a href="https://x.com/SatoDnaAi" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
 </div>
 
 <script>
+const icons = document.querySelectorAll('#socials a');
+
+icons.forEach((icon, i) => {
+    let scale = 1;
+    let growing = true;
+
+    setInterval(() => {
+        if(growing){
+            scale += 0.015;
+            if(scale >= 1.12) growing = false;
+        } else {
+            scale -= 0.015;
+            if(scale <= 1) growing = true;
+        }
+        icon.style.transform = scale(${scale});
+    }, 30);
+
+    icon.addEventListener('mouseenter', () => {
+        icon.style.transform = 'scale(1.3)';
+    });
+    icon.addEventListener('mouseleave', () => {
+        scale = 1;
+        growing = true;
+    });
+});
+
+// ماتریکس
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
@@ -160,7 +146,6 @@ let drops = new Array(columns).fill(1);
 function draw(){
     ctx.fillStyle = "rgba(0,0,0,0.05)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
-
     ctx.fillStyle = "#FFD700";
     ctx.font = fontSize + "px monospace";
 
