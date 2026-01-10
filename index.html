@@ -2,64 +2,66 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI Logo</title>
+<title>3D Social Cards</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 body{
     margin:0;
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    background:black;
-    font-family: 'Segoe UI', sans-serif;
+    background:#cfd8e3;
+    font-family:Arial, sans-serif;
 }
 
-.logo{
-    display:flex;
-    font-size:120px;
-    font-weight:800;
-    letter-spacing:4px;
+.scene{
+    perspective:1200px;
 }
 
-.white{
-    color:white;
-    text-shadow:0 0 15px rgba(255,255,255,.3);
+.stack{
+    transform-style:preserve-3d;
 }
 
-.blue{
-    color:#00aaff;
-    text-shadow:
-        0 0 10px #00aaff,
-        0 0 20px #0099ff,
-        0 0 40px #0077ff;
-}
-
-.ai{
+.card{
     position:relative;
-    background:linear-gradient(135deg,#00e1ff,#0050ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:
-        0 0 20px rgba(0,200,255,.7),
-        0 0 40px rgba(0,100,255,.6);
+    width:180px;
+    height:70px;
+    background:#f2f2f2;
+    border-radius:8px;
+    margin:18px 0;
+    display:flex;
+    align-items:center;
+    padding-left:22px;
+    font-size:20px;
+    font-weight:600;
+    color:#222;
+    box-shadow: 0 15px 0 #d0d0d0;
+    transform: rotateX(60deg) rotateZ(-45deg);
 }
 
-.ai::after{
-    content:"";
-    position:absolute;
-    inset:-15px;
-    background:radial-gradient(circle,rgba(0,180,255,.25),transparent 60%);
-    filter:blur(15px);
-    z-index:-1;
+.card i{
+    margin-right:12px;
+    font-size:26px;
 }
+
+.facebook { top:0 }
+.twitter { top:15px }
+.google { top:30px }
+.instagram { top:45px }
 </style>
 </head>
+
 <body>
 
-<div class="logo">
-    <span class="white">SAT</span>
-    <span class="blue">DNA</span>
-    <span class="ai">AI</span>
+<div class="scene">
+  <div class="stack">
+    <div class="card facebook"><i class="fab fa-facebook-f"></i>Facebook</div>
+    <div class="card twitter"><i class="fab fa-twitter"></i>Twitter</div>
+    <div class="card google"><i class="fab fa-google"></i>Google</div>
+    <div class="card instagram"><i class="fab fa-instagram"></i>Instagram</div>
+  </div>
 </div>
 
 </body>
