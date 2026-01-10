@@ -14,7 +14,7 @@ html,body{
     background:black;
 }
 
-/* لوگوی اصلی – کاملاً شفاف */
+/* لوگوی اصلی */
 .logo-bg{
     position:fixed;
     inset:0;
@@ -23,7 +23,7 @@ html,body{
     z-index:1;
 }
 
-/* لایه محافظ خیلی ملایم برای خوانایی (بدون نور) */
+/* لایه محافظ بسیار ملایم */
 .logo-protect{
     position:fixed;
     inset:0;
@@ -31,7 +31,7 @@ html,body{
     z-index:2;
 }
 
-/* افکت ماتریکس – بدون نور و سایه */
+/* ماتریکس */
 canvas{
     position:fixed;
     inset:0;
@@ -53,11 +53,11 @@ const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
 function resize(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
 }
 resize();
-window.addEventListener('resize', resize);
+addEventListener('resize', resize);
 
 const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const fontSize = 18;
@@ -65,10 +65,11 @@ let columns = Math.floor(canvas.width / fontSize);
 let drops = new Array(columns).fill(1);
 
 function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.04)";
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle = "#00ff88";
+    /* رنگ طلایی ماتریکس */
+    ctx.fillStyle = "#FFD700";
     ctx.font = fontSize + "px monospace";
 
     for(let i=0;i<drops.length;i++){
