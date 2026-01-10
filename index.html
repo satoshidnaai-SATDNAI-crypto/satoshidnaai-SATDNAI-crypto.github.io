@@ -2,67 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>3D Social Cards</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+<title>Matrix Background</title>
 <style>
-body{
+html,body{
     margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#cfd8e3;
-    font-family:Arial, sans-serif;
+    padding:0;
+    background:black;
+    overflow:hidden;
 }
-
-.scene{
-    perspective:1200px;
+canvas{
+    display:block;
 }
-
-.stack{
-    transform-style:preserve-3d;
-}
-
-.card{
-    position:relative;
-    width:180px;
-    height:70px;
-    background:#f2f2f2;
-    border-radius:8px;
-    margin:18px 0;
-    display:flex;
-    align-items:center;
-    padding-left:22px;
-    font-size:20px;
-    font-weight:600;
-    color:#222;
-    box-shadow: 0 15px 0 #d0d0d0;
-    transform: rotateX(60deg) rotateZ(-45deg);
-}
-
-.card i{
-    margin-right:12px;
-    font-size:26px;
-}
-
-.facebook { top:0 }
-.twitter { top:15px }
-.google { top:30px }
-.instagram { top:45px }
 </style>
 </head>
-
 <body>
 
-<div class="scene">
-  <div class="stack">
-    <div class="card facebook"><i class="fab fa-facebook-f"></i>Facebook</div>
-    <div class="card twitter"><i class="fab fa-twitter"></i>Twitter</div>
-    <div class="card google"><i class="fab fa-google"></i>Google</div>
-    <div class="card instagram"><i class="fab fa-instagram"></i>Instagram</div>
-  </div>
-</div>
+<canvas id="matrix"></canvas>
+
+<script>
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+for(let i=0;i<columns;i++){
+    drops[i] = Math.random()*canvas.height;
+}
+
+function draw(){
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#00ff41";
+    ctx.font = fontSize+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text = letters.charAt(Math.floor(Math.random()*letters.length));
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+
+setInterval(draw,33);
+
+window.addEventListener("resize",()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
 
 </body>
 </html>
