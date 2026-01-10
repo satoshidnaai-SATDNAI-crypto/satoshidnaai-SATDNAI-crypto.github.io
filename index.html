@@ -2,16 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Matrix Background</title>
+<title>SATDNAI</title>
 <style>
-html,body{
-    margin:0;
-    padding:0;
-    background:black;
-    overflow:hidden;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:black;overflow:hidden}
+
 canvas{
-    display:block;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+.logo-container{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    text-align:center;
+}
+
+.logo-container img{
+    width:380px;
+    filter: drop-shadow(0 0 30px #00ffcc);
 }
 </style>
 </head>
@@ -19,46 +33,39 @@ canvas{
 
 <canvas id="matrix"></canvas>
 
+<div class="logo-container">
+    <img src="logo.png">
+</div>
+
 <script>
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const letters = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-
-const drops = [];
-for(let i=0;i<columns;i++){
-    drops[i] = Math.random()*canvas.height;
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
+resize();
+window.addEventListener('resize',resize);
+
+const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const size=16;
+const columns=canvas.width/size;
+const drops=new Array(Math.floor(columns)).fill(1);
 
 function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillStyle="rgba(0,0,0,0.1)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#00ff41";
-    ctx.font = fontSize+"px monospace";
-
+    ctx.fillStyle="#00ff41";
+    ctx.font=size+"px monospace";
     for(let i=0;i<drops.length;i++){
-        const text = letters.charAt(Math.floor(Math.random()*letters.length));
-        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
-        }
+        const text=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(text,i*size,drops[i]*size);
+        if(drops[i]*size>canvas.height && Math.random()>0.975) drops[i]=0;
         drops[i]++;
     }
 }
-
 setInterval(draw,33);
-
-window.addEventListener("resize",()=>{
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
 </script>
 
 </body>
