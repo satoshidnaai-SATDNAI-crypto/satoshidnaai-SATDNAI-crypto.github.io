@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI Test</title>
+<title>SATDNAI Logo</title>
 <style>
 body{
   margin:0;
@@ -11,16 +11,33 @@ body{
   justify-content:center;
   align-items:center;
   height:100vh;
+  font-family: Arial, Helvetica, sans-serif;
 }
-img{
-  width:80%;
-  max-width:500px;
+
+.logo {
+  font-size: 80px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #00d0ff;
+  position: relative;
+  animation: glow 3s infinite alternate;
+}
+
+.logo span {
+  color: white;
+}
+
+@keyframes glow {
+  0%   { text-shadow: 0 0 10px #00d0ff; }
+  100% { text-shadow: 0 0 30px #00f0ff, 0 0 60px #00aaff; }
 }
 </style>
 </head>
 <body>
 
-<img src="satdnaai.png">
+<div class="logo">
+  <span>SAT</span>DNA<span>I</span>
+</div>
 
 </body>
 </html>
