@@ -94,12 +94,19 @@ canvas{
     justify-content:center;
     border-radius:50%;
     background:rgba(255,255,255,0.08);
+    animation: pulse 2.5s infinite;
     transition:0.3s;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.12)}
+    100%{transform:scale(1)}
 }
 
 .socials a:hover{
     background:rgba(0,255,163,0.25);
-    transform:scale(1.15);
+    transform:scale(1.25);
 }
 
 .socials img{
@@ -119,7 +126,6 @@ canvas{
     <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
 </div>
 
-<!-- شبکه‌های اجتماعی -->
 <div class="socials">
     <a href="https://t.me/SATDNAI" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
