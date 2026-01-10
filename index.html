@@ -40,10 +40,10 @@ canvas{
     opacity:0.22;
 }
 
-/* باکس متن */
+/* متن زیر لوگو */
 .caption{
     position:fixed;
-    bottom:40px;   /* 👈 این خط متن را حدود 1 سانت پایین‌تر می‌برد */
+    bottom:40px;
     width:100%;
     text-align:center;
     z-index:5;
@@ -55,14 +55,12 @@ canvas{
     50%{transform:translateY(-10px)}
 }
 
-/* متن */
 .caption span{
     font-size:24px;
     letter-spacing:1px;
     color:#8fd3ff;
 }
 
-/* استایل سولانا */
 .solana{
     font-weight:bold;
     background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
@@ -75,6 +73,39 @@ canvas{
     from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
     to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
 }
+
+/* شبکه‌های اجتماعی */
+.socials{
+    position:fixed;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    z-index:10;
+}
+
+.socials a{
+    width:46px;
+    height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    transition:0.3s;
+}
+
+.socials a:hover{
+    background:rgba(0,255,163,0.25);
+    transform:scale(1.15);
+}
+
+.socials img{
+    width:26px;
+    height:26px;
+}
 </style>
 </head>
 
@@ -86,6 +117,22 @@ canvas{
 
 <div class="caption">
     <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+</div>
+
+<!-- شبکه‌های اجتماعی -->
+<div class="socials">
+    <a href="https://t.me/SATDNAI" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+    </a>
+    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
+    </a>
+    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    </a>
+    <a href="https://x.com/SatoDnaAi" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
+    </a>
 </div>
 
 <script>
