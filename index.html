@@ -1,252 +1,75 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>SATDNAI – Crypto DNA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #000;
-      color: #fff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow: hidden;
-    }
-
-    /* پس‌زمینه ماتریکس */
-    .matrix-bg {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at top, #022, #000 60%);
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .matrix-column {
-      position: absolute;
-      top: -100vh;
-      width: 20px;
-      color: #0f0;
-      font-family: monospace;
-      font-size: 16px;
-      opacity: 0.6;
-      animation: rain 8s linear infinite;
-      white-space: pre;
-    }
-
-    @keyframes rain {
-      0% {
-        transform: translateY(-100vh);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
-
-    /* کانتینر اصلی */
-    .scene {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* DNA نئونی */
-    .dna {
-      position: relative;
-      width: 260px;
-      height: 520px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 0 18px #0f0);
-    }
-
-    .dna-line {
-      position: absolute;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(#0f0, #ffeb3b, #0f0);
-      border-radius: 999px;
-    }
-
-    .dna-line.left {
-      left: 60px;
-    }
-
-    .dna-line.right {
-      right: 60px;
-    }
-
-    .dna-rung {
-      position: absolute;
-      width: 140px;
-      height: 2px;
-      background: linear-gradient(90deg, #0f0, #ffeb3b, #0f0);
-      opacity: 0.9;
-      border-radius: 999px;
-    }
-
-    /* موج سینوسی برای ردیف‌های DNA */
-    /* ۱۲ پله */
-    .dna-rung:nth-child(1)  { top: 8%;  transform: rotate(18deg); }
-    .dna-rung:nth-child(2)  { top: 16%; transform: rotate(-18deg); }
-    .dna-rung:nth-child(3)  { top: 24%; transform: rotate(18deg); }
-    .dna-rung:nth-child(4)  { top: 32%; transform: rotate(-18deg); }
-    .dna-rung:nth-child(5)  { top: 40%; transform: rotate(18deg); }
-    .dna-rung:nth-child(6)  { top: 48%; transform: rotate(-18deg); }
-    .dna-rung:nth-child(7)  { top: 56%; transform: rotate(18deg); }
-    .dna-rung:nth-child(8)  { top: 64%; transform: rotate(-18deg); }
-    .dna-rung:nth-child(9)  { top: 72%; transform: rotate(18deg); }
-    .dna-rung:nth-child(10) { top: 80%; transform: rotate(-18deg); }
-    .dna-rung:nth-child(11) { top: 88%; transform: rotate(18deg); }
-    .dna-rung:nth-child(12) { top: 96%; transform: rotate(-18deg); }
-
-    /* نماد بیت‌کوین وسط DNA */
-    .btc {
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ffeb3b, #f9a825 60%, #f57f17 100%);
-      box-shadow:
-        0 0 25px rgba(255, 235, 59, 0.9),
-        0 0 60px rgba(255, 235, 59, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-weight: 900;
-      font-size: 64px;
-      color: #3e2723;
-      text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-
-    .btc::before,
-    .btc::after {
-      content: "";
-      position: absolute;
-      width: 4px;
-      height: 80%;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 999px;
-    }
-
-    .btc::before {
-      transform: translateX(-18px);
-    }
-
-    .btc::after {
-      transform: translateX(18px);
-    }
-
-    .btc span {
-      position: relative;
-      z-index: 1;
-    }@keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow:
-          0 0 25px rgba(255, 235, 59, 0.9),
-          0 0 60px rgba(255, 235, 59, 0.6);
-      }
-      50% {
-        transform: scale(1.06);
-        box-shadow:
-          0 0 40px rgba(255, 235, 59, 1),
-          0 0 90px rgba(255, 235, 59, 0.9);
-      }
-    }
-
-    /* متن برند پایین صفحه */
-    .brand {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #8bc34a;
-      opacity: 0.8;
-    }
-
-    .brand strong {
-      color: #cddc39;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>SATDNAI 3D Logo</title>
+<style>
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+canvas {
+  display: block;
+}
+</style>
 </head>
 <body>
-  <!-- پس‌زمینه ماتریکسی -->
-  <div class="matrix-bg" id="matrix"></div>
 
-  <!-- صحنه اصلی -->
-  <div class="scene">
-    <div class="dna">
-      <div class="dna-line left"></div>
-      <div class="dna-line right"></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 
-      <!-- پله‌های DNA -->
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
-      <div class="dna-rung"></div>
+<script>
+const scene = new THREE.Scene();
 
-      <!-- نماد بیت‌کوین -->
-      <div class="btc">
-        <span>₿</span>
-      </div>
-    </div>
-  </div>
+const camera = new THREE.PerspectiveCamera(
+  45, window.innerWidth / window.innerHeight, 0.1, 1000
+);
+camera.position.z = 5;
 
-  <!-- متن برند -->
-  <div class="brand">
-    Official website of <strong>SATDNAI</strong> — Satoshi’s idea reborn with AI
-  </div>
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 1);
+document.body.appendChild(renderer.domElement);
 
-  <script>
-    // تولید ستون‌های ماتریکس به صورت ساده
-    const matrix = document.getElementById("matrix");
-    const cols = 30;
-    const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@&%";
+// Light
+const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambient);
 
-    for (let i = 0; i < cols; i++) {
-      const col = document.createElement("div");
-      col.className = "matrix-column";
-      col.style.left = (i / cols) * 100 + "vw";
-      col.style.animationDelay = (Math.random() * 8) + "s";
-      col.style.fontSize = (12 + Math.random() * 10) + "px";
+const pointLight = new THREE.PointLight(0x00ffff, 1);
+pointLight.position.set(2, 2, 3);
+scene.add(pointLight);
 
-      let text = "";
-      const length = 30 + Math.floor(Math.random() * 40);
-      for (let j = 0; j < length; j++) {
-        text += chars.charAt(Math.floor(Math.random() * chars.length)) + "\n";
-      }
-      col.textContent = text;
-      matrix.appendChild(col);
-    }
-  </script>
+// Texture
+const loader = new THREE.TextureLoader();
+const texture = loader.load('satdnaai.png');
+
+// Geometry
+const geometry = new THREE.PlaneGeometry(3, 3);
+const material = new THREE.MeshStandardMaterial({
+  map: texture,
+  transparent: true,
+  metalness: 0.6,
+  roughness: 0.2
+});
+const logo = new THREE.Mesh(geometry, material);
+scene.add(logo);
+
+// Animation
+function animate() {
+  requestAnimationFrame(animate);
+  logo.rotation.y += 0.005;
+  logo.rotation.x += 0.002;
+  renderer.render(scene, camera);
+}
+animate();
+
+// Responsive
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
