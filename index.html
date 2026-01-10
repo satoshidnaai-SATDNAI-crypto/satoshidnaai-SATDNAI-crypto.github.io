@@ -40,43 +40,40 @@ canvas{
     opacity:0.22;
 }
 
-/* نوار موشن متن */
-.banner{
+/* باکس متن زیر لوگو */
+.caption{
     position:fixed;
-    bottom:60px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:14px 28px;
-    border-radius:50px;
-    background:rgba(0,0,0,0.6);
+    bottom:80px;
+    width:100%;
+    text-align:center;
     z-index:5;
     animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-    0%,100%{transform:translate(-50%,0)}
-    50%{transform:translate(-50%,-12px)}
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
 }
 
-.banner-text{
-    color:white;
-    font-size:22px;
+/* متن */
+.caption span{
+    font-size:24px;
     letter-spacing:1px;
+    color:#8fd3ff;
+}
+
+/* کلمه Solana با استایل رسمی */
+.solana{
+    font-weight:bold;
+    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
     animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow{
-    from{ text-shadow:0 0 5px #00ffa3 }
-    to{ text-shadow:0 0 18px #00ffa3 }
-}
-
-/* لوگوی سولانا */
-.solana-logo{
-    width:34px;
-    height:34px;
+    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
+    to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
 }
 </style>
 </head>
@@ -87,19 +84,8 @@ canvas{
 <div class="logo-protect"></div>
 <canvas id="matrix"></canvas>
 
-<div class="banner">
-    <span class="banner-text">Coming Soon on the Solana Blockchain</span>
-    <svg class="solana-logo" viewBox="0 0 256 256">
-        <defs>
-            <linearGradient id="sol" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#00ffa3"/>
-                <stop offset="100%" stop-color="#dc1fff"/>
-            </linearGradient>
-        </defs>
-        <rect x="40" y="40" width="176" height="30" rx="10" fill="url(#sol)"/>
-        <rect x="40" y="113" width="176" height="30" rx="10" fill="url(#sol)"/>
-        <rect x="40" y="186" width="176" height="30" rx="10" fill="url(#sol)"/>
-    </svg>
+<div class="caption">
+    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
 </div>
 
 <script>
@@ -122,7 +108,7 @@ function draw(){
     ctx.fillStyle = "rgba(0,0,0,0.05)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle = "#FFD700"; // طلایی
+    ctx.fillStyle = "#FFD700";
     ctx.font = fontSize + "px monospace";
 
     for(let i=0;i<drops.length;i++){
