@@ -2,208 +2,161 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Crypto Project</title>
+<title>SATDNAI</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{
-    width:100%;
-    height:100%;
-    background:black;
-    font-family:Arial,Helvetica,sans-serif;
-    overflow-x:hidden;
+html,body{width:100%;height:100%;background:black;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+
+/* ===== Layout ===== */
+.section{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
 }
 
-/* ---------- صفحه اول ---------- */
+/* ===== Page 1 ===== */
 .hero{
-    position:relative;
-    height:100vh;
-    overflow:hidden;
+  background:black;
 }
 
-.logo-bg{
-    position:fixed;
-    inset:0;
-    background:url("logo.jpg") no-repeat center center;
-    background-size:contain;
-    z-index:1;
+.hero .logo-bg{
+  position:absolute;
+  inset:0;
+  background:url("logo.jpg") no-repeat center center;
+  background-size:contain;
+  z-index:1;
 }
 
-.logo-protect{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.05);
-    z-index:2;
+.hero .logo-protect{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.05);
+  z-index:2;
 }
 
-canvas.matrix{
-    position:fixed;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    opacity:0.22;
+#matrix{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:.25;
 }
 
 .caption{
-    position:absolute;
-    bottom:40px;
-    width:100%;
-    text-align:center;
-    z-index:5;
-    animation: float 4s ease-in-out infinite;
-}
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-.caption span{
-    font-size:24px;
-    letter-spacing:1px;
-    color:#8fd3ff;
-}
-.solana{
-    font-weight:bold;
-    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  text-align:center;
+  z-index:5;
+  animation:float 4s ease-in-out infinite;
 }
 
-/* ---------- صفحه دوم ---------- */
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+.caption span{font-size:24px;color:#8fd3ff}
+
+/* ===== Page 2 ===== */
 #bitcoinSection{
-    position:relative;
-    height:100vh;
-    background:black;
-    overflow:hidden;
+  background:black;
 }
 
 #bitcoinCanvas{
-    position:absolute;
-    inset:0;
+  position:absolute;
+  inset:0;
 }
 
 .section-title{
-    position:absolute;
-    top:40px;
-    width:100%;
-    text-align:center;
-    color:#ffd700;
-    font-size:36px;
-    letter-spacing:2px;
-    z-index:5;
-    text-shadow:0 0 18px rgba(255,215,0,0.8);
+  position:absolute;
+  top:40px;
+  width:100%;
+  text-align:center;
+  font-size:36px;
+  color:gold;
+  z-index:3;
+  text-shadow:0 0 18px rgba(255,215,0,.9);
 }
 </style>
 </head>
 
 <body>
 
-<!-- صفحه اول -->
-<section class="hero">
-    <div class="logo-bg"></div>
-    <div class="logo-protect"></div>
-    <canvas class="matrix" id="matrix"></canvas>
-    <div class="caption">
-        <span>Coming Soon on the <span class="solana">Blockchain</span></span>
-    </div>
+<!-- PAGE 1 -->
+<section class="section hero">
+  <div class="logo-bg"></div>
+  <div class="logo-protect"></div>
+  <canvas id="matrix"></canvas>
+  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
 </section>
 
-<!-- صفحه دوم -->
-<section id="bitcoinSection">
-    <div class="section-title">BITCOIN RAIN</div>
-    <canvas id="bitcoinCanvas"></canvas>
+<!-- PAGE 2 -->
+<section class="section" id="bitcoinSection">
+  <div class="section-title">BITCOIN RAIN</div>
+  <canvas id="bitcoinCanvas"></canvas>
 </section>
 
 <script>
-// ===== MATRIX =====
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+// MATRIX
+const m=document.getElementById("matrix"),mctx=m.getContext("2d");
+function resizeM(){m.width=innerWidth;m.height=innerHeight}
+resizeM();addEventListener("resize",resizeM);
 
-function resize(){
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener('resize', resize);
+const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
+let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
 
-const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = new Array(columns).fill(1);
+setInterval(()=>{
+  mctx.fillStyle="rgba(0,0,0,.05)";
+  mctx.fillRect(0,0,m.width,m.height);
+  mctx.fillStyle="#FFD700";
+  mctx.font=font+"px monospace";
+  for(let i=0;i<drops.length;i++){
+    let c=chars[Math.floor(Math.random()*chars.length)];
+    mctx.fillText(c,i*font,drops[i]*font);
+    if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
+    drops[i]++;
+  }
+},33);
 
-function drawMatrix(){
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "#FFD700";
-    ctx.font = fontSize + "px monospace";
+// BITCOIN RAIN
+const b=document.getElementById("bitcoinCanvas"),bctx=b.getContext("2d");
+function resizeB(){b.width=innerWidth;b.height=innerHeight}
+resizeB();addEventListener("resize",resizeB);
 
-    for(let i=0;i<drops.length;i++){
-        const char = chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
-        }
-        drops[i]++;
-    }
-}
-setInterval(drawMatrix, 33);
+const img=new Image();
+img.src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg";
+let coins=[];
 
-// ===== BITCOIN RAIN =====
-const btcCanvas = document.getElementById("bitcoinCanvas");
-const btcCtx = btcCanvas.getContext("2d");
-
-function resizeBTC(){
-    btcCanvas.width = innerWidth;
-    btcCanvas.height = innerHeight;
-}
-resizeBTC();
-addEventListener("resize", resizeBTC);
-
-const btcImg = new Image();
-btcImg.src = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg";
-
-const coins = [];
-
-function spawnCoin(){
-    coins.push({
-        x: Math.random() * btcCanvas.width,
-        y: -50,
-        size: 24 + Math.random() * 26,
-        speed: 1 + Math.random() * 3,
-        rotation: Math.random() * Math.PI,
-        spin: (Math.random() - 0.5) * 0.05
-    });
+function spawn(){
+  coins.push({
+    x:Math.random()*b.width,
+    y:-60,
+    s:24+Math.random()*26,
+    v:1+Math.random()*3,
+    r:Math.random()*Math.PI,
+    spin:(Math.random()-.5)*.05
+  });
 }
 
-function animateBTC(){
-    btcCtx.clearRect(0,0,btcCanvas.width, btcCanvas.height);
-
-    if(Math.random() < 0.06) spawnCoin();
-
-    for(let i=0;i<coins.length;i++){
-        const c = coins[i];
-        btcCtx.save();
-        btcCtx.translate(c.x, c.y);
-        btcCtx.rotate(c.rotation);
-        btcCtx.drawImage(btcImg, -c.size/2, -c.size/2, c.size, c.size);
-        btcCtx.restore();
-
-        c.y += c.speed;
-        c.rotation += c.spin;
-
-        if(c.y > btcCanvas.height + 60){
-            coins.splice(i,1);
-            i--;
-        }
-    }
-    requestAnimationFrame(animateBTC);
+function draw(){
+  bctx.clearRect(0,0,b.width,b.height);
+  if(Math.random()<.06)spawn();
+  for(let i=0;i<coins.length;i++){
+    let c=coins[i];
+    bctx.save();
+    bctx.translate(c.x,c.y);
+    bctx.rotate(c.r);
+    bctx.drawImage(img,-c.s/2,-c.s/2,c.s,c.s);
+    bctx.restore();
+    c.y+=c.v;c.r+=c.spin;
+    if(c.y>b.height+60){coins.splice(i,1);i--}
+  }
+  requestAnimationFrame(draw);
 }
-
-btcImg.onload = ()=> animateBTC();
+img.onload=draw;
 </script>
 
 </body>
