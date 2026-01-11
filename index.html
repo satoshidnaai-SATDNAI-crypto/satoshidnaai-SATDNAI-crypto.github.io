@@ -14,7 +14,7 @@ html,body{
     font-family:Arial,Helvetica,sans-serif;
 }
 
-/* پس‌زمینه */
+/* پس‌زمینه لوگو */
 .logo-bg{
     position:fixed;
     inset:0;
@@ -22,56 +22,44 @@ html,body{
     background-size:contain;
 }
 
-/* متن */
+/* متن وسط */
 .caption{
     position:fixed;
-    left:40px;
+    left:220px;
     top:50%;
     transform:translateY(-50%);
     color:white;
 }
-
 .caption h1{font-size:64px}
 .caption p{font-size:18px;color:#7fd3ff}
 
-/* پنل قیمت */
+/* پنل قیمت حرفه‌ای */
 .price-panel{
     position:fixed;
-    left:10px;
+    left:15px;
     top:50%;
     transform:translateY(-50%);
+    width:180px;
     background:rgba(0,0,0,0.55);
-    border:1px solid rgba(0,255,200,0.3);
-    border-radius:12px;
-    padding:10px 14px;
-    width:150px;
+    border:1px solid rgba(0,255,200,0.4);
+    border-radius:14px;
+    padding:12px;
     backdrop-filter:blur(8px);
 }
 
 .price-item{
     display:flex;
     justify-content:space-between;
-    margin:6px 0;
+    margin:7px 0;
     font-size:13px;
     color:#ddd;
-    transition:0.25s;
+    transition:0.3s;
 }
+
+.price-item span{font-weight:bold}
 
 .price-up span{color:#00ff99}
 .price-down span{color:#ff4d4d}
-
-/* انیمیشن تغییر عدد */
-.flash-up{animation:flashGreen 0.6s}
-.flash-down{animation:flashRed 0.6s}
-
-@keyframes flashGreen{
-  from{background:rgba(0,255,150,0.35)}
-  to{background:transparent}
-}
-@keyframes flashRed{
-  from{background:rgba(255,80,80,0.35)}
-  to{background:transparent}
-}
 </style>
 </head>
 
@@ -87,50 +75,54 @@ html,body{
 <div class="price-panel" id="pricePanel">Loading...</div>
 
 <script>
-const coins={
- bitcoin:"BTC",
- ethereum:"ETH",
- binancecoin:"BNB",
- ripple:"XRP",
- solana:"SOL",
- dogecoin:"DOGE"
+const coins = {
+  bitcoin:"BTC",
+  ethereum:"ETH",
+  binancecoin:"BNB",
+  solana:"SOL",
+  ripple:"XRP",
+  dogecoin:"DOGE",
+  cardano:"ADA",
+  avalanche:"AVAX",
+  polkadot:"DOT",
+  tron:"TRX"
 };
 
-let lastPrices={};
+let lastPrices = {};
 
 async function loadPrices(){
- try{
-  const ids=Object.keys(coins).join(",");
-  const res=await fetch(https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd);
-  const data=await res.json();
+  try{
+    const ids = Object.keys(coins).join(",");
+    const res = await fetch(https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd);
+    const data = await res.json();
 
-  const panel=document.getElementById("pricePanel");
-  panel.innerHTML="";
+    const panel = document.getElementById("pricePanel");
+    panel.innerHTML = "";
 
-  for(const id in coins){
-    const newPrice=data[id].usd;
-    const oldPrice=lastPrices[id] ?? newPrice;
+    for(const id in coins){
+      const newPrice = data[id].usd;
+      const oldPrice = lastPrices[id] ?? newPrice;
 
-    let cls="", flash="";
-    if(newPrice>oldPrice){cls="price-up"; flash="flash-up";}
-    if(newPrice<oldPrice){cls="price-down"; flash="flash-down";}
+      let cls = "";
+      if(newPrice > oldPrice) cls = "price-up";
+      if(newPrice < oldPrice) cls = "price-down";
 
-    panel.innerHTML+=
-      <div class="price-item ${cls} ${flash}">
-        ${coins[id]}
-        <span>$${newPrice}</span>
-      </div>
-    ;
+      panel.innerHTML += 
+        <div class="price-item ${cls}">
+          ${coins[id]}
+          <span>$${newPrice.toLocaleString()}</span>
+        </div>
+      ;
 
-    lastPrices[id]=newPrice;
+      lastPrices[id] = newPrice;
+    }
+  } catch {
+    document.getElementById("pricePanel").innerText = "Loading...";
   }
- }catch{
-  document.getElementById("pricePanel").innerText="Loading...";
- }
 }
 
 loadPrices();
-setInterval(loadPrices,15000);
+setInterval(loadPrices, 10000);
 </script>
 
 </body>
