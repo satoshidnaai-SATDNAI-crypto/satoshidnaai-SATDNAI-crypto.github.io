@@ -1,247 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>SATDNAI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروژه ماتریکس و کریپتو</title>
+    <style>
+        /* تنظیمات کلی برای اسکرول نرم و چسبنده */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: #000;
+            font-family: 'Tahoma', sans-serif;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:black;
-    font-family:Arial,Helvetica,sans-serif;
-}
+        /* ظرف اصلی برای اسکرول اسنپ */
+        .container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory; /* مجبور کردن اسکرول به ایستادن روی بخش‌ها */
+        }
 
-/* لوگوی اصلی */
-.logo-bg{
-    position:fixed;
-    inset:0;
-    background:url("logo.jpg") no-repeat center center;
-    background-size: contain;
-    z-index:1;
-}
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start; /* هر بخش در ابتدای صفحه قفل می‌شود */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
 
-/* محافظ ملایم */
-.logo-protect{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.05);
-    z-index:2;
-}
+        /* --- استایل بخش اول: ماتریکس --- */
+        #section1 { background: black; }
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+        .overlay {
+            z-index: 2;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border: 2px solid #0f0;
+            border-radius: 15px;
+        }
 
-/* ماتریکس */
-canvas{
-    position:fixed;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    opacity:0.22;
-}
+        /* --- استایل بخش دوم: قیمت ارزها --- */
+        #section2 {
+            background: #1a1a1a;
+            justify-content: flex-start;
+        }
+        .crypto-bar {
+            width: 100%;
+            background: #222;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 3px solid #333;
+            font-size: 1.2rem;
+        }
+        .coin-box { text-align: center; }
+        .price { color: #f1c40f; font-weight: bold; }
+        .up { color: #2ecc71; }
+        .down { color: #e74c3c; }
 
-/* متن زیر لوگو */
-.caption{
-    position:fixed;
-    bottom:40px;
-    width:100%;
-    text-align:center;
-    z-index:5;
-    animation: float 4s ease-in-out infinite;
-}
+        /* --- استایل بخش سوم: لوگوی بیت‌کوین --- */
+        #section3 {
+            background: radial-gradient(circle, #4b2c00 0%, #000000 100%);
+        }
+        .btc-logo {
+            font-size: 180px;
+            color: #f39c12;
+            text-shadow: 0 0 60px #f39c12;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite ease-in-out;
+        }
 
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
 
-.caption span{
-    font-size:24px;
-    letter-spacing:1px;
-    color:#8fd3ff;
-}
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9rem;
+            color: #888;
+            animation: bounce 2s infinite;
+        }
 
-.solana{
-    font-weight:bold;
-    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
-}
-
-/* شبکه‌های اجتماعی */
-.socials{
-    position:fixed;
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    z-index:10;
-}
-.page2{
-height:100vh;
-position:relative;
-background:black;
-overflow:hidden;
-}
-
-#electric{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-}
-
-.btc{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:160px;
-font-weight:900;
-color:#ffcc33;
-text-shadow:0 0 30px gold,0 0 80px orange;
-}
-.socials a{
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:rgba(255,255,255,0.08);
-    animation: pulse 2.5s infinite;
-    transition:0.3s;
-}
-
-@keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.12)}
-    100%{transform:scale(1)}
-}
-
-.socials a:hover{
-    background:rgba(0,255,163,0.25);
-    transform:scale(1.25);
-}
-
-.socials img{
-    width:26px;
-    height:26px;
-}
-</style>
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="logo-bg"></div>
-<div class="logo-protect"></div>
-<canvas id="matrix"></canvas>
+<div class="container">
+    
+    <section id="section1">
+        <canvas id="matrixCanvas"></canvas>
+        <div class="overlay">
+            <h1>سیستم مرکزی ماتریکس</h1>
+            <p>برای مشاهده بازار به پایین اسکرول کنید</p>
+        </div>
+        <div class="scroll-hint">▼ اسکرول کنید</div>
+    </section>
 
-<div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+    <section id="section2">
+        <div class="crypto-bar">
+            <div class="coin-box">Bitcoin Cash<br><span class="price">$654.52</span> <small class="up">+2.74%</small></div>
+            <div class="coin-box">Dogecoin<br><span class="price">$0.14</span> <small class="down">-0.02%</small></div>
+            <div class="coin-box">TRON<br><span class="price">$0.12</span> <small class="up">+0.5%</small></div>
+        </div>
+        <div style="margin-top: 100px; text-align: center;">
+            <h2>وضعیت لحظه‌ای بازار دیجیتال</h2>
+            <p>داده‌ها بر اساس عکس شماره ۲ شبیه‌سازی شده‌اند.</p>
+        </div>
+        <div class="scroll-hint">▼ جزئیات بیشتر</div>
+    </section><section id="section3">
+        <div class="btc-logo">₿</div>
+        <h1>تحلیل نهایی</h1>
+        <p>امنیت و سرعت در شبکه بلاک‌چین</p>
+    </section>
+
 </div>
 
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
-</div>
-<section class="page2">
-  <canvas id="electric"></canvas>
-  <div class="btc">SATDNAI</div>
-</section>
 <script>
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+    // اسکریپت باران ماتریکسی برای بخش اول
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
 
-function resize(){const e = document.getElementById("electric");
-const ex = e.getContext("2d");
-
-function er(){
-e.width = innerWidth;
-e.height = innerHeight;
-}
-er();
-addEventListener("resize",er);
-
-const pts=[];
-for(let i=0;i<200;i++){
-pts.push({x:Math.random()*e.width,y:Math.random()*e.height,
-vx:(Math.random()-.5)*1.5,vy:(Math.random()-.5)*1.5});
-}
-
-function flow(){
-ex.fillStyle="rgba(0,0,0,.15)";
-ex.fillRect(0,0,e.width,e.height);
-
-for(let i=0;i<pts.length;i++){
-let a=pts[i];
-a.x+=a.vx;a.y+=a.vy;
-if(a.x<0||a.x>e.width)a.vx*=-1;
-if(a.y<0||a.y>e.height)a.vy*=-1;
-
-for(let j=i+1;j<pts.length;j++){
-let b=pts[j];
-let dx=a.x-b.x, dy=a.y-b.y;
-let d=Math.sqrt(dx*dx+dy*dy);
-if(d<120){
-ex.strokeStyle=rgba(255,180,0,${1-d/120});
-ex.beginPath();
-ex.moveTo(a.x,a.y);
-ex.lineTo(b.x,b.y);
-ex.stroke();
-}
-}
-}
-requestAnimationFrame(flow);
-}
-flow();
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener('resize', resize);
-
-const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = new Array(columns).fill(1);
-
-function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#FFD700";
-    ctx.font = fontSize + "px monospace";
-
-    for(let i=0;i<drops.length;i++){
-        const char = chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
-        }
-        drops[i]++;
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-}
-setInterval(draw,33);
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#%*";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 35);
 </script>
 
 </body>
