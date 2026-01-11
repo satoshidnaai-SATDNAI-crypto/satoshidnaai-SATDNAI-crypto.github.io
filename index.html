@@ -2,170 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
-
+<title>Matrix + Bitcoin Scene</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:black;
-    font-family:Arial,Helvetica,sans-serif;
+html,body{height:100%;overflow-x:hidden;background:black;font-family:Arial}
+
+section{height:100vh;width:100%;position:relative}
+
+/* ===== Matrix Page ===== */
+#matrix{background:black}
+canvas{display:block}
+
+/* ===== Bitcoin Page ===== */
+#btc{
+background:radial-gradient(circle at center,#0b2a4d,#000);
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
 }
 
-/* لوگوی اصلی */
-.logo-bg{
-    position:fixed;
-    inset:0;
-    background:url("logo.jpg") no-repeat center center;
-    background-size: contain;
-    z-index:1;
+.bitcoin{
+font-size:200px;
+font-weight:900;
+color:gold;
+text-shadow:0 0 30px #ffcc33,0 0 60px orange;
+position:relative;
+z-index:2;
 }
 
-/* محافظ ملایم */
-.logo-protect{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.05);
-    z-index:2;
+.lines{
+position:absolute;
+width:100%;
+height:100%;
+background:
+linear-gradient(90deg,rgba(255,215,0,.6) 1px,transparent 1px),
+linear-gradient(0deg,rgba(0,200,255,.4) 1px,transparent 1px);
+background-size:40px 40px;
+animation:flow 10s linear infinite;
+opacity:.5;
 }
 
-/* ماتریکس */
-canvas{
-    position:fixed;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    opacity:0.22;
-}
-
-/* متن زیر لوگو */
-.caption{
-    position:fixed;
-    bottom:40px;
-    width:100%;
-    text-align:center;
-    z-index:5;
-    animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-
-.caption span{
-    font-size:24px;
-    letter-spacing:1px;
-    color:#8fd3ff;
-}
-
-.solana{
-    font-weight:bold;
-    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
-}
-
-/* شبکه‌های اجتماعی */
-.socials{
-    position:fixed;
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    z-index:10;
-}
-
-.socials a{
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:rgba(255,255,255,0.08);
-    transition:0.3s;
-}
-
-.socials a:hover{
-    background:rgba(0,255,163,0.25);
-    transform:scale(1.15);
-}
-
-.socials img{
-    width:26px;
-    height:26px;
+@keyframes flow{
+from{background-position:0 0,0 0}
+to{background-position:400px 0,0 400px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-bg"></div>
-<div class="logo-protect"></div>
-<canvas id="matrix"></canvas>
+<section id="matrix">
+<canvas id="c"></canvas>
+</section>
 
-<div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
-</div>
-
-<!-- شبکه‌های اجتماعی -->
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
-</div>
+<section id="btc">
+<div class="lines"></div>
+<div class="bitcoin">₿</div>
+</section>
 
 <script>
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+/* ===== Matrix Effect ===== */
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function resize(){
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener('resize', resize);
-
-const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = new Array(columns).fill(1);
+const letters = "01SATDNAI";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
 
 function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#FFD700";
-    ctx.font = fontSize + "px monospace";
-
-    for(let i=0;i<drops.length;i++){
-        const char = chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
-        }
-        drops[i]++;
-    }
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#0F0";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+const text = letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)
+drops[i]=0;
+drops[i]++;
+}
 }
 setInterval(draw,33);
 </script>
