@@ -1,183 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Crypto Digital Hub</title>
-    <style>
-        /* Reset & Base Styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { 
-            height: 100%; 
-            background: #000; 
-            color: #fff; 
-            font-family: sans-serif;
-            overflow: hidden; 
-        }
+<meta charset="UTF-8">
+<title>Crypto Bubble Market</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Snap Scrolling Container */
-        .main-container {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
+<style>
+body {
+    margin:0;
+    background: radial-gradient(circle at bottom, #020b1c, #000);
+    overflow:hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        section {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.bubble {
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background: rgba(0,255,200,0.12);
+    border:1px solid rgba(0,255,200,0.6);
+    box-shadow: 0 0 20px rgba(0,255,200,0.4);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#7fffd4;
+    animation: float 12s infinite ease-in-out;
+    backdrop-filter: blur(8px);
+}
 
-        /* PAGE 1: MATRIX EFFECT */
-        #matrixCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-        }
+@keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-40px); }
+    100% { transform: translateY(0px); }
+}
 
-        /* PAGE 2: LIVE CRYPTO DATA */
-        #page2 { background: #050505; padding-top: 20px; }
-        .grid-container {
-            width: 95%;
-            max-width: 1200px;
-            height: 85vh;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 12px;
-            padding: 15px;
-            border: 1px solid #1a1a1a;
-            background: rgba(10, 10, 10, 0.8);
-            border-radius: 12px;
-            z-index: 5;
-        }
-        .coin-item {
-            background: #111;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border-bottom: 2px solid #222;
-        }
-        .coin-item img { width: 35px; height: 35px; margin-bottom: 8px; }
-        .symbol { font-weight: bold; color: #aaa; display: block; margin-bottom: 5px; }
-        .price { font-size: 1.1rem; color: #f1c40f; }
-        .percent { font-size: 0.8rem; margin-top: 5px; }
-        .green { color: #00ff88; }
-        .red { color: #ff3366; }
+.symbol {
+    font-size:20px;
+    font-weight:bold;
+}
 
-        /* PAGE 3: BITCOIN ART */
-        #page3 { 
-            background: radial-gradient(circle at center, #221400 0%, #000 80%); 
-        }
-        .btc-icon {
-            font-size: clamp(100px, 25vw, 250px);
-            color: #f7931a;
-            text-shadow: 0 0 50px rgba(247, 147, 26, 0.5);
-            animation: breathe 3s infinite ease-in-out;
-            user-select: none;
-        }
-
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-
-        /* Scrollbar Style */
-        .grid-container::-webkit-scrollbar { width: 4px; }
-        .grid-container::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-    </style>
+.price {
+    font-size:16px;
+    margin-top:6px;
+    color:#fff;
+}
+</style>
 </head>
 <body>
 
-<div class="main-container">
-    
-    <section id="page1">
-        <canvas id="matrixCanvas"></canvas>
-    </section>
-
-    <section id="page2">
-        <div style="margin-bottom: 15px; color: #555; font-size: 0.8rem;">LIVE MARKET - TOP 100</div>
-        <div class="grid-container" id="crypto-list">
-            <div style="grid-column: 1/-1; text-align: center; padding: 50px;">Connecting to Blockchain Data...</div>
-        </div>
-    </section>
-
-    <section id="page3">
-        <div class="btc-icon">₿</div>
-    </section>
-
-</div>
+<div class="bubble" style="left:10%; top:60%" id="btc"></div>
+<div class="bubble" style="left:35%; top:40%" id="eth"></div>
+<div class="bubble" style="left:60%; top:65%" id="sol"></div>
+<div class="bubble" style="left:80%; top:35%" id="bnb"></div>
 
 <script>
-    // 1. Matrix Effect Logic
-    const canvas = document.getElementById('matrixCanvas');
-    const ctx = canvas.getContext('2d');
+async function loadPrices() {
+    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd");
+    const data = await res.json();
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    
-    const letters = "0101010101010101ABCDEFHIJKLMNOPQRSTUVWXYZ";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+    setBubble("btc", "BTC", data.bitcoin.usd);
+    setBubble("eth", "ETH", data.ethereum.usd);
+    setBubble("sol", "SOL", data.solana.usd);
+    setBubble("bnb", "BNB", data.binancecoin.usd);
+}
 
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#0F0";
-        ctx.font = fontSize + "px monospace";
+function setBubble(id, name, price) {
+    document.getElementById(id).innerHTML = 
+        <div class="symbol">${name}</div>
+        <div class="price">$${price.toLocaleString()}</div>
+    ;
+}
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        }
-    }
-    setInterval(drawMatrix, 45);
-
-    // 2. Live Crypto Data (Real-time API)
-    async function getLivePrices() {
-        try {
-            const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
-            const data = await response.json();
-            const list = document.getElementById('crypto-list');
-            list.innerHTML = '';
-
-            data.forEach(coin => {
-                const isUp = coin.price_change_percentage_24h >= 0;
-                const card = 
-                    <div class="coin-item">
-                        <img src="${coin.image}" loading="lazy">
-                        <span class="symbol">${coin.symbol.toUpperCase()}</span>
-                        <span class="price">$${coin.current_price.toLocaleString()}</span>
-                        <div class="percent ${isUp ? 'green' : 'red'}">
-                            ${isUp ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%
-                        </div>
-                    </div>
-                ;
-                list.innerHTML += card;
-            });
-        } catch (err) {
-            document.getElementById('crypto-list').innerHTML = "Failed to load data. Please refresh.";
-        }
-    }
-
-    getLivePrices();
-    setInterval(getLivePrices, 60000); // Auto-update every minute
+loadPrices();
+setInterval(loadPrices, 15000);
 </script>
 
 </body>
