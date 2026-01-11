@@ -2,28 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
+<title>Crypto Project</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
     width:100%;
     height:100%;
-    overflow:hidden;
     background:black;
     font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
-/* لوگوی اصلی */
+/* ---------- صفحه اول ---------- */
+.hero{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+}
+
 .logo-bg{
     position:fixed;
     inset:0;
     background:url("logo.jpg") no-repeat center center;
-    background-size: contain;
+    background-size:contain;
     z-index:1;
 }
 
-/* محافظ ملایم */
 .logo-protect{
     position:fixed;
     inset:0;
@@ -31,8 +36,7 @@ html,body{
     z-index:2;
 }
 
-/* ماتریکس */
-canvas{
+canvas.matrix{
     position:fixed;
     inset:0;
     z-index:3;
@@ -40,27 +44,23 @@ canvas{
     opacity:0.22;
 }
 
-/* متن زیر لوگو */
 .caption{
-    position:fixed;
+    position:absolute;
     bottom:40px;
     width:100%;
     text-align:center;
     z-index:5;
     animation: float 4s ease-in-out infinite;
 }
-
 @keyframes float{
     0%,100%{transform:translateY(0)}
     50%{transform:translateY(-10px)}
 }
-
 .caption span{
     font-size:24px;
     letter-spacing:1px;
     color:#8fd3ff;
 }
-
 .solana{
     font-weight:bold;
     background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
@@ -68,80 +68,58 @@ canvas{
     -webkit-text-fill-color:transparent;
     animation: glow 2s ease-in-out infinite alternate;
 }
-
 @keyframes glow{
     from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
     to{ text-shadow:0 0 18px rgba(3,225,255,.8) }
 }
 
-/* شبکه‌های اجتماعی */
-.socials{
-    position:fixed;
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    z-index:10;
+/* ---------- صفحه دوم ---------- */
+#bitcoinSection{
+    position:relative;
+    height:100vh;
+    background:black;
+    overflow:hidden;
 }
 
-.socials a{
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:rgba(255,255,255,0.08);
-    animation: pulse 2.5s infinite;
-    transition:0.3s;
+#bitcoinCanvas{
+    position:absolute;
+    inset:0;
 }
 
-@keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.12)}
-    100%{transform:scale(1)}
-}
-
-.socials a:hover{
-    background:rgba(0,255,163,0.25);
-    transform:scale(1.25);
-}
-
-.socials img{
-    width:26px;
-    height:26px;
+.section-title{
+    position:absolute;
+    top:40px;
+    width:100%;
+    text-align:center;
+    color:#ffd700;
+    font-size:36px;
+    letter-spacing:2px;
+    z-index:5;
+    text-shadow:0 0 18px rgba(255,215,0,0.8);
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-bg"></div>
-<div class="logo-protect"></div>
-<canvas id="matrix"></canvas>
+<!-- صفحه اول -->
+<section class="hero">
+    <div class="logo-bg"></div>
+    <div class="logo-protect"></div>
+    <canvas class="matrix" id="matrix"></canvas>
+    <div class="caption">
+        <span>Coming Soon on the <span class="solana">Blockchain</span></span>
+    </div>
+</section>
 
-<div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
-</div>
-
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai?is_from_webapp=1&sender_device=pc" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
-</div>
+<!-- صفحه دوم -->
+<section id="bitcoinSection">
+    <div class="section-title">BITCOIN RAIN</div>
+    <canvas id="bitcoinCanvas"></canvas>
+</section>
 
 <script>
+// ===== MATRIX =====
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
@@ -157,10 +135,9 @@ const fontSize = 18;
 let columns = Math.floor(canvas.width / fontSize);
 let drops = new Array(columns).fill(1);
 
-function draw(){
+function drawMatrix(){
     ctx.fillStyle = "rgba(0,0,0,0.05)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
-
     ctx.fillStyle = "#FFD700";
     ctx.font = fontSize + "px monospace";
 
@@ -173,7 +150,60 @@ function draw(){
         drops[i]++;
     }
 }
-setInterval(draw,33);
+setInterval(drawMatrix, 33);
+
+// ===== BITCOIN RAIN =====
+const btcCanvas = document.getElementById("bitcoinCanvas");
+const btcCtx = btcCanvas.getContext("2d");
+
+function resizeBTC(){
+    btcCanvas.width = innerWidth;
+    btcCanvas.height = innerHeight;
+}
+resizeBTC();
+addEventListener("resize", resizeBTC);
+
+const btcImg = new Image();
+btcImg.src = "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg";
+
+const coins = [];
+
+function spawnCoin(){
+    coins.push({
+        x: Math.random() * btcCanvas.width,
+        y: -50,
+        size: 24 + Math.random() * 26,
+        speed: 1 + Math.random() * 3,
+        rotation: Math.random() * Math.PI,
+        spin: (Math.random() - 0.5) * 0.05
+    });
+}
+
+function animateBTC(){
+    btcCtx.clearRect(0,0,btcCanvas.width, btcCanvas.height);
+
+    if(Math.random() < 0.06) spawnCoin();
+
+    for(let i=0;i<coins.length;i++){
+        const c = coins[i];
+        btcCtx.save();
+        btcCtx.translate(c.x, c.y);
+        btcCtx.rotate(c.rotation);
+        btcCtx.drawImage(btcImg, -c.size/2, -c.size/2, c.size, c.size);
+        btcCtx.restore();
+
+        c.y += c.speed;
+        c.rotation += c.spin;
+
+        if(c.y > btcCanvas.height + 60){
+            coins.splice(i,1);
+            i--;
+        }
+    }
+    requestAnimationFrame(animateBTC);
+}
+
+btcImg.onload = ()=> animateBTC();
 </script>
 
 </body>
