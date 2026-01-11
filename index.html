@@ -2,96 +2,74 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
+<title>Crypto Live Rain</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
-  width:100%;
-  height:100%;
-  background:black;
+  width:100%;height:100%;background:black;
   font-family:Arial,Helvetica,sans-serif;
   overflow-x:hidden;
 }
 
-/* ===== Layout ===== */
-.section{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-}
+/* Page */
+.section{position:relative;width:100%;height:100vh;overflow:hidden;}
 
-/* ===== Page 1 ===== */
+/* Page 1 */
 .hero{background:black}
-
 .hero .logo-bg{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   background:url("logo.jpg") no-repeat center center;
-  background-size:contain;
-  z-index:1;
+  background-size:contain;z-index:1;
 }
-
 .hero .logo-protect{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.05);
-  z-index:2;
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.05);z-index:2;
 }
-
-#matrix{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  opacity:.25;
-}
-
+#matrix{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.25;}
 .caption{
-  position:absolute;
-  bottom:40px;
-  width:100%;
-  text-align:center;
-  z-index:5;
-  animation:float 4s ease-in-out infinite;
+  position:absolute;bottom:40px;width:100%;text-align:center;
+  z-index:5;animation:float 4s ease-in-out infinite;
 }
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .caption span{font-size:24px;color:#8fd3ff}
 
-/* ===== Page 2 ===== */
+/* Page 2 */
 #marketSection{background:black}
+#marketCanvas{position:absolute;inset:0;}
 
-#marketCanvas{
-  position:absolute;
-  inset:0;
+/* Prices Panel */
+.prices{
+  position:absolute;top:30px;left:50%;
+  transform:translateX(-50%);
+  display:flex;gap:24px;
+  z-index:8;
 }
+.price-box{
+  background:rgba(0,0,0,0.7);
+  padding:12px 18px;
+  border-radius:12px;
+  border:1px solid #00eaff;
+  color:#fff;font-size:18px;
+  min-width:90px;text-align:center;
+}
+.price-box span{display:block;font-size:14px;color:#00eaff;font-weight:bold;}
 
-/* ===== Social Links ===== */
+/* Socials */
 .socials{
-  position:fixed;
-  right:20px;
-  top:50%;
+  position:fixed;right:20px;top:50%;
   transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  z-index:20;
+  display:flex;flex-direction:column;gap:14px;z-index:20;
 }
 .socials a{
   width:44px;height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:rgba(255,255,255,.08);
-  transition:.3s;
+  display:flex;align-items:center;
+  justify-content:center;border-radius:50%;
+  background:rgba(255,255,255,.08);transition:.3s;
 }
 .socials a:hover{background:rgba(255,215,0,.25);transform:scale(1.15)}
 .socials img{width:24px;height:24px}
+
 </style>
 </head>
 
@@ -111,11 +89,20 @@ html,body{
   <div class="logo-bg"></div>
   <div class="logo-protect"></div>
   <canvas id="matrix"></canvas>
-  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
+  <div class="caption"><span>Crypto Universe Live</span></div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="section" id="marketSection">
+  <!-- Prices Panel -->
+  <div class="prices">
+    <div class="price-box" id="priceBTC"><span>BTC</span>Loading...</div>
+    <div class="price-box" id="priceETH"><span>ETH</span>Loading...</div>
+    <div class="price-box" id="priceSOL"><span>SOL</span>Loading...</div>
+    <div class="price-box" id="priceBNB"><span>BNB</span>Loading...</div>
+    <div class="price-box" id="priceADA"><span>ADA</span>Loading...</div>
+    <div class="price-box" id="priceSATD"><span>SATD</span>Loading...</div>
+  </div>
   <canvas id="marketCanvas"></canvas>
 </section>
 
@@ -124,13 +111,12 @@ html,body{
 const m=document.getElementById("matrix"),mctx=m.getContext("2d");
 function resizeM(){m.width=innerWidth;m.height=innerHeight}
 resizeM();addEventListener("resize",resizeM);
-const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
+const chars="01CRYPTOΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
 let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
 setInterval(()=>{
   mctx.fillStyle="rgba(0,0,0,.05)";
   mctx.fillRect(0,0,m.width,m.height);
-  mctx.fillStyle="#FFD700";
-  mctx.font=font+"px monospace";
+  mctx.fillStyle="#FFD700";mctx.font=font+"px monospace";
   for(let i=0;i<drops.length;i++){
     let c=chars[Math.floor(Math.random()*chars.length)];
     mctx.fillText(c,i*font,drops[i]*font);
@@ -139,7 +125,7 @@ setInterval(()=>{
   }
 },33);
 
-// MULTI TOKEN RAIN
+// MARKET RAIN (TOKENS)
 const c=document.getElementById("marketCanvas"),ctx=c.getContext("2d");
 function resizeC(){c.width=innerWidth;c.height=innerHeight}
 resizeC();addEventListener("resize",resizeC);
@@ -147,41 +133,53 @@ resizeC();addEventListener("resize",resizeC);
 const icons={
   BTC:"https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
   ETH:"https://cryptologos.cc/logos/ethereum-eth-logo.svg",
-  SOL:"https://cryptologos.cc/logos/solana-sol-logo.svg"
+  SOL:"https://cryptologos.cc/logos/solana-sol-logo.svg",
+  BNB:"https://cryptologos.cc/logos/binance-coin-bnb-logo.svg",
+  ADA:"https://cryptologos.cc/logos/cardano-ada-logo.svg",
+  SATD:"https://cryptologos.cc/logos/your-token-image.svg"
 };
-const imgs={};
-for(let k in icons){imgs[k]=new Image();imgs[k].src=icons[k];}
+const imgs={};for(let k in icons){imgs[k]=new Image();imgs[k].src=icons[k];}
 
 let tokens=[];
 function spawn(){
   const keys=Object.keys(imgs);
   const sym=keys[Math.floor(Math.random()*keys.length)];
   tokens.push({
-    img:imgs[sym],
-    x:Math.random()*c.width,
-    y:-60,
-    s:24+Math.random()*26,
-    v:1+Math.random()*3,
-    r:Math.random()*Math.PI,
-    spin:(Math.random()-.5)*.05
+    img:imgs[sym],x:Math.random()*c.width,y:-60,
+    s:28+Math.random()*20,v:1+Math.random()*2,
+    r:Math.random()Math.PI,spin:(Math.random()-.5).05
   });
 }
-function draw(){
+function drawRain(){
   ctx.clearRect(0,0,c.width,c.height);
-  if(Math.random()<.07)spawn();
+  if(Math.random()<.06)spawn();
   for(let i=0;i<tokens.length;i++){
     let t=tokens[i];
     ctx.save();
-    ctx.translate(t.x,t.y);
-    ctx.rotate(t.r);
+    ctx.translate(t.x,t.y);ctx.rotate(t.r);
     ctx.drawImage(t.img,-t.s/2,-t.s/2,t.s,t.s);
     ctx.restore();
-    t.y+=t.v;t.r+=t.spin;
-    if(t.y>c.height+60){tokens.splice(i,1);i--}
+    t.y+=t.v; t.r+=t.spin;
+    if(t.y>c.height+50){tokens.splice(i,1);i--}
   }
-  requestAnimationFrame(draw);
+  requestAnimationFrame(drawRain);
 }
-draw();
+drawRain();
+
+// LIVE PRICES (CoinGecko API)
+async function fetchPrices(){
+  try{
+    const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,cardano,satdna-token&vs_currencies=usd");
+    const data=await res.json();
+    document.getElementById("priceBTC").innerText="BTC $"+data.bitcoin.usd;
+    document.getElementById("priceETH").innerText="ETH $"+data.ethereum.usd;
+    document.getElementById("priceSOL").innerText="SOL $"+data.solana.usd;
+    document.getElementById("priceBNB").innerText="BNB $"+data.binancecoin.usd;
+    document.getElementById("priceADA").innerText="ADA $"+data.cardano.usd;
+    document.getElementById("priceSATD").innerText="SATD $"+(data["satdna-token"]?.usd??"N/A");
+  }catch(e){}
+}
+fetchPrices();setInterval(fetchPrices,15000);
 </script>
 
 </body>
