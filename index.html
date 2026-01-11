@@ -3,56 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <title>SATDNAI</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:black;font-family:Arial;overflow-x:hidden}
+html,body{width:100%;height:100%;background:black;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
 
+/* Layout */
 .section{width:100%;height:100vh;position:relative;overflow:hidden}
 
-/* PAGE 1 */
+/* Page 1 */
+.hero{
+  background:black;
+}
 .hero .logo-bg{
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   background:url("logo.jpg") no-repeat center/contain;
-  z-index:1
 }
-.hero canvas{position:absolute;inset:0;z-index:2;opacity:.25}
 .caption{
-  position:absolute;bottom:40px;width:100%;
-  text-align:center;color:#8fd3ff;font-size:24px;z-index:3
-}
-
-/* PAGE 2 */
-#market canvas{position:absolute;inset:0}
-
-/* Prices */
-.prices{
-  position:absolute;top:20px;left:50%;
-  transform:translateX(-50%);
-  display:flex;gap:14px;z-index:5
-}
-.price{
-  background:rgba(0,0,0,.7);
-  border:1px solid #00eaff;
-  border-radius:10px;
-  padding:8px 12px;
-  min-width:90px;
+  position:absolute;
+  bottom:40px;
+  width:100%;
   text-align:center;
-  color:white;
-  font-size:14px
+  font-size:24px;
+  color:#8fd3ff;
 }
-.price b{display:block;color:#00eaff}
+
+/* Page 2 */
+#market{
+  background:black;
+}
+
+/* Coin Rain */
+#rain{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.coin{
+  position:absolute;
+  width:100px;
+  height:100px;
+  background-size:contain;
+  background-repeat:no-repeat;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-120px) rotateY(0deg)}
+  to{transform:translateY(110vh) rotateY(720deg)}
+}
 
 /* Social */
 .socials{
-  position:fixed;right:15px;top:50%;
+  position:fixed;
+  right:15px;
+  top:50%;
   transform:translateY(-50%);
-  display:flex;flex-direction:column;gap:14px;z-index:10
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 .socials a{
-  width:40px;height:40px;
-  display:flex;align-items:center;justify-content:center;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   border-radius:50%;
-  background:rgba(255,255,255,.08)
+  background:rgba(255,255,255,.08);
 }
 .socials img{width:22px;height:22px}
 </style>
@@ -68,110 +86,37 @@ html,body{width:100%;height:100%;background:black;font-family:Arial;overflow-x:h
 <a href="https://www.instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
 </div>
 
-<!-- PAGE 1 -->
 <section class="section hero">
   <div class="logo-bg"></div>
-  <canvas id="matrix"></canvas>
   <div class="caption">Coming Soon on the Blockchain</div>
 </section>
 
-<!-- PAGE 2 -->
 <section class="section" id="market">
-  <div class="prices">
-    <div class="price" id="pBTC"><b>BTC</b>...</div>
-    <div class="price" id="pETH"><b>ETH</b>...</div>
-    <div class="price" id="pSOL"><b>SOL</b>...</div>
-    <div class="price" id="pBNB"><b>BNB</b>...</div>
-    <div class="price" id="pADA"><b>ADA</b>...</div>
-    <div class="price"><b>SATDNAI</b>$0.0005</div>
-  </div>
-  <canvas id="rain"></canvas>
+  <div id="rain"></div>
 </section>
 
 <script>
-// ===== MATRIX =====
-const m=document.getElementById("matrix"),mx=m.getContext("2d");
-function rm(){m.width=innerWidth;m.height=innerHeight}
-rm();addEventListener("resize",rm);
-const chars="01SATDNAIΞ₿",font=18;
-let drops=new Array(Math.floor(innerWidth/font)).fill(1);
-setInterval(()=>{
-mx.fillStyle="rgba(0,0,0,.05)";
-mx.fillRect(0,0,m.width,m.height);
-mx.fillStyle="#00ff99";
-mx.font=font+"px monospace";
-for(let i=0;i<drops.length;i++){
- let c=chars[Math.floor(Math.random()*chars.length)];
- mx.fillText(c,i*font,drops[i]*font);
- if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
- drops[i]++;
-}},33);
+const icons = [
+ "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
+ "https://cryptologos.cc/logos/ethereum-eth-logo.svg",
+ "https://cryptologos.cc/logos/solana-sol-logo.svg",
+ "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg",
+ "https://cryptologos.cc/logos/cardano-ada-logo.svg"
+];
 
-// ===== PROFESSIONAL COIN RAIN =====
-const c=document.getElementById("rain"),cx=c.getContext("2d");
-function rc(){c.width=innerWidth;c.height=innerHeight}
-rc();addEventListener("resize",rc);
+const rain = document.getElementById("rain");
 
-const icons={
- BTC:"https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
- ETH:"https://cryptologos.cc/logos/ethereum-eth-logo.svg",
- SOL:"https://cryptologos.cc/logos/solana-sol-logo.svg",
- BNB:"https://cryptologos.cc/logos/binance-coin-bnb-logo.svg",
- ADA:"https://cryptologos.cc/logos/cardano-ada-logo.svg",
- SAT:"https://upload.wikimedia.org/wikipedia/commons/6/6a/Bitcoin.svg"
-};
-
-const imgs={}; for(let k in icons){imgs[k]=new Image();imgs[k].src=icons[k]}
-
-let coins=[];
 function spawn(){
- if(coins.length>160) return;
- const keys=Object.keys(imgs);
- const sym=keys[Math.floor(Math.random()*keys.length)];
- coins.push({
-  img:imgs[sym],
-  x:Math.random()*c.width,
-  y:-100,
-  s:60+Math.random()*50,
-  v:2+Math.random()*4,
-  r:Math.random()*Math.PI,
-  spin:(Math.random()-.5)*.08
- });
+  const c = document.createElement("div");
+  c.className = "coin";
+  c.style.left = Math.random()*100+"vw";
+  c.style.animationDuration = 3+Math.random()*3+"s";
+  c.style.backgroundImage = url(${icons[Math.floor(Math.random()*icons.length)]});
+  rain.appendChild(c);
+  setTimeout(()=>c.remove(),7000);
 }
 
-function draw(){
- cx.clearRect(0,0,c.width,c.height);
- if(Math.random()<.25)spawn();
- for(let i=0;i<coins.length;i++){
-  let t=coins[i];
-  cx.save();
-  cx.translate(t.x,t.y);
-  cx.rotate(t.r);
-  cx.imageSmoothingEnabled=true;
-  cx.imageSmoothingQuality="high";
-  cx.drawImage(t.img,-t.s/2,-t.s/2,t.s,t.s);
-  cx.restore();
-  t.y+=t.v;
-  t.r+=t.spin;
-  if(t.y>c.height+100){coins.splice(i,1);i--}
- }
- requestAnimationFrame(draw);
-}
-draw();
-
-// ===== SAFE LIVE PRICES =====
-async function prices(){
- try{
-  const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,cardano&vs_currencies=usd");
-  const d=await r.json();
-  pBTC.innerHTML="<b>BTC</b>$"+d.bitcoin.usd;
-  pETH.innerHTML="<b>ETH</b>$"+d.ethereum.usd;
-  pSOL.innerHTML="<b>SOL</b>$"+d.solana.usd;
-  pBNB.innerHTML="<b>BNB</b>$"+d.binancecoin.usd;
-  pADA.innerHTML="<b>ADA</b>$"+d.cardano.usd;
- }catch(e){}
-}
-prices();setInterval(prices,20000);
+setInterval(spawn,80);
 </script>
 
 </body>
