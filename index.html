@@ -2,137 +2,126 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Social Icons</title>
-<style>
-.social-icons {
-    display: flex;
-    gap: 15px;
-}
-.social-icons a img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.2s;
-}
-.social-icons a img:hover {
-    transform: scale(1.1);
-}
-</style>
-</head>
-<body>
-
-<div class="social-icons">
-  <a href="https://www.youtube.com" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
-  </a>
-
-  <a href="https://twitter.com" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter">
-  </a>
-
-  <a href="https://www.tiktok.com" target="_blank">
-    <img src="https://upload.wikimedia.org/wik…
-[16:07, 18.1.2026] Ahmad: <!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>Social Media Icons</title>
+<title>Premium Social Icons</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
 
 body{
-    background: #0f172a;
+    margin:0;
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    font-family: 'Poppins', sans-serif;
+    background:#0b0f1a;
+    font-family:'Poppins',sans-serif;
 }
 
 .social-wrapper{
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    padding: 20px 30px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    position: relative;
+    padding: 25px 35px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    box-shadow: 
+      0 10px 30px rgba(0,0,0,.5),
+      inset 0 0 30px rgba(255,255,255,.03);
 }
 
 .social-icons{
     display:flex;
-    gap: 18px;
+    gap: 22px;
 }
 
 .icon{
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size: 28px;
+    font-size: 30px;
     color:white;
     text-decoration:none;
     position: relative;
     overflow:hidden;
-    transition: transform .3s, box-shadow .3s;
+    transform-style: preserve-3d;
+    transition: transform .2s, box-shadow .3s;
 }
 
+/* نور بالایی (Gloss) */
+.icon::after{
+    content:"";
+    position:absolute;
+    top:-5px;
+    left:15%;
+    width:70%;
+    height:40%;
+    background: rgba(255,255,255,.25);
+    filter: blur(6px);
+    border-radius: 50%;
+    opacity:.7;
+}
+
+/* نئون ملایم اطراف */
 .icon::before{
     content:"";
     position:absolute;
-    inset:0;
-    background: linear-gradient(135deg, #ff0080, #7928ca);
-    opacity:0;
-    transition:.3s;
-}
-
-.icon i{
-    position: relative;
-    z-index:2;
+    inset:-3px;
+    border-radius:50%;
+    filter: blur(8px);
+    opacity:.5;
 }
 
 /* رنگ هر شبکه */
 .youtube{ background:#FF0000; }
+.youtube::before{ background:#FF0000; }
+
 .twitter{ background:#1DA1F2; }
-.tiktok{ background:#000000; }
+.twitter::before{ background:#1DA1F2; }
+
+.tiktok{ background:#111; }
+.tiktok::before{ background:#444; }
+
 .instagram{ 
     background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 }
-.telegram{ background:#0088cc; }
+.instagram::before{ 
+    background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+}
 
-/* انیمیشن ورود از پایین */
+.telegram{ background:#0088cc; }
+.telegram::before{ background:#0088cc; }
+
+/* ورود سینمایی از پایین */
 .icon{
-    animation: floatUp .8s ease forwards;
+    animation: enter .9s cubic-bezier(.23,1,.32,1) forwards;
     opacity:0;
 }
 
-.icon:nth-child(1){ animation-delay:.1s;}
-.icon:nth-child(2){ animation-delay:.2s;}
-.icon:nth-child(3){ animation-delay:.3s;}
-.icon:nth-child(4){ animation-delay:.4s;}
-.icon:nth-child(5){ animation-delay:.5s;}
+.icon:nth-child(1){ animation-delay:.05s;}
+.icon:nth-child(2){ animation-delay:.15s;}
+.icon:nth-child(3){ animation-delay:.25s;}
+.icon:nth-child(4){ animation-delay:.35s;}
+.icon:nth-child(5){ animation-delay:.45s;}
 
-@keyframes floatUp{
+@keyframes enter{
     from{
-        transform: translateY(40px);
+        transform: translateY(60px) scale(.8);
         opacity:0;
     }
     to{
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         opacity:1;
     }
 }
 
-/* هاور افکت حرفه‌ای */
+/* Hover حرفه‌ای */
 .icon:hover{
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 15px 25px rgba(0,0,0,.4);
-}
-
-.icon:hover::before{
-    opacity:.3;
+    transform: translateY(-10px) scale(1.08);
+    box-shadow: 0 18px 30px rgba(0,0,0,.5);
 }
 </style>
 </head>
@@ -140,7 +129,7 @@ body{
 <body>
 
 <div class="social-wrapper">
-  <div class="social-icons">
+  <div class="social-icons" id="magneticArea">
 
     <a class="icon youtube" href="https://www.youtube.com" target="_blank">
       <i class="fa-brands fa-youtube"></i>
@@ -164,6 +153,27 @@ body{
 
   </div>
 </div>
+
+<script>
+// افکت Magnetic (آیکن‌ها به موس جذب می‌شوند)
+const area = document.getElementById("magneticArea");
+const icons = document.querySelectorAll(".icon");
+
+area.addEventListener("mousemove", (e) => {
+  icons.forEach(icon => {
+    const rect = icon.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width/2);
+    const y = e.clientY - (rect.top + rect.height/2);
+    const dist = Math.sqrt(x*x + y*y);
+
+    if(dist < 120){
+      icon.style.transform = translate(${x/8}px, ${y/8}px) translateY(-8px);
+    } else {
+      icon.style.transform = "translate(0,0)";
+    }
+  });
+});
+</script>
 
 </body>
 </html>
