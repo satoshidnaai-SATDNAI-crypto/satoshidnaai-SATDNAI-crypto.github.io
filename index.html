@@ -3,151 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Animation - Three.js</title>
+    <title>Centered Galaxy</title>
     <style>
-        /* استایل برای تمام‌صفحه کردن انیمیشن */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* حذف اسکرول بار */
-            background-color: #000000;
-        }
-        canvas {
-            display: block;
-        }
+        body { margin: 0; padding: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <script>
-        /**
-         * تنظیمات اولیه (Scene, Camera, Renderer)
-         */
         const scene = new THREE.Scene();
+        
+        // تنظیمات ابعاد صفحه
         const sizes = {
             width: window.innerWidth,
             height: window.innerHeight
         };
 
+        // تنظیم دوربین برای قرارگیری در مرکز
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-        camera.position.set(3, 3, 3);
+        // دوربین را کمی عقب‌تر و بالاتر می‌بریم تا اشراف کامل داشته باشد
+        camera.position.set(0, 4, 6); 
+        // مهم: دوربین حتماً به مرکز مختصات (0,0,0) نگاه کند
+        camera.lookAt(0, 0, 0); 
         scene.add(camera);
 
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         document.body.appendChild(renderer.domElement);
 
-        /**
-         * پارامترهای کهکشان
-         */
         const parameters = {
-            count: 100000,
-            size: 0.01,
+            count: 80000,
+            size: 0.015,
             radius: 5,
             branches: 3,
             spin: 1,
             randomness: 0.2,
             randomnessPower: 3,
-            insideColor: '#ff6030', // نارنجی مرکز (مطابق تصویر)
-            outsideColor: '#1b3984'  // آبی لبه‌ها
+            insideColor: '#ff6030',
+            outsideColor: '#1b3984'
         };
 
-        let geometry = null;
-        let material = null;
-        let points = null;
+        let geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(parameters.count * 3);
+        const colors = new Float32Array(parameters.count * 3);
 
-        const generateGalaxy = () => {
-            // بخش پاکسازی حافظه (دقیقاً مشابه متن تصویر شما)
-            if(points !== null) {
-                geometry.dispose();
-                material.dispose();
-                scene.remove(points);
-            }
+        const colorInside = new THREE.Color(parameters.insideColor);
+        const colorOutside = new THREE.Color(parameters.outsideColor);
 
-            geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(parameters.count * 3);
-            const colors = new Float32Array(parameters.count * 3);
+        for(let i = 0; i < parameters.count; i++) {
+            const i3 = i * 3;
+            const radius = Math.random() * parameters.radius;
+            const spinAngle = radius * parameters.spin;
+            const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2;
 
-            const colorInside = new THREE.Color(parameters.insideColor);
-            const colorOutside = new THREE.Color(parameters.outsideColor);
+            const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+            const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+            const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
 
-            for(let i = 0; i < parameters.count; i++) {
-                const i3 = i * 3;
+            positions[i3    ] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+            positions[i3 + 1] = randomY;
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
 
-                // محاسبات ریاضی برای ایجاد بازوهای کهکشان
-                const radius = Math.random() * parameters.radius;
-                const spinAngle = radius * parameters.spin;
-                const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2;
+            const mixedColor = colorInside.clone();
+            mixedColor.lerp(colorOutside, radius / parameters.radius);
+            colors[i3] = mixedColor.r;
+            colors[i3 + 1] = mixedColor.g;
+            colors[i3 + 2] = mixedColor.b;
+        }
 
-                const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-                const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-                const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-                positions[i3    ] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-                positions[i3 + 1] = randomY;
-                positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+        // متریال مطابق تصویر اول شما
+        const material = new THREE.PointsMaterial({
+            size: parameters.size,
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            vertexColors: true
+        });
 
-                // ترکیب رنگ مرکز به لبه‌ها
-                const mixedColor = colorInside.clone();
-                mixedColor.lerp(colorOutside, radius / parameters.radius);
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
 
-                colors[i3    ] = mixedColor.r;
-                colors[i3 + 1] = mixedColor.g;
-                colors[i3 + 2] = mixedColor.b;
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            /**
-             * پیاده‌سازی متریال ذرات (بخش اصلی کد در تصویر ارسالی شما)
-             */
-            material = new THREE.PointsMaterial({
-                size: parameters.size,
-                sizeAttenuation: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-                vertexColors: true
-            });
-
-            points = new THREE.Points(geometry, material);
-            scene.add(points);
-        };
-
-        generateGalaxy();
-
-        /**
-         * ریسپانسیو کردن صفحه
-         */
+        // اصلاح سایز هنگام تغییر اندازه پنجره مرورگر
         window.addEventListener('resize', () => {
             sizes.width = window.innerWidth;
             sizes.height = window.innerHeight;
-
             camera.aspect = sizes.width / sizes.height;
             camera.updateProjectionMatrix();
-
             renderer.setSize(sizes.width, sizes.height);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
 
-        /**
-         * انیمیشن چرخش (Tick)
-         */
         const clock = new THREE.Clock();
-
         const tick = () => {
             const elapsedTime = clock.getElapsedTime();
-
-            // چرخاندن کهکشان حول محور Y
-            points.rotation.y = elapsedTime * 0.15;
-
+            points.rotation.y = elapsedTime * 0.1; // چرخش دور مرکز
             renderer.render(scene, camera);
             window.requestAnimationFrame(tick);
         };
-
         tick();
     </script>
 </body>
