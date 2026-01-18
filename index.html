@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+[11:48, 18.1.2026] Ahmad: <!DOCTYPE html>
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
@@ -21,90 +21,125 @@
         };
 
         // تنظیم دوربین برای قرارگیری در مرکز
-        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-        // دوربین را کمی عقب‌تر و بالاتر می‌بریم تا اشراف کامل داشته باشد
-        camera.position.set(0, 4, 6); 
-        // مهم: دوربین حتماً به مرکز مختصات (0,0,0) نگاه کند
-        camera.lookAt(0, 0, 0); 
-        scene.add(camera);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(sizes.width, sizes.height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        document.body.appendChild(renderer.domElement);
-
-        const parameters = {
-            count: 80000,
-            size: 0.015,
-            radius: 5,
-            branches: 3,
-            spin: 1,
-            randomness: 0.2,
-            randomnessPower: 3,
-            insideColor: '#ff6030',
-            outsideColor: '#1b3984'
-        };
-
-        let geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(parameters.count * 3);
-        const colors = new Float32Array(parameters.count * 3);
-
-        const colorInside = new THREE.Color(parameters.insideColor);
-        const colorOutside = new THREE.Color(parameters.outsideColor);
-
-        for(let i = 0; i < parameters.count; i++) {
-            const i3 = i * 3;
-            const radius = Math.random() * parameters.radius;
-            const spinAngle = radius * parameters.spin;
-            const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2;
-
-            const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-            const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-            const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-
-            positions[i3    ] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-            positions[i3 + 1] = randomY;
-            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
-
-            const mixedColor = colorInside.clone();
-            mixedColor.lerp(colorOutside, radius / parameters.radius);
-            colors[i3] = mixedColor.r;
-            colors[i3 + 1] = mixedColor.g;
-            colors[i3 + 2] = mixedColor.b;
+        const camera = new THREE.PerspectiveCamera(75, size…
+[12:01, 18.1.2026] Ahmad: <!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Fireworks Animation</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            overflow: hidden;
+            font-family: sans-serif;
         }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
 
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+<canvas id="canvas"></canvas>
 
-        // متریال مطابق تصویر اول شما
-        const material = new THREE.PointsMaterial({
-            size: parameters.size,
-            sizeAttenuation: true,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending,
-            vertexColors: true
-        });
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
-        const points = new THREE.Points(geometry, material);
-        scene.add(points);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-        // اصلاح سایز هنگام تغییر اندازه پنجره مرورگر
-        window.addEventListener('resize', () => {
-            sizes.width = window.innerWidth;
-            sizes.height = window.innerHeight;
-            camera.aspect = sizes.width / sizes.height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(sizes.width, sizes.height);
-        });
+// لیست توکن‌هایی که جایگزین آتش‌بازی می‌شوند
+const cryptoIcons = ['₿', 'Ξ', '₮', 'XRP', 'ADA', 'SOL', 'DOGE'];
+const colors = ['#F7931A', '#627EEA', '#26A17B', '#23292F', '#0033AD', '#14F195', '#C2A633'];
 
-        const clock = new THREE.Clock();
-        const tick = () => {
-            const elapsedTime = clock.getElapsedTime();
-            points.rotation.y = elapsedTime * 0.1; // چرخش دور مرکز
-            renderer.render(scene, camera);
-            window.requestAnimationFrame(tick);
+let particles = [];
+
+class Particle {
+    constructor(x, y, color, icon, velocity) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.icon = icon;
+        this.velocity = velocity;
+        this.alpha = 1;
+        this.friction = 0.95;
+        this.gravity = 0.15;
+        this.life = Math.random() * 60 + 40;
+    }
+
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.font = '20px Arial';
+        ctx.fillText(this.icon, this.x, this.y);
+        ctx.restore();
+    }
+
+    update() {
+        this.velocity.x *= this.friction;
+        this.velocity.y *= this.friction;
+        this.velocity.y += this.gravity;
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
+        this.alpha -= 0.01;
+        this.life--;
+    }
+}
+
+function createFirework(x, y) {
+    const iconIndex = Math.floor(Math.random() * cryptoIcons.length);
+    const icon = cryptoIcons[iconIndex];
+    const color = colors[iconIndex];
+    
+    // تعداد ذرات (توکن‌ها) در هر انفجار
+    const particleCount = 20;
+    const angleIncrement = (Math.PI * 2) / particleCount;
+
+    for (let i = 0; i < particleCount; i++) {
+        const velocity = {
+            x: Math.cos(angleIncrement * i) * (Math.random() * 6 + 2),
+            y: Math.sin(angleIncrement * i) * (Math.random() * 6 + 2)
         };
-        tick();
-    </script>
+        particles.push(new Particle(x, y, color, icon, velocity));
+    }
+}
+
+// ایجاد انفجار با کلیک موس
+window.addEventListener('click', (event) => {
+    createFirework(event.clientX, event.clientY);
+});
+
+// ایجاد انفجار خودکار
+setInterval(() => {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * (canvas.height / 2);
+    createFirework(x, y);
+}, 1000);
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // افکت کشیدگی (Trail)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((particle, index) => {
+        if (particle.alpha > 0 && particle.life > 0) {
+            particle.update();
+            particle.draw();
+        } else {
+            particles.splice(index, 1);
+        }
+    });
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
 </body>
 </html>
