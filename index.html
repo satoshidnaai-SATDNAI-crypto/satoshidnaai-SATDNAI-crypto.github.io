@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satoshidnaai (SATDNAAI) | Matrix Edition</title>
+    <title>SATDNAAI | Matrix Gold Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* استایل کلی */
         body, html {
             margin: 0;
             padding: 0;
@@ -13,10 +13,9 @@
             height: 100%;
             overflow: hidden;
             background-color: black;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Orbitron', sans-serif;
         }
 
-        /* بوم پس‌زمینه ماتریکس */
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -24,18 +23,17 @@
             z-index: 1;
         }
 
-        /* لایه محتوا روی ماتریکس */
         .content-layer {
             position: relative;
             z-index: 2;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* تاریک کردن ماتریکس برای خوانایی متن */
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             flex-direction: column;
         }
 
-        /* هدر مشابه عکس */
+        /* هدر */
         nav {
             display: flex;
             justify-content: space-between;
@@ -43,97 +41,70 @@
             padding: 20px 50px;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #00ff41; /* سبز ماتریکسی */
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
         .nav-links a {
-            color: white;
+            color: #ffd700; /* رنگ طلایی برای منوها */
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin: 0 15px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             transition: 0.3s;
         }
 
-        .nav-links a:hover {
-            color: #00ff41;
-        }
+        .nav-links a:hover { color: white; }
 
-        .buy-btn-top {
-            background: white;
-            color: black;
-            padding: 8px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        /* محتوای اصلی */
+        /* دایره طلایی مرکزی */
         .hero {
             flex: 1;
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            color: white;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px #00ff41;
-        }
-
-        .sub-heading {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            padding: 10px 30px;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-        }
-
-        .hero p {
-            max-width: 700px;
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        .icons-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .icon-circle {
-            width: 50px;
-            height: 50px;
+        .main-circle {
+            width: 450px;
+            height: 450px;
+            border: 4px solid #ffd700;
             border-radius: 50%;
-            border: 1px solid #00ff41;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #00ff41;
-            background: rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(255, 215, 0, 0.2);
+            animation: pulse 3s infinite ease-in-out;
         }
+
+        .text-gold {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            text-align: center;
+        }
+
+        .satoshi { font-size: 2.5rem; font-weight: 700; }
+        .plus { font-size: 2rem; margin: 10px 0; color: white; }
+        .dna { font-size: 2.5rem; font-weight: 700; }
+        .ai { font-size: 3rem; font-weight: 900; letter-spacing: 5px; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 0 70px rgba(255, 215, 0, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+        }
+
+        .buy-now {
+            margin-top: 40px;
+            background: #ffd700;
+            color: black;
+            padding: 12px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .buy-now:hover { background: white; transform: translateY(-3px); }
 
     </style>
 </head>
@@ -143,76 +114,50 @@
 
     <div class="content-layer">
         <nav>
-            <div class="logo-section">
-                <img src="https://via.placeholder.com/40/00ff41/000000?text=S" style="border-radius: 50%;">
-                SATOSHIDNAAI
-            </div>
+            <div style="color: #ffd700; font-weight: bold;">SATDNAAI.AI</div>
             <div class="nav-links">
-                <a href="#">About</a>
-                <a href="#">How to Buy</a>
-                <a href="#">Tokenomics</a>
-                <a href="#">Whitepaper</a>
+                <a href="#">ABOUT</a>
+                <a href="#">TOKENOMICS</a>
+                <a href="#">WHITEPAPER</a>
             </div>
-            <a href="#" class="buy-btn-top">BUY NOW</a>
+            <a href="#" class="buy-now" style="margin-top: 0; padding: 8px 20px;">BUY NOW</a>
         </nav>
 
         <div class="hero">
-            <h1>Welcome to Satoshidnaai</h1>
-            <div class="sub-heading">SATOSHI DNA AI ECOSYSTEM</div>
-            <p>
-                The digital evolution starts here. SATDNAAI merges the genetic legacy of Satoshi with cutting-edge Artificial Intelligence. 
-                Experience the first self-evolving crypto asset.
-            </p>
-            
-            <div class="icons-group">
-                <div class="icon-circle">AI</div>
-                <div class="icon-circle">DNA</div>
-                <div class="icon-circle">SAT</div>
+            <div class="main-circle">
+                <div class="text-gold satoshi">SATOSHI</div>
+                <div class="plus">+ DNA +</div>
+                <div class="text-gold ai">AI</div>
             </div>
+            <p style="color: white; margin-top: 30px; letter-spacing: 3px; opacity: 0.8;">THE EVOLUTION OF CRYPTO GENETICS</p>
         </div>
     </div>
 
     <script>
-        // اسکریپت باران ماتریکسی
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+        const letters = "01"; // ماتریکس فقط با 0 و 1 برای تم علمی‌تر
         const fontSize = 16;
         const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
-        const drops = [];
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-
-        function drawMatrix() {
+        function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00ff41"; // رنگ سبز کلاسیک ماتریکس
+            ctx.fillStyle = "#004400"; // سبز بسیار تیره برای اینکه مزاحم طلایی نشود
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
-
-        setInterval(drawMatrix, 35);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        setInterval(draw, 35);
     </script>
 </body>
 </html>
