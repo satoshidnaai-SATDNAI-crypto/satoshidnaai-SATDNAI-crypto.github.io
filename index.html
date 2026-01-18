@@ -2,187 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
-
+<title>Social Icons Animation</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{
-  width:100%;
-  height:100%;
-  background:black;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+body{
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
-/* ===== Layout ===== */
-.section{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
+.social-container{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
 }
 
-/* ===== Page 1 ===== */
-.hero{background:black}
-
-.hero .logo-bg{
-  position:absolute;
-  inset:0;
-  background:url("logo.jpg") no-repeat center center;
-  background-size:contain;
-  z-index:1;
+.social-icon{
+    width:50px;
+    opacity:0;
+    transform:translateY(-50px);
+    animation: dropDown 0.6s ease forwards;
 }
 
-.hero .logo-protect{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.05);
-  z-index:2;
+/* انیمیشن */
+@keyframes dropDown{
+    from{
+        opacity:0;
+        transform:translateY(-50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
-
-#matrix{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  opacity:.25;
-}
-
-.caption{
-  position:absolute;
-  bottom:40px;
-  width:100%;
-  text-align:center;
-  z-index:5;
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
-.caption span{font-size:24px;color:#8fd3ff}
-
-/* ===== Page 2 ===== */
-#marketSection{background:black}
-
-#marketCanvas{
-  position:absolute;
-  inset:0;
-}
-
-/* ===== Social Links ===== */
-.socials{
-  position:fixed;
-  right:20px;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  z-index:20;
-}
-.socials a{
-  width:44px;height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:rgba(255,255,255,.08);
-  transition:.3s;
-}
-.socials a:hover{background:rgba(255,215,0,.25);transform:scale(1.15)}
-.socials img{width:24px;height:24px}
 </style>
 </head>
-
 <body>
 
-<!-- Social Links -->
-<div class="socials">
-  <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-  <a href="https://www.tiktok.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png"></a>
-  <a href="https://www.youtube.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-  <a href="https://x.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
-  <a href="https://www.instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+<div class="social-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="social-icon" style="animation-delay:0s">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" style="animation-delay:0.2s">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" class="social-icon" style="animation-delay:0.4s">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733635.png" class="social-icon" style="animation-delay:0.6s">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" class="social-icon" style="animation-delay:0.8s">
 </div>
-
-<!-- PAGE 1 -->
-<section class="section hero">
-  <div class="logo-bg"></div>
-  <div class="logo-protect"></div>
-  <canvas id="matrix"></canvas>
-  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
-</section>
-
-<!-- PAGE 2 -->
-<section class="section" id="marketSection">
-  <canvas id="marketCanvas"></canvas>
-</section>
-
-<script>
-// MATRIX
-const m=document.getElementById("matrix"),mctx=m.getContext("2d");
-function resizeM(){m.width=innerWidth;m.height=innerHeight}
-resizeM();addEventListener("resize",resizeM);
-const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
-let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
-setInterval(()=>{
-  mctx.fillStyle="rgba(0,0,0,.05)";
-  mctx.fillRect(0,0,m.width,m.height);
-  mctx.fillStyle="#FFD700";
-  mctx.font=font+"px monospace";
-  for(let i=0;i<drops.length;i++){
-    let c=chars[Math.floor(Math.random()*chars.length)];
-    mctx.fillText(c,i*font,drops[i]*font);
-    if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
-    drops[i]++;
-  }
-},33);
-
-// MULTI TOKEN RAIN
-const c=document.getElementById("marketCanvas"),ctx=c.getContext("2d");
-function resizeC(){c.width=innerWidth;c.height=innerHeight}
-resizeC();addEventListener("resize",resizeC);
-
-const icons={
-  BTC:"https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
-  ETH:"https://cryptologos.cc/logos/ethereum-eth-logo.svg",
-  SOL:"https://cryptologos.cc/logos/solana-sol-logo.svg"
-};
-const imgs={};
-for(let k in icons){imgs[k]=new Image();imgs[k].src=icons[k];}
-
-let tokens=[];
-function spawn(){
-  const keys=Object.keys(imgs);
-  const sym=keys[Math.floor(Math.random()*keys.length)];
-  tokens.push({
-    img:imgs[sym],
-    x:Math.random()*c.width,
-    y:-60,
-    s:24+Math.random()*26,
-    v:1+Math.random()*3,
-    r:Math.random()*Math.PI,
-    spin:(Math.random()-.5)*.05
-  });
-}
-function draw(){
-  ctx.clearRect(0,0,c.width,c.height);
-  if(Math.random()<.07)spawn();
-  for(let i=0;i<tokens.length;i++){
-    let t=tokens[i];
-    ctx.save();
-    ctx.translate(t.x,t.y);
-    ctx.rotate(t.r);
-    ctx.drawImage(t.img,-t.s/2,-t.s/2,t.s,t.s);
-    ctx.restore();
-    t.y+=t.v;t.r+=t.spin;
-    if(t.y>c.height+60){tokens.splice(i,1);i--}
-  }
-  requestAnimationFrame(draw);
-}
-draw();
-</script>
 
 </body>
 </html>
