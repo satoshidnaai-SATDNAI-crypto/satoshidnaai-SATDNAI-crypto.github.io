@@ -1,121 +1,188 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Crypto Fireworks Animation</title>
-    <style>
-        body {
-            margin: 0;
-            background-color: #000;
-            overflow: hidden;
-            font-family: sans-serif;
-        }
-        canvas {
-            display: block;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>SATDNAI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  background:black;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+/* ===== Layout ===== */
+.section{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ===== Page 1 ===== */
+.hero{background:black}
+
+.hero .logo-bg{
+  position:absolute;
+  inset:0;
+  background:url("logo.jpg") no-repeat center center;
+  background-size:contain;
+  z-index:1;
+}
+
+.hero .logo-protect{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.05);
+  z-index:2;
+}
+
+#matrix{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:.25;
+}
+
+.caption{
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  text-align:center;
+  z-index:5;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.caption span{font-size:24px;color:#8fd3ff}
+
+/* ===== Page 2 ===== */
+#marketSection{background:black}
+
+#marketCanvas{
+  position:absolute;
+  inset:0;
+}
+
+/* ===== Social Links ===== */
+.socials{
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:20;
+}
+.socials a{
+  width:44px;height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  transition:.3s;
+}
+.socials a:hover{background:rgba(255,215,0,.25);transform:scale(1.15)}
+.socials img{width:24px;height:24px}
+</style>
 </head>
+
 <body>
 
-<canvas id="canvas"></canvas>
+<!-- Social Links -->
+<div class="socials">
+  <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+  <a href="https://www.tiktok.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png"></a>
+  <a href="https://www.youtube.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+  <a href="https://x.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
+  <a href="https://www.instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+</div>
+
+<!-- PAGE 1 -->
+<section class="section hero">
+  <div class="logo-bg"></div>
+  <div class="logo-protect"></div>
+  <canvas id="matrix"></canvas>
+  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="section" id="marketSection">
+  <canvas id="marketCanvas"></canvas>
+</section>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+// MATRIX
+const m=document.getElementById("matrix"),mctx=m.getContext("2d");
+function resizeM(){m.width=innerWidth;m.height=innerHeight}
+resizeM();addEventListener("resize",resizeM);
+const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
+let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
+setInterval(()=>{
+  mctx.fillStyle="rgba(0,0,0,.05)";
+  mctx.fillRect(0,0,m.width,m.height);
+  mctx.fillStyle="#FFD700";
+  mctx.font=font+"px monospace";
+  for(let i=0;i<drops.length;i++){
+    let c=chars[Math.floor(Math.random()*chars.length)];
+    mctx.fillText(c,i*font,drops[i]*font);
+    if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
+    drops[i]++;
+  }
+},33);
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// MULTI TOKEN RAIN
+const c=document.getElementById("marketCanvas"),ctx=c.getContext("2d");
+function resizeC(){c.width=innerWidth;c.height=innerHeight}
+resizeC();addEventListener("resize",resizeC);
 
-// لیست توکن‌هایی که جایگزین آتش‌بازی می‌شوند
-const cryptoIcons = ['₿', 'Ξ', '₮', 'XRP', 'ADA', 'SOL', 'DOGE'];
-const colors = ['#F7931A', '#627EEA', '#26A17B', '#23292F', '#0033AD', '#14F195', '#C2A633'];
+const icons={
+  BTC:"https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
+  ETH:"https://cryptologos.cc/logos/ethereum-eth-logo.svg",
+  SOL:"https://cryptologos.cc/logos/solana-sol-logo.svg"
+};
+const imgs={};
+for(let k in icons){imgs[k]=new Image();imgs[k].src=icons[k];}
 
-let particles = [];
-
-class Particle {
-    constructor(x, y, color, icon, velocity) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.icon = icon;
-        this.velocity = velocity;
-        this.alpha = 1;
-        this.friction = 0.95;
-        this.gravity = 0.15;
-        this.life = Math.random() * 60 + 40;
-    }
-
-    draw() {
-        ctx.save();
-        ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.font = '20px Arial';
-        ctx.fillText(this.icon, this.x, this.y);
-        ctx.restore();
-    }
-
-    update() {
-        this.velocity.x *= this.friction;
-        this.velocity.y *= this.friction;
-        this.velocity.y += this.gravity;
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-        this.alpha -= 0.01;
-        this.life--;
-    }
+let tokens=[];
+function spawn(){
+  const keys=Object.keys(imgs);
+  const sym=keys[Math.floor(Math.random()*keys.length)];
+  tokens.push({
+    img:imgs[sym],
+    x:Math.random()*c.width,
+    y:-60,
+    s:24+Math.random()*26,
+    v:1+Math.random()*3,
+    r:Math.random()*Math.PI,
+    spin:(Math.random()-.5)*.05
+  });
 }
-
-function createFirework(x, y) {
-    const iconIndex = Math.floor(Math.random() * cryptoIcons.length);
-    const icon = cryptoIcons[iconIndex];
-    const color = colors[iconIndex];
-    
-    // تعداد ذرات (توکن‌ها) در هر انفجار
-    const particleCount = 20;
-    const angleIncrement = (Math.PI * 2) / particleCount;
-
-    for (let i = 0; i < particleCount; i++) {
-        const velocity = {
-            x: Math.cos(angleIncrement * i) * (Math.random() * 6 + 2),
-            y: Math.sin(angleIncrement * i) * (Math.random() * 6 + 2)
-        };
-        particles.push(new Particle(x, y, color, icon, velocity));
-    }
+function draw(){
+  ctx.clearRect(0,0,c.width,c.height);
+  if(Math.random()<.07)spawn();
+  for(let i=0;i<tokens.length;i++){
+    let t=tokens[i];
+    ctx.save();
+    ctx.translate(t.x,t.y);
+    ctx.rotate(t.r);
+    ctx.drawImage(t.img,-t.s/2,-t.s/2,t.s,t.s);
+    ctx.restore();
+    t.y+=t.v;t.r+=t.spin;
+    if(t.y>c.height+60){tokens.splice(i,1);i--}
+  }
+  requestAnimationFrame(draw);
 }
-
-// ایجاد انفجار با کلیک موس
-window.addEventListener('click', (event) => {
-    createFirework(event.clientX, event.clientY);
-});
-
-// ایجاد انفجار خودکار
-setInterval(() => {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * (canvas.height / 2);
-    createFirework(x, y);
-}, 1000);
-
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // افکت کشیدگی (Trail)
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((particle, index) => {
-        if (particle.alpha > 0 && particle.life > 0) {
-            particle.update();
-            particle.draw();
-        } else {
-            particles.splice(index, 1);
-        }
-    });
-}
-
-animate();
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
+draw();
 </script>
+
 </body>
 </html>
