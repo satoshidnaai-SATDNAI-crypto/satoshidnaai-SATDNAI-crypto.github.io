@@ -30,144 +30,194 @@ body{
     border-radius: 24px;
     box-shadow:
       0 10px 40px rgba(0,0,0,.6),
-      inset 0 0 40px rgba(255,255,255,.03);
-    text-align:center;
-    min-width: 320px;
+      inset 0 0 4…
+[17:06, 18.1.2026] Ahmad: <!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Ryujin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* عنوان بالای صفحه */
-.card h2{
-    color:white;
-    margin-top:0;
-    margin-bottom:20px;
-    letter-spacing: .5px;
+body{
+    background: radial-gradient(circle at top, #f7d9c4, #e7b18a);
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
-/* ردیف آیکن‌ها */
-.social-icons{
+/* ---------- HEADER ---------- */
+header{
     display:flex;
-    justify-content:center;
-    gap: 18px;
-}
-
-/* استایل پایه آیکن */
-.icon{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
-    font-size: 26px;
-    color:white;
+    padding:25px 60px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:22px;
+}
+
+.logo img{
+    width:40px;
+}
+
+nav a{
+    margin:0 15px;
     text-decoration:none;
-    position: relative;
-    overflow:hidden;
-    transition: transform .3s, box-shadow .3s;
+    color:#222;
+    font-weight:500;
 }
 
-/* افکت نور شیشه‌ای */
-.icon::after{
-    content:"";
-    position:absolute;
-    top:-5px;
-    left:15%;
-    width:70%;
-    height:40%;
-    background: rgba(255,255,255,.25);
-    filter: blur(6px);
-    border-radius: 50%;
+.buy-btn{
+    padding:10px 22px;
+    border:2px solid #222;
+    background:none;
+    cursor:pointer;
+    font-weight:600;
 }
 
-/* هاله نور اطراف */
-.icon::before{
-    content:"";
-    position:absolute;
-    inset:-4px;
+/* ---------- HERO ---------- */
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:80px 60px;
+}
+
+.hero-text{
+    max-width:550px;
+}
+
+.hero-text h1{
+    font-size:64px;
+    font-weight:800;
+    line-height:1.1;
+    color:#e16b2e;
+}
+
+.hero-text p{
+    margin:25px 0;
+    font-size:18px;
+    color:#333;
+}
+
+.hero-text .cta{
+    background:#e16b2e;
+    color:white;
+    border:none;
+    padding:15px 35px;
+    font-size:16px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* ---------- CIRCLE ART ---------- */
+.hero-art{
+    position:relative;
+    width:420px;
+    height:420px;
     border-radius:50%;
-    filter: blur(8px);
-    opacity:.5;
+    background:linear-gradient(145deg,#f3b98c,#d68b5b);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* رنگ هر شبکه */
-.youtube{ background:#FF0000; }
-.youtube::before{ background:#FF0000; }
-
-.twitter{ background:#1DA1F2; }
-.twitter::before{ background:#1DA1F2; }
-
-.tiktok{ background:#111; }
-.tiktok::before{ background:#444; }
-
-.instagram{
-    background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-}
-.instagram::before{
-    background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+.hero-art::before{
+    content:'';
+    position:absolute;
+    width:85%;
+    height:85%;
+    border-radius:50%;
+    background:#fff5eb;
 }
 
-.telegram{ background:#0088cc; }
-.telegram::before{ background:#0088cc; }
-
-/* انیمیشن ورود از پایین (مثل طرح تو) */
-.icon{
-    animation: popUp .8s ease forwards;
-    opacity:0;
+/* ---------- SOCIAL ---------- */
+.social{
+    position:fixed;
+    left:30px;
+    bottom:40px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
 }
 
-.icon:nth-child(1){ animation-delay:.1s;}
-.icon:nth-child(2){ animation-delay:.2s;}
-.icon:nth-child(3){ animation-delay:.3s;}
-.icon:nth-child(4){ animation-delay:.4s;}
-.icon:nth-child(5){ animation-delay:.5s;}
+.social a{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#e16b2e;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-weight:bold;
+}
 
-@keyframes popUp{
-    from{
-        transform: translateY(40px) scale(.8);
-        opacity:0;
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+    .hero{
+        flex-direction:column;
+        text-align:center;
     }
-    to{
-        transform: translateY(0) scale(1);
-        opacity:1;
+    .hero-art{
+        margin-top:40px;
     }
-}
-
-/* هاور افکت */
-.icon:hover{
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 15px 25px rgba(0,0,0,.5);
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>Follow Us</h2>
+<header>
+    <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Dragon_icon.svg/512px-Dragon_icon.svg.png">
+        RYUJIN
+    </div>
 
-  <div class="social-icons">
+    <nav>
+        <a href="#">ABOUT</a>
+        <a href="#">HOW TO BUY</a>
+        <a href="#">TOKENOMICS</a>
+        <a href="#">WHITEPAPER</a>
+    </nav>
 
-    <a class="icon youtube" href="https://www.youtube.com" target="_blank">
-      <i class="fa-brands fa-youtube"></i>
-    </a>
+    <button class="buy-btn">BUY NOW</button>
+</header>
 
-    <a class="icon twitter" href="https://twitter.com" target="_blank">
-      <i class="fa-brands fa-twitter"></i>
-    </a>
+<section class="hero">
+    <div class="hero-text">
+        <h1>Welcome to Ryujin</h1>
+        <p>
+            Guardian of Omikami Ecosystem.  
+            A new generation crypto experience inspired by Japanese mythology.
+        </p>
+        <button class="cta">Get Started</button>
+    </div>
 
-    <a class="icon tiktok" href="https://www.tiktok.com" target="_blank">
-      <i class="fa-brands fa-tiktok"></i>
-    </a>
+    <div class="hero-art">
+        <!-- جای تصویر یا SVG -->
+    </div>
+</section>
 
-    <a class="icon instagram" href="https://www.instagram.com" target="_blank">
-      <i class="fa-brands fa-instagram"></i>
-    </a>
-
-    <a class="icon telegram" href="https://t.me" target="_blank">
-      <i class="fa-brands fa-telegram"></i>
-    </a>
-
-  </div>
+<div class="social">
+    <a href="#">T</a>
+    <a href="#">X</a>
+    <a href="#">D</a>
 </div>
 
 </body>
