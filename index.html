@@ -5,157 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Satoshidnaai | SATDNAAI</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --bg:#0b0e14;
-    --card:#111520;
-    --primary:#00ffd5;
-    --secondary:#7c7cff;
-    --text:#e6e6eb;
-    --muted:#9aa0b5;
+  --bg:#05060a;
+  --glass:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.12);
+  --primary:#00ffd5;
+  --secondary:#7c7cff;
+  --text:#eaeaf0;
+  --muted:#a1a6c2;
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
-    background:radial-gradient(circle at top,#0f1320,#06080f);
-    color:var(--text);
-    overflow-x:hidden;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(0,255,213,0.12),transparent 40%),
+    radial-gradient(circle at 80% 30%,rgba(124,124,255,0.12),transparent 45%),
+    #05060a;
+  color:var(--text);
+  overflow-x:hidden;
 }
 
 /* ===== HERO ===== */
 .hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  padding:60px 10%;
 }
 
 .hero h1{
-    font-size:3.2rem;
-    font-weight:700;
-    background:linear-gradient(90deg,var(--primary),var(--secondary));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    margin-bottom:15px;
+  font-size:4rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
 }
 
 .hero h2{
-    font-weight:400;
-    color:var(--muted);
-    margin-bottom:30px;
-}
-
-.hero .glow{
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    background:radial-gradient(circle,var(--primary),transparent 70%);
-    filter:blur(40px);
-    position:absolute;
-    z-index:-1;
+  margin-top:18px;
+  font-weight:400;
+  color:var(--muted);
+  max-width:900px;
 }
 
 /* ===== SECTIONS ===== */
 section{
-    padding:80px 10%;
+  padding:120px 10%;
+  position:relative;
 }
 
-.card{
-    background:linear-gradient(180deg,#12182a,#0c101c);
-    border-radius:20px;
-    padding:40px;
-    box-shadow:0 0 40px rgba(0,255,213,0.08);
-    margin-bottom:40px;
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:60px;
+  box-shadow:0 0 60px rgba(0,255,213,0.12);
 }
 
 /* ===== TITLES ===== */
-.section-title{
-    font-size:2rem;
-    margin-bottom:25px;
-    background:linear-gradient(90deg,var(--primary),var(--secondary));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+h3{
+  font-size:2.4rem;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 /* ===== TEXT ===== */
 p{
-    line-height:1.8;
-    color:var(--muted);
+  color:var(--muted);
+  font-size:1.05rem;
+  line-height:2;
+  margin-bottom:22px;
 }
 
-/* ===== FEATURES ===== */
-.features{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
+/* ===== TAX GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  margin-top:30px;
 }
 
-.feature{
-    background:var(--card);
-    padding:30px;
-    border-radius:18px;
-    transition:0.4s;
+.box{
+  background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  text-align:center;
 }
 
-.feature:hover{
-    transform:translateY(-8px);
-    box-shadow:0 0 30px rgba(124,124,255,0.2);
-}
-
-/* ===== TOKENOMICS ===== */
-.tokenomics{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
-}
-
-.token-box{
-    background:linear-gradient(180deg,#0f1425,#0a0d18);
-    padding:25px;
-    border-radius:16px;
-    text-align:center;
-    border:1px solid rgba(255,255,255,0.05);
-}
-
-.token-box h3{
-    color:var(--primary);
-    margin-bottom:10px;
+.box strong{
+  display:block;
+  color:var(--primary);
+  font-size:1.4rem;
+  margin-bottom:8px;
 }
 
 /* ===== FOOTER ===== */
 footer{
-    text-align:center;
-    padding:30px;
-    color:var(--muted);
-    font-size:0.9rem;
-    border-top:1px solid rgba(255,255,255,0.05);
-}
-
-/* ===== ANIMATION ===== */
-.fade{
-    opacity:0;
-    transform:translateY(40px);
-    transition:0.8s ease;
-}
-
-.fade.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-@media(max-width:768px){
-    .hero h1{font-size:2.3rem;}
+  padding:40px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+  font-size:0.9rem;
 }
 </style>
 </head>
@@ -163,90 +125,66 @@ footer{
 <body>
 
 <div class="hero">
-    <div class="glow"></div>
+  <div>
     <h1>Satoshidnaai</h1>
-    <h2>SATDNAAI — Where Idea, Creativity & Intelligence Become One</h2>
+    <h2>SATDNAAI — Where Idea, Creativity, and Intelligence Become One</h2>
+  </div>
 </div>
 
-<section class="fade">
-    <div class="card">
-        <h2 class="section-title">What Does Satoshidnaai Mean?</h2>
-        <p>
-        Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.
-        <br><br>
-        <strong>Satoshi</strong> represents a pure and revolutionary idea — a way of thinking that challenged old systems and gave meaning to financial freedom.
-        <br><br>
-        <strong>DNA</strong> represents innate creativity and inner structure — the essence that keeps the project alive, dynamic, evolving, and unique.
-        <br><br>
-        <strong>AI</strong> represents uniqueness, intelligence, and the future — a power that pushes the boundaries of what is possible.
-        <br><br>
-        <strong>Satoshidnaai = SATDNAAI</strong><br>
-        A place where idea, creativity, and intelligence become one.
-        </p>
-    </div>
-</section>
+<section>
+<div class="glass">
 
-<section class="fade">
-    <h2 class="section-title">Core Philosophy</h2>
-    <div class="features">
-        <div class="feature">
-            <h3>Transparency</h3>
-            <p>Clear structure, no hidden mechanics, no surprise changes.</p>
-        </div>
-        <div class="feature">
-            <h3>Community First</h3>
-            <p>Users are not just traders, they are part of the project’s identity.</p>
-        </div>
-        <div class="feature">
-            <h3>Sustainable Growth</h3>
-            <p>Built for long-term value, not short-term hype.</p>
-        </div>
-    </div>
-</section>
+<h3>Satoshidnaai (SATDNAAI) – What Does It Mean?</h3>
 
-<section class="fade">
-    <h2 class="section-title">Tokenomics & Tax Policy</h2>
-    <div class="tokenomics">
-        <div class="token-box">
-            <h3>Total Tax</h3>
-            <p>0.5%</p>
-        </div>
-        <div class="token-box">
-            <h3>Buy Tax</h3>
-            <p>0.5%</p>
-        </div>
-        <div class="token-box">
-            <h3>Sell Tax</h3>
-            <p>0.5%</p>
-        </div>
-        <div class="token-box">
-            <h3>Transfer Tax</h3>
-            <p>0%</p>
-        </div>
-    </div>
-    <br>
-    <p>
-    The 0.5% tax is minimal, transparent, permanent, and non-increasable.  
-    It is used exclusively for development, ecosystem growth, and long-term sustainability.
-    </p>
+<p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.</p>
+
+<p>Satoshi represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
+
+<p>DNA represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
+
+<p>AI represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
+
+<p><strong>Satoshidnaai = SATDNAAI</strong><br>
+A place where idea, creativity, and intelligence become one.</p>
+
+<p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
+
+<p>This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey. SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.</p>
+
+<h3>Tokenomics and Tax Policy</h3>
+
+<p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax. This tax is designed to be almost unnoticeable for users and does not create pressure on buying, selling, or natural price growth.</p>
+
+<div class="grid">
+  <div class="box"><strong>Total Tax</strong>0.5%</div>
+  <div class="box"><strong>Buy Tax</strong>0.5%</div>
+  <div class="box"><strong>Sell Tax</strong>0.5%</div>
+  <div class="box"><strong>Transfer Tax</strong>0%</div>
+</div>
+
+<p>This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.</p>
+
+<p>There are no hidden taxes.<br>
+There are no non-transparent mechanisms in the contract.</p>
+
+<p><strong>This tax is permanent, transparent, and will never be increased.</strong></p>
+
+<h3>SATDNAAI Philosophy</h3>
+
+<p>SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly.</p>
+
+<p>For this reason, the interests of the team and the community are fully aligned, and the success of the team depends directly on the real growth of the project’s value.</p>
+
+<h3>Final Summary</h3>
+
+<p>SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence. A project created to prove that memecoins can be fair, transparent, and long-lasting.</p>
+
+</div>
 </section>
 
 <footer>
-    © 2026 Satoshidnaai (SATDNAAI). All rights reserved.
+© 2026 Satoshidnaai (SATDNAAI). All rights reserved.
 </footer>
-
-<script>
-const faders = document.querySelectorAll('.fade');
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-        }
-    });
-},{threshold:0.2});
-
-faders.forEach(f=>observer.observe(f));
-</script>
 
 </body>
 </html>
