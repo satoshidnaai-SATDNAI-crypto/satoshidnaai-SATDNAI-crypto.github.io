@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATDNAAI | Matrix Gold Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>SATDNAAI | Golden Triple Circles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
@@ -28,12 +28,12 @@
             z-index: 2;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             display: flex;
             flex-direction: column;
         }
 
-        /* هدر */
+        /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -42,17 +42,31 @@
         }
 
         .nav-links a {
-            color: #ffd700; /* رنگ طلایی برای منوها */
+            color: #ffd700;
             text-decoration: none;
             margin: 0 15px;
             font-size: 0.8rem;
-            letter-spacing: 2px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .buy-now {
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
             transition: 0.3s;
         }
 
-        .nav-links a:hover { color: white; }
+        .buy-now:hover {
+            background: #ffd700;
+            color: black;
+            box-shadow: 0 0 20px #ffd700;
+        }
 
-        /* دایره طلایی مرکزی */
+        /* بخش سه دایره */
         .hero {
             flex: 1;
             display: flex;
@@ -61,50 +75,55 @@
             flex-direction: column;
         }
 
-        .main-circle {
-            width: 450px;
-            height: 450px;
-            border: 4px solid #ffd700;
+        .circle-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .gold-circle {
+            width: 160px;
+            height: 160px;
+            border: 3px solid #ffd700;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.4);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(255, 215, 0, 0.2);
-            animation: pulse 3s infinite ease-in-out;
-        }
-
-        .text-gold {
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
             color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            font-size: 1.2rem;
+            font-weight: 900;
             text-align: center;
+            transition: 0.5s;
         }
 
-        .satoshi { font-size: 2.5rem; font-weight: 700; }
-        .plus { font-size: 2rem; margin: 10px 0; color: white; }
-        .dna { font-size: 2.5rem; font-weight: 700; }
-        .ai { font-size: 3rem; font-weight: 900; letter-spacing: 5px; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 0 70px rgba(255, 215, 0, 0.5); }
-            100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+        .gold-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            background: rgba(255, 215, 0, 0.1);
         }
 
-        .buy-now {
-            margin-top: 40px;
-            background: #ffd700;
-            color: black;
-            padding: 12px 40px;
-            border-radius: 50px;
-            text-decoration: none;
+        .plus-sign {
+            color: #ffd700;
+            font-size: 2.5rem;
             font-weight: bold;
-            letter-spacing: 2px;
-            transition: 0.3s;
+            text-shadow: 0 0 10px #ffd700;
         }
 
-        .buy-now:hover { background: white; transform: translateY(-3px); }
+        .main-title {
+            margin-top: 50px;
+            color: white;
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .sub-text {
+            color: #888;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
 
     </style>
 </head>
@@ -114,22 +133,31 @@
 
     <div class="content-layer">
         <nav>
-            <div style="color: #ffd700; font-weight: bold;">SATOSHI+DNA+AI=SATDNAI</div>
+            <div style="color: #ffd700; font-size: 1.5rem; font-weight: 900;">SATDNAAI</div>
             <div class="nav-links">
                 <a href="#">ABOUT</a>
+                <a href="#">HOW TO BUY</a>
                 <a href="#">TOKENOMICS</a>
                 <a href="#">WHITEPAPER</a>
             </div>
-            <a href="#" class="buy-now" style="margin-top: 0; padding: 8px 20px;">BUY NOW</a>
+            <a href="#" class="buy-now">BUY NOW</a>
         </nav>
 
         <div class="hero">
-            <div class="main-circle">
-                <div class="text-gold satoshi">SATOSHI</div>
-                <div class="plus">+ DNA +</div>
-                <div class="text-gold ai">AI</div>
+            <div class="circle-container">
+                <div class="gold-circle">SATOSHI</div>
+                
+                <div class="plus-sign">+</div>
+                
+                <div class="gold-circle">DNA</div>
+                
+                <div class="plus-sign">+</div>
+                
+                <div class="gold-circle">AI</div>
             </div>
-            <p style="color: white; margin-top: 30px; letter-spacing: 3px; opacity: 0.8;">THE EVOLUTION OF CRYPTO GENETICS</p>
+
+            <h1 class="main-title">Welcome to Satoshidnaai</h1>
+            <p class="sub-text">GUARDIAN OF THE DIGITAL EVOLUTION</p>
         </div>
     </div>
 
@@ -139,7 +167,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const letters = "01"; // ماتریکس فقط با 0 و 1 برای تم علمی‌تر
+        const letters = "01";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
@@ -147,7 +175,7 @@
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#004400"; // سبز بسیار تیره برای اینکه مزاحم طلایی نشود
+            ctx.fillStyle = "#003300"; // سبز تیره ماتریکسی
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
@@ -158,6 +186,11 @@
             }
         }
         setInterval(draw, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
