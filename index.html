@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+[15:59, 18.1.2026] Ahmad: <!DOCTYPE html>
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
@@ -30,16 +30,139 @@
   </a>
 
   <a href="https://www.tiktok.com" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg" alt="TikTok">
-  </a>
+    <img src="https://upload.wikimedia.org/wik…
+[16:07, 18.1.2026] Ahmad: <!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Social Media Icons</title>
 
-  <a href="https://www.instagram.com" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-  </a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <a href="https://t.me" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
-  </a>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body{
+    background: #0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.social-wrapper{
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+.social-icons{
+    display:flex;
+    gap: 18px;
+}
+
+.icon{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size: 28px;
+    color:white;
+    text-decoration:none;
+    position: relative;
+    overflow:hidden;
+    transition: transform .3s, box-shadow .3s;
+}
+
+.icon::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(135deg, #ff0080, #7928ca);
+    opacity:0;
+    transition:.3s;
+}
+
+.icon i{
+    position: relative;
+    z-index:2;
+}
+
+/* رنگ هر شبکه */
+.youtube{ background:#FF0000; }
+.twitter{ background:#1DA1F2; }
+.tiktok{ background:#000000; }
+.instagram{ 
+    background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+}
+.telegram{ background:#0088cc; }
+
+/* انیمیشن ورود از پایین */
+.icon{
+    animation: floatUp .8s ease forwards;
+    opacity:0;
+}
+
+.icon:nth-child(1){ animation-delay:.1s;}
+.icon:nth-child(2){ animation-delay:.2s;}
+.icon:nth-child(3){ animation-delay:.3s;}
+.icon:nth-child(4){ animation-delay:.4s;}
+.icon:nth-child(5){ animation-delay:.5s;}
+
+@keyframes floatUp{
+    from{
+        transform: translateY(40px);
+        opacity:0;
+    }
+    to{
+        transform: translateY(0);
+        opacity:1;
+    }
+}
+
+/* هاور افکت حرفه‌ای */
+.icon:hover{
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 25px rgba(0,0,0,.4);
+}
+
+.icon:hover::before{
+    opacity:.3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="social-wrapper">
+  <div class="social-icons">
+
+    <a class="icon youtube" href="https://www.youtube.com" target="_blank">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+
+    <a class="icon twitter" href="https://twitter.com" target="_blank">
+      <i class="fa-brands fa-twitter"></i>
+    </a>
+
+    <a class="icon tiktok" href="https://www.tiktok.com" target="_blank">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+    <a class="icon instagram" href="https://www.instagram.com" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a class="icon telegram" href="https://t.me" target="_blank">
+      <i class="fa-brands fa-telegram"></i>
+    </a>
+
+  </div>
 </div>
 
 </body>
