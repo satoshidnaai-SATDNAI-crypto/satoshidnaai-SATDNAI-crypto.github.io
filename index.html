@@ -2,117 +2,180 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI | DNA MATRIX MODE</title>
+<title>SATDNAI</title>
+
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background: #000; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    #matrix { position: fixed; inset: 0; z-index: 1; }
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
-    .content-overlay {
-        position: relative;
-        z-index: 10;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-    }
+/* لوگوی اصلی */
+.logo-bg{
+    position:fixed;
+    inset:0;
+    background:url("./logo.png") no-repeat center center;
+    background-size:contain;
+    z-index:1;
+}
 
-    /* حذف کامل پس‌زمینه سیاه لوگو */
-    .logo-box {
-        width: 480px;
-        mix-blend-mode: screen; 
-        filter: contrast(1.2) brightness(1.2);
-        animation: dna-float 5s ease-in-out infinite;
-    }
+/* محافظ خیلی ملایم */
+.logo-protect{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.08);
+    z-index:2;
+}
 
-    .logo-box img { width: 100%; height: auto; }
+/* ماتریکس */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    opacity:0.25;
+}
 
-    @keyframes dna-float {
-        0%, 100% { transform: translateY(0) rotate(-1deg); }
-        50% { transform: translateY(-20px) rotate(1deg); }
-    }
+/* متن پایین */
+.caption{
+    position:fixed;
+    bottom:40px;
+    width:100%;
+    text-align:center;
+    z-index:5;
+    animation: float 4s ease-in-out infinite;
+}
 
-    .caption {
-        margin-top: 20px;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 20px;
-        color: #8fd3ff;
-        text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
-    }
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
+}
+
+.caption span{
+    font-size:24px;
+    color:#8fd3ff;
+    letter-spacing:1px;
+}
+
+.solana{
+    font-weight:bold;
+    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
+    to{ text-shadow:0 0 18px rgba(3,225,255,.9) }
+}
+
+/* شبکه‌های اجتماعی */
+.socials{
+    position:fixed;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    z-index:10;
+}
+
+.socials a{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.08);
+    transition:0.3s;
+}
+
+.socials a:hover{
+    background:rgba(0,255,163,0.3);
+    transform:scale(1.15);
+}
+
+.socials img{
+    width:26px;
+    height:26px;
+}
 </style>
 </head>
+
 <body>
+
+<div class="logo-bg"></div>
+<div class="logo-protect"></div>
 
 <canvas id="matrix"></canvas>
 
-<div class="content-overlay">
-    <div class="logo-box">
-        <img src="logo.png" alt="SATDNAI">
-    </div>
-    <div class="caption">
-        <span>GENETIC ALGORITHM INITIALIZED</span>
-    </div>
+<div class="caption">
+    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+</div>
+
+<div class="socials">
+    <a href="https://t.me/SATDNAI" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+    </a>
+    <a href="https://www.tiktok.com/@satoshidnaai" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
+    </a>
+    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    </a>
+    <a href="https://x.com/SatoDnaAi" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
+    </a>
 </div>
 
 <script>
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-    let width, height;
-    const fontSize = 16;
-    const chars = "01ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
-    // پارامترهای DNA
-    let columns;
-    let frame = 0;
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-    function init() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        columns = Math.floor(width / fontSize);
-    }
+const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 18;
+let columns = Math.floor(canvas.width / fontSize);
+let drops = Array(columns).fill(1);
 
-    function draw() {
-        // افکت محو شدن برای ایجاد دنباله نوری
-        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-        ctx.fillRect(0, 0, width, height);
+function draw(){
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-        ctx.font = fontSize + "px monospace";
-        frame++;
+    ctx.fillStyle = "#FFD700";
+    ctx.font = fontSize + "px monospace";
 
-        for (let i = 0; i < columns; i++) {
-            // محاسبه مسیر مارپیچ DNA با استفاده از تابع سینوسی
-            // رشته اول
-            const y1 = (Math.sin(frame * 0.05 + i * 0.2) * 100) + (height / 2);
-            // رشته دوم (با اختلاف فاز ۱۸۰ درجه)
-            const y2 = (Math.sin(frame * 0.05 + i * 0.2 + Math.PI) * 100) + (height / 2);
+    for(let i=0;i<drops.length;i++){
+        const char = chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
 
-            const char1 = chars[Math.floor(Math.random() * chars.length)];
-            const char2 = chars[Math.floor(Math.random() * chars.length)];
-
-            // رسم رشته اول (سبز ماتریکسی)
-            ctx.fillStyle = "#00ff41";
-            ctx.fillText(char1, i * fontSize, y1 + (Math.random() * 50));
-
-            // رسم رشته دوم (آبی/طلایی برای هارمونی با لوگو)
-            ctx.fillStyle = i % 2 === 0 ? "#FFD700" : "#00d4ff";
-            ctx.fillText(char2, i * fontSize, y2 - (Math.random() * 50));
-
-            // درخشش تصادفی کاراکترها
-            if(Math.random() > 0.98) {
-                ctx.fillStyle = "#fff";
-                ctx.fillText(char1, i * fontSize, y1);
-            }
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
+            drops[i] = 0;
         }
+        drops[i]++;
     }
+}
 
-    window.addEventListener("resize", init);
-    init();
-    setInterval(draw, 30);
+setInterval(draw, 33);
 </script>
+
 </body>
 </html>
