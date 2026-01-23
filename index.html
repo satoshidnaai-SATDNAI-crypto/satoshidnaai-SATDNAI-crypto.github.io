@@ -1,128 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #ffd700; --satoshi-blue: #00d4ff; --dna-green: #39ff14; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Rajdhani', sans-serif; }
-        
-        #matrixCanvas { position: fixed; top: 0; left: 0; z-index: 1; filter: brightness(1.2); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SATOSHI DNA AI | OFFICIAL</title>
 
-        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; background: transparent; overflow-y: auto; align-items: center; }
-        
-        nav { width: 100%; display: flex; justify-content: flex-end; padding: 20px 50px; }
-        .nav-links a { color: var(--gold); text-decoration: none; margin-left: 25px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
-        .circle-container { display: flex; align-items: center; gap: 20px; margin-top: 30px; margin-bottom: 30px; }
-        .gold-circle {
-            width: 140px; height: 140px; border: 2px solid var(--gold); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-family: 'Orbitron'; font-weight: 900; background: rgba(0,0,0,0.7);
-        }
+<style>
+:root { 
+    --gold: #ffd700; 
+    --satoshi-blue: #00d4ff;
+    --dna-green: #39ff14;
+    --matrix-glow: #00ff41;
+}
 
-        .brand-name { color: white; font-family: 'Orbitron'; letter-spacing: 12px; font-size: 3.5rem; margin-bottom: 30px; text-shadow: 0 0 15px #000; }
-        
-        .action-btn { 
-            background: rgba(0,0,0,0.6); border: 2px solid var(--gold); color: var(--gold); 
-            padding: 15px 50px; cursor: pointer; font-family: 'Orbitron'; 
-            font-weight: bold; transition: 0.3s; margin-bottom: 20px;
-        }
-        .action-btn:hover { background: var(--gold); color: #000; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        /* --- راه حل قطعی حذف پس‌زمینه سیاه --- */
-        .logo-box {
-            width: 500px; /* اندازه لوگو */
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            /* این دستور کلیدی است: هر چه سیاه باشد را غیب می‌کند */
-            mix-blend-mode: screen; 
-        }
+html,body{
+    width:100%;
+    height:100%;
+    background:#000;
+    overflow:hidden;
+    font-family:'Rajdhani',sans-serif;
+}
 
-        .logo-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-            /* افزایش تضاد برای اطمینان از حذف کامل لبه‌های کدر */
-            filter: contrast(1.1) brightness(1.1); 
-        }
+/* MATRIX */
+#matrixCanvas{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    z-index:1;
+}
 
-        #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
-        .doc-content { max-width: 850px; margin: 0 auto; color: white; line-height: 1.8; text-align: left; }
-        .close-btn { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 3rem; cursor: pointer; }
-    </style>
+/* MAIN UI */
+.main-ui{
+    position:relative;
+    z-index:2;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:rgba(0,0,0,0.25);
+    overflow-y:auto;
+}
+
+/* NAV */
+nav{
+    display:flex;
+    justify-content:flex-end;
+    padding:25px 60px;
+}
+.nav-links a{
+    color:var(--gold);
+    text-decoration:none;
+    margin-left:30px;
+    font-family:'Orbitron';
+    font-size:0.8rem;
+    cursor:pointer;
+    transition:.3s;
+}
+.nav-links a:hover{
+    text-shadow:0 0 10px var(--gold);
+}
+
+/* CONTENT */
+.content-area{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding-top:40px;
+}
+
+/* CIRCLES */
+.circle-container{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    margin-bottom:35px;
+}
+.gold-circle{
+    width:140px;
+    height:140px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Orbitron';
+    font-weight:900;
+    background:rgba(0,0,0,0.8);
+    box-shadow:0 0 25px rgba(255,215,0,.4);
+}
+
+/* TITLE */
+.brand-name{
+    color:white;
+    font-family:'Orbitron';
+    letter-spacing:12px;
+    font-size:3rem;
+    margin-bottom:25px;
+}
+
+/* BUTTON */
+.action-btn{
+    background:transparent;
+    border:2px solid var(--gold);
+    color:var(--gold);
+    padding:14px 60px;
+    cursor:pointer;
+    font-family:'Orbitron';
+    font-weight:bold;
+    transition:.3s;
+    margin-bottom:25px;
+}
+.action-btn:hover{
+    background:var(--gold);
+    color:#000;
+    box-shadow:0 0 20px var(--gold);
+}
+
+/* LOGO TRANSPARENT REAL */
+.logo-container{
+    width:520px;
+    height:420px;
+    background-image:url('logo-transparent.png'); /* PNG شفاف واقعی */
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* FLOAT ANIMATION */
+@keyframes float{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0px);}
+}
+
+/* DOCUMENTATION OVERLAY */
+#docOverlay{
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.97);
+    z-index:100;
+    display:none;
+    overflow-y:auto;
+    padding:70px 20px;
+}
+.doc-content{
+    max-width:900px;
+    margin:0 auto;
+    color:white;
+    line-height:1.9;
+    text-align:left;
+}
+.highlight{
+    color:var(--gold);
+    font-weight:bold;
+}
+</style>
 </head>
+
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+<canvas id="matrixCanvas"></canvas>
 
-    <div class="main-ui">
-        <nav>
-            <div class="nav-links">
-                <a onclick="toggleDocs()">ABOUT</a>
-                <a onclick="toggleDocs()">TOKENOMICS</a>
-            </div>
-        </nav>
+<div class="main-ui">
 
-        <div class="circle-container">
-            <div class="gold-circle" style="color:var(--satoshi-blue)">SATOSHI</div>
-            <div style="color:var(--gold); font-size:2rem">+</div>
-            <div class="gold-circle" style="color:var(--dna-green)">DNA</div>
-            <div style="color:var(--gold); font-size:2rem">+</div>
-            <div class="gold-circle" style="color:var(--gold)">AI</div>
-        </div>
+<nav>
+    <div class="nav-links">
+        <a onclick="openDocs()">ABOUT</a>
+        <a onclick="openDocs()">TOKENOMICS</a>
+    </div>
+</nav>
 
-        <h1 class="brand-name">SATOSHIDNAAI</h1>
-        
-        <button class="action-btn" onclick="toggleDocs()">ENTER DOCUMENTATION</button>
+<div class="content-area">
 
-        <div class="logo-box">
-            <img src="logo.jpg" alt="SATDNAAI Logo">
-        </div>
+    <div class="circle-container">
+        <div class="gold-circle" style="color:var(--satoshi-blue)">SATOSHI</div>
+        <div style="color:var(--gold); font-size:2rem">+</div>
+        <div class="gold-circle" style="color:var(--dna-green)">DNA</div>
+        <div style="color:var(--gold); font-size:2rem">+</div>
+        <div class="gold-circle" style="color:var(--gold)">AI</div>
     </div>
 
-    <div id="docOverlay">
-        <span class="close-btn" onclick="toggleDocs()">×</span>
-        <div class="doc-content">
-            <h2 style="color:var(--gold); font-family:Orbitron;">What Does Satoshidnaai Mean?</h2>
-            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts...</p>
-            </div>
-    </div>
+    <h1 class="brand-name">SATOSHIDNAAI</h1>
 
-    <script>
-        function toggleDocs() {
-            const overlay = document.getElementById('docOverlay');
-            overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+    <button class="action-btn" onclick="openDocs()">ENTER DOCUMENTATION</button>
+
+    <!-- LOGO -->
+    <div class="logo-container"></div>
+
+</div>
+</div>
+
+<!-- DOC OVERLAY -->
+<div id="docOverlay">
+<span style="position:fixed;top:20px;right:40px;color:var(--gold);font-size:3rem;cursor:pointer;" onclick="closeDocs()">×</span>
+<div class="doc-content">
+<h2>What Does Satoshidnaai (SATDNAAI) Mean?</h2>
+<p><span class="highlight">Satoshi</span> = revolution of financial freedom</p>
+<p><span class="highlight">DNA</span> = core identity & evolution</p>
+<p><span class="highlight">AI</span> = intelligence & future</p>
+
+<h2>🔥 Tokenomics</h2>
+<p>
+Total Tax: 0.5%<br>
+Buy Tax: 0.5%<br>
+Sell Tax: 0.5%<br>
+Transfer Tax: 0%
+</p>
+</div>
+</div>
+
+<script>
+/* DOCS */
+function openDocs(){document.getElementById('docOverlay').style.display='block';}
+function closeDocs(){document.getElementById('docOverlay').style.display='none';}
+
+/* MATRIX EFFECT */
+const canvas=document.getElementById('matrixCanvas');
+const ctx=canvas.getContext('2d');
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+const fontSize=16;
+const columns=canvas.width/fontSize;
+const drops=Array(Math.floor(columns)).fill(1);
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00ff41";
+    ctx.font=fontSize+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text=chars.charAt(Math.floor(Math.random()*chars.length));
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+            drops[i]=0;
         }
+        drops[i]++;
+    }
+}
+setInterval(draw,35);
+</script>
 
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺ";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff41";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = char.charAt(Math.floor(Math.random() * char.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(draw, 35);
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-    </script>
 </body>
 </html>
