@@ -1,190 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Satoshidnaai | SATDNAAI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATDNAAI | Satoshi + DNA + AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffd700;
+            --matrix-green: #003300;
+            --glass: rgba(0, 0, 0, 0.85);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: black;
+            font-family: 'Rajdhani', sans-serif;
+        }
 
-<style>
-:root{
-  --bg:#05060a;
-  --glass:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.12);
-  --primary:#00ffd5;
-  --secondary:#7c7cff;
-  --text:#eaeaf0;
-  --muted:#a1a6c2;
-}
+        #matrixCanvas { position: fixed; top: 0; left: 0; z-index: 1; }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+        /* لایه اصلی */
+        .content-layer {
+            position: relative; z-index: 2;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex; flex-direction: column;
+            transition: 0.5s;
+        }
 
-body{
-  background:
-    radial-gradient(circle at 20% 10%,rgba(0,255,213,0.12),transparent 40%),
-    radial-gradient(circle at 80% 30%,rgba(124,124,255,0.12),transparent 45%),
-    #05060a;
-  color:var(--text);
-  overflow-x:hidden;
-}
+        /* Navbar */
+        nav {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 50px;
+            font-family: 'Orbitron', sans-serif;
+        }
 
-/* ===== HERO ===== */
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:relative;
-  padding:60px 10%;
-}
+        .nav-links a {
+            color: var(--gold); text-decoration: none;
+            margin: 0 15px; font-size: 0.8rem;
+            cursor: pointer; transition: 0.3s;
+        }
 
-.hero h1{
-  font-size:4rem;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--primary),var(--secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  letter-spacing:1px;
-}
+        .nav-links a:hover { text-shadow: 0 0 10px var(--gold); color: white; }
 
-.hero h2{
-  margin-top:18px;
-  font-weight:400;
-  color:var(--muted);
-  max-width:900px;
-}
+        /* Hero Section */
+        .hero {
+            flex: 1; display: flex;
+            justify-content: center; align-items: center;
+            flex-direction: column;
+        }
 
-/* ===== SECTIONS ===== */
-section{
-  padding:120px 10%;
-  position:relative;
-}
+        .circle-container { display: flex; align-items: center; gap: 20px; }
 
-.glass{
-  background:var(--glass);
-  backdrop-filter:blur(20px);
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:60px;
-  box-shadow:0 0 60px rgba(0,255,213,0.12);
-}
+        .gold-circle {
+            width: 150px; height: 150px;
+            border: 3px solid var(--gold); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--gold); font-family: 'Orbitron';
+            font-weight: 900; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
 
-/* ===== TITLES ===== */
-h3{
-  font-size:2.4rem;
-  margin-bottom:30px;
-  background:linear-gradient(90deg,var(--primary),var(--secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+        .plus-sign { color: var(--gold); font-size: 2rem; font-weight: bold; }
 
-/* ===== TEXT ===== */
-p{
-  color:var(--muted);
-  font-size:1.05rem;
-  line-height:2;
-  margin-bottom:22px;
-}
+        /* --- صفحه About (Overlay) --- */
+        #aboutPage {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--glass);
+            z-index: 100; display: none; /* در ابتدا مخفی */
+            overflow-y: auto;
+            backdrop-filter: blur(15px);
+            padding: 50px 0;
+        }
 
-/* ===== TAX GRID ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:25px;
-  margin-top:30px;
-}
+        .about-container {
+            max-width: 900px; margin: 0 auto;
+            padding: 40px; color: white;
+            border-left: 2px solid var(--gold);
+        }
 
-.box{
-  background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px;
-  text-align:center;
-}
+        .close-about {
+            position: fixed; top: 30px; right: 50px;
+            color: var(--gold); font-size: 2rem;
+            cursor: pointer; font-family: 'Orbitron';
+        }
 
-.box strong{
-  display:block;
-  color:var(--primary);
-  font-size:1.4rem;
-  margin-bottom:8px;
-}
+        .section-card {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 25px; margin-bottom: 30px;
+            border-radius: 10px;
+            transform: translateY(30px); opacity: 0;
+            transition: 0.8s all ease;
+        }
 
-/* ===== FOOTER ===== */
-footer{
-  padding:40px;
-  text-align:center;
-  color:var(--muted);
-  border-top:1px solid var(--border);
-  font-size:0.9rem;
-}
-</style>
+        .section-card.show { transform: translateY(0); opacity: 1; }
+
+        h2 { color: var(--gold); font-family: 'Orbitron'; margin-bottom: 15px; }
+        
+        .tax-table {
+            display: flex; justify-content: space-around;
+            margin-top: 20px; border-top: 1px solid var(--gold);
+            padding-top: 20px;
+        }
+
+        .tax-item { text-align: center; }
+        .tax-val { display: block; font-size: 2rem; font-weight: bold; color: var(--gold); }
+
+    </style>
 </head>
-
 <body>
 
-<div class="hero">
-  <div>
-    <h1>Satoshidnaai</h1>
-    <h2>SATDNAAI — Where Idea, Creativity, and Intelligence Become One</h2>
-  </div>
-</div>
+    <canvas id="matrixCanvas"></canvas>
 
-<section>
-<div class="glass">
+    <div class="content-layer" id="mainContent">
+        <nav>
+            <div style="color: var(--gold); font-family: 'Orbitron'; font-weight: 900; font-size: 1.4rem;">SATDNAAI</div>
+            <div class="nav-links">
+                <a onclick="openAbout()">ABOUT</a>
+                <a>TOKENOMICS</a>
+                <a>WHITEPAPER</a>
+            </div>
+            <a class="buy-now" style="border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; text-decoration: none; border-radius: 4px;">BUY NOW</a>
+        </nav>
 
-<h3>Satoshidnaai (SATDNAAI) – What Does It Mean?</h3>
+        <div class="hero">
+            <div class="circle-container">
+                <div class="gold-circle">SATOSHI</div>
+                <div class="plus-sign">+</div>
+                <div class="gold-circle">DNA</div>
+                <div class="plus-sign">+</div>
+                <div class="gold-circle">AI</div>
+            </div>
+            <h1 style="color: white; margin-top: 40px; font-family: 'Orbitron'; letter-spacing: 5px;">SATOSHIDNAAI</h1>
+            <button onclick="openAbout()" style="margin-top: 20px; background: transparent; border: 1px solid white; color: white; padding: 10px 30px; cursor: pointer; font-family: 'Orbitron';">LEARN MORE</button>
+        </div>
+    </div>
 
-<p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.</p>
+    <div id="aboutPage">
+        <span class="close-about" onclick="closeAbout()">X</span>
+        <div class="about-container">
+            <div class="section-card show">
+                <h2>What Does It Mean?</h2>
+                <p><strong>Satoshi</strong> represents a pure and revolutionary idea; a way of thinking that challenged old systems.</p>
+                <p><strong>DNA</strong> represents innate creativity and inner structure; the essence that makes the project alive.</p>
+                <p><strong>AI</strong> represents uniqueness, intelligence, and the future.</p>
+                <p style="margin-top: 15px; font-size: 1.2rem; color: var(--gold);">Satoshidnaai = Idea + Creativity + Intelligence</p>
+            </div>
 
-<p>Satoshi represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
+            <div class="section-card" id="card2">
+                <h2>Philosophy</h2>
+                <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values.</p>
+                <p>Technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
+            </div>
 
-<p>DNA represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
+            <div class="section-card" id="card3">
+                <h2>Tokenomics & Tax Policy</h2>
+                <p>To support long-term sustainability, we apply a very low and fully transparent 0.5% transaction tax.</p>
+                <div class="tax-table">
+                    <div class="tax-item"><span class="tax-val">0.5%</span>Buy Tax</div>
+                    <div class="tax-item"><span class="tax-val">0.5%</span>Sell Tax</div>
+                    <div class="tax-item"><span class="tax-val">0%</span>Transfer Tax</div>
+                </div>
+                <p style="margin-top: 20px; color: #00ff41; font-size: 0.9rem;">● No hidden taxes ● No non-transparent mechanisms ● Permanent & Transparent</p>
+            </div>
 
-<p>AI represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
+            <div class="section-card" id="card4">
+                <h2>Final Summary</h2>
+                <p>SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence. A project created to prove that memecoins can be fair, transparent, and long-lasting.</p>
+            </div>
+        </div>
+    </div>
 
-<p><strong>Satoshidnaai = SATDNAAI</strong><br>
-A place where idea, creativity, and intelligence become one.</p>
+    <script>
+        /* مدیریت صفحه About */
+        function openAbout() {
+            document.getElementById('aboutPage').style.display = 'block';
+            document.getElementById('mainContent').style.filter = 'blur(10px)';
+            // انیمیشن کارت‌ها
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.section-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => card.classList.add('show'), index * 200);
+                });
+            }, 100);
+        }
 
-<p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
+        function closeAbout() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('mainContent').style.filter = 'blur(0)';
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('show'));
+        }
 
-<p>This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey. SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.</p>
+        /* اسکریپت ماتریکس */
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const letters = "0101SATDNAAI";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
-<h3>Tokenomics and Tax Policy</h3>
-
-<p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax. This tax is designed to be almost unnoticeable for users and does not create pressure on buying, selling, or natural price growth.</p>
-
-<div class="grid">
-  <div class="box"><strong>Total Tax</strong>0.5%</div>
-  <div class="box"><strong>Buy Tax</strong>0.5%</div>
-  <div class="box"><strong>Sell Tax</strong>0.5%</div>
-  <div class="box"><strong>Transfer Tax</strong>0%</div>
-</div>
-
-<p>This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.</p>
-
-<p>There are no hidden taxes.<br>
-There are no non-transparent mechanisms in the contract.</p>
-
-<p><strong>This tax is permanent, transparent, and will never be increased.</strong></p>
-
-<h3>SATDNAAI Philosophy</h3>
-
-<p>SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly.</p>
-
-<p>For this reason, the interests of the team and the community are fully aligned, and the success of the team depends directly on the real growth of the project’s value.</p>
-
-<h3>Final Summary</h3>
-
-<p>SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence. A project created to prove that memecoins can be fair, transparent, and long-lasting.</p>
-
-</div>
-</section>
-
-<footer>
-© 2026 Satoshidnaai (SATDNAAI). All rights reserved.
-</footer>
-
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#003300";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 35);
+    </script>
 </body>
 </html>
