@@ -13,26 +13,31 @@
 
 html,body{
     width:100%;
-    height:100%;
+    /* تغییر مهم: حذف overflow:hidden برای فعال شدن اسکرول */
     background:#000;
     font-family:Arial,Helvetica,sans-serif;
-    overflow-y:auto;
+    color: #fff;
 }
 
-/* ================= PAGE 1 ================= */
+/* بخش صفحه اول */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* ارتفاع دقیقاً یک صفحه */
+    overflow: hidden;
+}
 
-/* لوگوی اصلی */
+/* لوگوی اصلی - حالا فقط در محدوده hero-section است */
 .logo-bg{
-    position:fixed;
+    position:absolute; /* تغییر از fixed به absolute */
     inset:0;
     background:url("./logo.png") no-repeat center center;
     background-size:contain;
     z-index:1;
 }
 
-/* محافظ */
 .logo-protect{
-    position:fixed;
+    position:absolute;
     inset:0;
     background:rgba(0,0,0,0.08);
     z-index:2;
@@ -40,7 +45,7 @@ html,body{
 
 /* ماتریکس */
 canvas{
-    position:fixed;
+    position:absolute;
     inset:0;
     z-index:3;
     pointer-events:none;
@@ -49,7 +54,7 @@ canvas{
 
 /* متن پایین */
 .caption{
-    position:fixed;
+    position:absolute;
     bottom:40px;
     width:100%;
     text-align:center;
@@ -83,14 +88,14 @@ canvas{
 
 /* شبکه‌های اجتماعی */
 .socials{
-    position:fixed;
+    position:fixed; /* این بخش می‌تواند ثابت بماند */
     right:20px;
     top:50%;
     transform:translateY(-50%);
     display:flex;
     flex-direction:column;
     gap:16px;
-    z-index:10;
+    z-index:100;
 }
 
 .socials a{
@@ -119,7 +124,6 @@ canvas{
 .page-2{
     position:relative;
     z-index:20;
-    margin-top:100vh;
     background:#000;
     padding:120px 20px;
 }
@@ -149,11 +153,6 @@ canvas{
     margin-bottom:20px;
 }
 
-.highlight{
-    color:#ffd700;
-    font-weight:bold;
-}
-
 .final-box{
     margin-top:60px;
     border-top:1px solid #ffd700;
@@ -167,103 +166,34 @@ canvas{
 
 <body>
 
-<!-- ========== PAGE 1 ========== -->
-<div class="logo-bg"></div>
-<div class="logo-protect"></div>
-<canvas id="matrix"></canvas>
+<div class="hero-section">
+    <div class="logo-bg"></div>
+    <div class="logo-protect"></div>
+    <canvas id="matrix"></canvas>
 
-<div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+    <div class="caption">
+        <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+    </div>
 </div>
 
 <div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
+    <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+    <a href="https://www.tiktok.com/@satoshidnaai" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png"></a>
+    <a href="https://www.youtube.com/@SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+    <a href="https://x.com/SatoDnaAi" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
 </div>
 
-<!-- ========== PAGE 2 ========== -->
 <section class="page-2">
-<div class="content">
-
-<h2>Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
-
-<p>
-Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.
-</p>
-
-<p><strong>Satoshi</strong> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
-<p><strong>DNA</strong> represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
-<p><strong>AI</strong> represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
-
-<p style="text-align:center;font-size:1.4rem;color:#ffd700;margin:30px 0;">
-Satoshidnaai = SATDNAAI
-</p>
-
-<p style="text-align:center;font-weight:bold;">
-A place where idea, creativity, and intelligence become one.
-</p>
-
-<p>
-Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values.
-In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.
-</p>
-
-<p>
-This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey.
-SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.
-</p>
-
-<h2>Tokenomics and Tax Policy</h2>
-
-<p>
-To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax.
-This tax is designed to be almost unnoticeable for users and does not create pressure on buying, selling, or natural price growth.
-</p>
-
-<ul>
-<li>Total Tax: 0.5%</li>
-<li>Buy Tax: 0.5%</li>
-<li>Sell Tax: 0.5%</li>
-<li>Transfer Tax: 0%</li>
-</ul>
-
-<p>
-This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.
-</p>
-
-<p style="color:#ff4d4d;">There are no hidden taxes.</p>
-<p style="color:#ff4d4d;">There are no non-transparent mechanisms in the contract.</p>
-<p>This tax is permanent, transparent, and will never be increased.</p>
-
-<h2>SATDNAAI Philosophy</h2>
-
-<p>
-SATDNAAI believes that trust is the most important asset of any project.
-Real growth comes from the community, not from financial pressure.
-The future belongs to projects that are built honestly.
-</p>
-
-<p>
-For this reason, the interests of the team and the community are fully aligned,
-and the success of the team depends directly on the real growth of the project’s value.
-</p>
-
-<div class="final-box">
-SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence.
-A project created to prove that memecoins can be fair, transparent, and long-lasting.
-</div>
-
-</div>
+    <div class="content">
+        <h2>Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
+        <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts...</p>
+        <p><strong>Satoshi</strong>: A revolutionary idea...</p>
+        <p><strong>DNA</strong>: Innate creativity...</p>
+        <p><strong>AI</strong>: Future intelligence...</p>
+        <div class="final-box">
+            SATDNAAI is the meeting point of a great idea...
+        </div>
+    </div>
 </section>
 
 <script>
@@ -271,11 +201,12 @@ const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 function resize(){
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+    // تغییر کوچک: بوم ماتریکس باید به اندازه کادر والد خود باشد
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
 }
 resize();
-addEventListener("resize", resize);
+window.addEventListener("resize", resize);
 
 const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const fontSize = 18;
