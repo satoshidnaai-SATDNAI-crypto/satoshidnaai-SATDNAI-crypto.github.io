@@ -2,113 +2,161 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI — Satoshi's Idea Reborn With AI</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SATDNAI</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  background:black;
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:black;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+
+/* ===== Layout ===== */
+.section{
+  position:relative;
+  width:100%;
+  height:100vh;
   overflow:hidden;
-  font-family:Arial,Helvetica,sans-serif;
-  color:white;
+}
+
+/* ===== Page 1 ===== */
+.hero{
+  background:black;
+}
+
+.hero .logo-bg{
+  position:absolute;
+  inset:0;
+  background:url("logo.jpg") no-repeat center center;
+  background-size:contain;
+  z-index:1;
+}
+
+.hero .logo-protect{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.05);
+  z-index:2;
 }
 
 #matrix{
-  position:fixed;
-  top:0;
-  left:0;
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:.25;
+}
+
+.caption{
+  position:absolute;
+  bottom:40px;
   width:100%;
-  height:100%;
-  z-index:-1;
-}
-
-.content{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
   text-align:center;
-  padding:40px;
+  z-index:5;
+  animation:float 4s ease-in-out infinite;
 }
 
-h1{
-  font-size:64px;
-  letter-spacing:6px;
-  margin-bottom:20px;
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
 }
 
-p{
-  max-width:900px;
-  font-size:20px;
-  line-height:1.6;
-  color:#b5f5d5;
+.caption span{font-size:24px;color:#8fd3ff}
+
+/* ===== Page 2 ===== */
+#bitcoinSection{
+  background:black;
 }
 
-.button{
-  margin-top:30px;
-  padding:14px 36px;
-  border-radius:40px;
-  background:linear-gradient(90deg,#00ffc6,#9cff00);
-  color:black;
-  text-decoration:none;
-  font-weight:bold;
-  transition:0.3s;
+#bitcoinCanvas{
+  position:absolute;
+  inset:0;
 }
 
-.button:hover{
-  transform:scale(1.05);
+.section-title{
+  position:absolute;
+  top:40px;
+  width:100%;
+  text-align:center;
+  font-size:36px;
+  color:gold;
+  z-index:3;
+  text-shadow:0 0 18px rgba(255,215,0,.9);
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
+<!-- PAGE 1 -->
+<section class="section hero">
+  <div class="logo-bg"></div>
+  <div class="logo-protect"></div>
+  <canvas id="matrix"></canvas>
+  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
+</section>
 
-<div class="content">
-  <h1>SATDNAI</h1>
-  <p>
-    SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin, now reimagined and revived through the power of artificial intelligence.
-  </p>
-  <a class="button" href="#">Coming Soon on Solana</a>
-</div>
+<!-- PAGE 2 -->
+<section class="section" id="bitcoinSection">
+  <div class="section-title">BITCOIN RAIN</div>
+  <canvas id="bitcoinCanvas"></canvas>
+</section>
 
 <script>
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+// MATRIX
+const m=document.getElementById("matrix"),mctx=m.getContext("2d");
+function resizeM(){m.width=innerWidth;m.height=innerHeight}
+resizeM();addEventListener("resize",resizeM);
 
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
+const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
+let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
 
-const letters = "0101 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
-const fontSize = 16;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(0);
-
-function draw(){
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle = "#00ff88";
-  ctx.font = fontSize + "px monospace";
-
+setInterval(()=>{
+  mctx.fillStyle="rgba(0,0,0,.05)";
+  mctx.fillRect(0,0,m.width,m.height);
+  mctx.fillStyle="#FFD700";
+  mctx.font=font+"px monospace";
   for(let i=0;i<drops.length;i++){
-    const text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-      drops[i] = 0;
-    }
+    let c=chars[Math.floor(Math.random()*chars.length)];
+    mctx.fillText(c,i*font,drops[i]*font);
+    if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
     drops[i]++;
   }
+},33);
+
+// BITCOIN RAIN
+const b=document.getElementById("bitcoinCanvas"),bctx=b.getContext("2d");
+function resizeB(){b.width=innerWidth;b.height=innerHeight}
+resizeB();addEventListener("resize",resizeB);
+
+const img=new Image();
+img.src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg";
+let coins=[];
+
+function spawn(){
+  coins.push({
+    x:Math.random()*b.width,
+    y:-60,
+    s:24+Math.random()*26,
+    v:1+Math.random()*3,
+    r:Math.random()*Math.PI,
+    spin:(Math.random()-.5)*.05
+  });
 }
-setInterval(draw, 33);
+
+function draw(){
+  bctx.clearRect(0,0,b.width,b.height);
+  if(Math.random()<.06)spawn();
+  for(let i=0;i<coins.length;i++){
+    let c=coins[i];
+    bctx.save();
+    bctx.translate(c.x,c.y);
+    bctx.rotate(c.r);
+    bctx.drawImage(img,-c.s/2,-c.s/2,c.s,c.s);
+    bctx.restore();
+    c.y+=c.v;c.r+=c.spin;
+    if(c.y>b.height+60){coins.splice(i,1);i--}
+  }
+  requestAnimationFrame(draw);
+}
+img.onload=draw;
 </script>
 
 </body>
