@@ -2,179 +2,238 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SATDNAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SATOSHIDNAAI | SATDNAAI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root{
+    --gold:#ffd700;
+    --blue:#00d4ff;
+    --green:#39ff14;
 }
 
+*{margin:0;padding:0;box-sizing:border-box}
 html,body{
     width:100%;
     height:100%;
-    overflow:hidden;
+    scroll-behavior:smooth;
     background:#000;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:'Rajdhani',sans-serif;
+    color:#fff;
 }
 
-/* لوگوی اصلی */
-.logo-bg{
-    position:fixed;
-    inset:0;
-    background:url("./logo.png") no-repeat center center;
-    background-size:contain;
-    z-index:1;
-}
-
-/* محافظ خیلی ملایم */
-.logo-protect{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.08);
-    z-index:2;
-}
-
-/* ماتریکس */
+/* MATRIX */
 canvas{
     position:fixed;
     inset:0;
-    z-index:3;
-    pointer-events:none;
-    opacity:0.25;
+    z-index:1;
+    opacity:0.35;
 }
 
-/* متن پایین */
-.caption{
+/* NAV */
+nav{
     position:fixed;
-    bottom:40px;
+    top:0;
+    right:0;
     width:100%;
-    text-align:center;
+    display:flex;
+    justify-content:flex-end;
+    padding:20px 50px;
     z-index:5;
-    animation: float 4s ease-in-out infinite;
+}
+nav a{
+    margin-left:25px;
+    color:var(--gold);
+    text-decoration:none;
+    font-family:'Orbitron';
+    font-size:0.8rem;
+    cursor:pointer;
+}
+nav .buy{
+    border:1px solid var(--gold);
+    padding:5px 15px;
+    border-radius:4px;
 }
 
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
-}
-
-.caption span{
-    font-size:24px;
-    color:#8fd3ff;
-    letter-spacing:1px;
-}
-
-.solana{
-    font-weight:bold;
-    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.9) }
-}
-
-/* شبکه‌های اجتماعی */
-.socials{
-    position:fixed;
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
+/* SECTIONS */
+section{
+    min-height:100vh;
+    position:relative;
+    z-index:2;
     display:flex;
     flex-direction:column;
-    gap:16px;
-    z-index:10;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.75);
+    padding:120px 20px 80px;
 }
 
-.socials a{
-    width:46px;
-    height:46px;
+/* PAGE 1 */
+.circle-container{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:50px;
+}
+.gold-circle{
+    width:150px;height:150px;
+    border:3px solid var(--gold);
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,0.08);
-    transition:0.3s;
+    font-family:'Orbitron';
+    font-weight:900;
+    background:rgba(0,0,0,0.8);
+    box-shadow:0 0 25px rgba(255,215,0,.4);
+}
+.plus{
+    color:var(--gold);
+    font-size:2.5rem;
+    font-weight:bold;
 }
 
-.socials a:hover{
-    background:rgba(0,255,163,0.3);
-    transform:scale(1.15);
+.txt-satoshi{color:var(--blue);text-shadow:0 0 10px var(--blue)}
+.txt-dna{color:var(--green);text-shadow:0 0 10px var(--green)}
+.txt-ai{color:var(--gold);text-shadow:0 0 10px var(--gold)}
+
+.brand{
+    font-family:'Orbitron';
+    letter-spacing:15px;
+    font-size:3.5rem;
+    margin-bottom:40px;
 }
 
-.socials img{
-    width:26px;
-    height:26px;
+.btn{
+    background:none;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:14px 60px;
+    font-family:'Orbitron';
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+.btn:hover{
+    background:var(--gold);
+    color:#000;
+    box-shadow:0 0 30px var(--gold);
+}
+
+/* PAGE 2 */
+.content{
+    max-width:900px;
+}
+h2{
+    color:var(--gold);
+    font-family:'Orbitron';
+    margin:50px 0 20px;
+    border-bottom:1px solid rgba(255,215,0,.3);
+    padding-bottom:10px;
+}
+h3{color:var(--gold);margin:25px 0 10px}
+p{margin-bottom:15px;font-size:1.1rem;line-height:1.7}
+ul{margin-left:20px;margin-bottom:15px}
+
+/* FOOTER NOTE */
+.footer-note{
+    margin-top:60px;
+    border-top:1px solid var(--gold);
+    padding-top:30px;
+    text-align:center;
+    font-style:italic;
+    font-size:1.3rem;
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-bg"></div>
-<div class="logo-protect"></div>
-
 <canvas id="matrix"></canvas>
 
-<div class="caption">
-    <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
+<nav>
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#token">TOKENOMICS</a>
+    <a class="buy">BUY NOW</a>
+</nav>
+
+<!-- PAGE 1 -->
+<section id="home">
+    <div class="circle-container">
+        <div class="gold-circle txt-satoshi">SATOSHI</div>
+        <div class="plus">+</div>
+        <div class="gold-circle txt-dna">DNA</div>
+        <div class="plus">+</div>
+        <div class="gold-circle txt-ai">AI</div>
+    </div>
+    <h1 class="brand">SATOSHIDNAAI</h1>
+    <a href="#about"><button class="btn">ENTER DOCUMENTATION</button></a>
+</section>
+
+<!-- PAGE 2 -->
+<section id="about">
+<div class="content">
+
+<h2>What Does SATDNAAI Mean?</h2>
+<p><strong>Satoshi</strong> represents revolutionary thinking and financial freedom.</p>
+<p><strong>DNA</strong> is the living structure and creative essence of the project.</p>
+<p><strong>AI</strong> symbolizes intelligence, uniqueness, and the future.</p>
+
+<p style="text-align:center;color:var(--gold);font-size:1.4rem;margin:30px 0;">
+SATOSHIDNAAI = SATDNAAI
+</p>
+
+<h2 id="token">🔥 Tokenomics & Tax Policy</h2>
+<p>Total Tax: <strong>0.5%</strong> (Buy / Sell only)</p>
+<ul>
+<li>Development</li>
+<li>Ecosystem Growth</li>
+<li>Long-term Sustainability</li>
+</ul>
+
+<p style="color:#ff4d4d;">❌ No hidden taxes</p>
+<p style="color:#ff4d4d;">❌ No contract manipulation</p>
+
+<h2>🧠 SATDNAAI Philosophy</h2>
+<ul>
+<li>Trust above hype</li>
+<li>Community-driven growth</li>
+<li>Transparency first</li>
+</ul>
+
+<div class="footer-note">
+SATDNAAI is where idea, creativity, and intelligence become one.
 </div>
 
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-    </a>
-    <a href="https://www.tiktok.com/@satoshidnaai" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-    </a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    </a>
-    <a href="https://x.com/SatoDnaAi" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png">
-    </a>
 </div>
+</section>
 
 <script>
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener("resize",resize);
 
-function resize(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
-
-const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(1);
+const chars="01SATOSHI+DNA+AIΞ₿";
+const font=16;
+let cols=Math.floor(canvas.width/font);
+let drops=Array(cols).fill(1);
 
 function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#FFD700";
-    ctx.font = fontSize + "px monospace";
-
-    for(let i=0;i<drops.length;i++){
-        const char = chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
-        }
-        drops[i]++;
-    }
-}
-
-setInterval(draw, 33);
+ctx.fillStyle="rgba(0,0,0,.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#004400";
+ctx.font=font+"px monospace";
+for(let i=0;i<drops.length;i++){
+const c=chars[Math.floor(Math.random()*chars.length)];
+ctx.fillText(c,i*font,drops[i]*font);
+if(drops[i]*font>canvas.height&&Math.random()>0.975)drops[i]=0;
+drops[i]++;
+}}
+setInterval(draw,35);
 </script>
 
 </body>
