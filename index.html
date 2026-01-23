@@ -1,139 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | OFFICIAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --gold: #ffd700; 
-            --satoshi-blue: #00d4ff;
-            --dna-green: #39ff14;
-            --matrix-glow: #00ff41;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Rajdhani', sans-serif; }
-        
-        #matrixCanvas { 
-            position: fixed; top: 0; left: 0; z-index: 1; 
-            filter: saturate(2) contrast(1.2);
-        }
+<meta charset="UTF-8">
+<title>SATDNAI | DNA MATRIX MODE</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #000; }
 
-        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; background: rgba(0,0,0,0.2); overflow-y: auto; }
-        
-        nav { display: flex; justify-content: flex-end; padding: 20px 50px; }
-        .nav-links a { color: var(--gold); text-decoration: none; margin-left: 25px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; }
+    #matrix { position: fixed; inset: 0; z-index: 1; }
 
-        .content-area { flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 30px; }
+    .content-overlay {
+        position: relative;
+        z-index: 10;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
 
-        .circle-container { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
-        .gold-circle {
-            width: 140px; height: 140px; border: 2px solid var(--gold); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-family: 'Orbitron'; font-weight: 900; background: rgba(0,0,0,0.8);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-        }
+    /* حذف کامل پس‌زمینه سیاه لوگو */
+    .logo-box {
+        width: 480px;
+        mix-blend-mode: screen; 
+        filter: contrast(1.2) brightness(1.2);
+        animation: dna-float 5s ease-in-out infinite;
+    }
 
-        .brand-name { color: white; font-family: 'Orbitron'; letter-spacing: 12px; font-size: 3rem; margin-bottom: 25px; }
-        
-        .action-btn { 
-            background: transparent; border: 2px solid var(--gold); color: var(--gold); 
-            padding: 12px 50px; cursor: pointer; font-family: 'Orbitron'; 
-            font-weight: bold; transition: 0.3s; margin-bottom: 20px;
-        }
+    .logo-box img { width: 100%; height: auto; }
 
-        /* بخش اصلاح شده لوگو برای حذف ۱۰۰٪ سیاهی */
-        .logo-container {
-            width: 550px;
-            height: 400px;
-            background-image: url('logo.jpg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* این متد باعث می‌شود رنگ سیاه کاملاً ناپدید شده و فقط بخش‌های روشن تصویر دیده شوند */
-            mix-blend-mode: lighten; 
-            filter: brightness(1.2) contrast(1.1);
-            position: relative;
-        }
+    @keyframes dna-float {
+        0%, 100% { transform: translateY(0) rotate(-1deg); }
+        50% { transform: translateY(-20px) rotate(1deg); }
+    }
 
-        #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
-        .doc-content { max-width: 800px; margin: 0 auto; color: white; line-height: 1.8; text-align: left; }
-        .highlight { color: var(--gold); font-weight: bold; }
-    </style>
+    .caption {
+        margin-top: 20px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 20px;
+        color: #8fd3ff;
+        text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+    }
+</style>
 </head>
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+<canvas id="matrix"></canvas>
 
-    <div class="main-ui">
-        <nav>
-            <div class="nav-links">
-                <a onclick="openDocs()">ABOUT</a>
-                <a onclick="openDocs()">TOKENOMICS</a>
-            </div>
-        </nav>
-
-        <div class="content-area">
-            <div class="circle-container">
-                <div class="gold-circle" style="color:var(--satoshi-blue)">SATOSHI</div>
-                <div style="color:var(--gold); font-size:2rem">+</div>
-                <div class="gold-circle" style="color:var(--dna-green)">DNA</div>
-                <div style="color:var(--gold); font-size:2rem">+</div>
-                <div class="gold-circle" style="color:var(--gold)">AI</div>
-            </div>
-            
-            <h1 class="brand-name">SATOSHIDNAAI</h1>
-            
-            <button class="action-btn" onclick="openDocs()">ENTER DOCUMENTATION</button>
-
-            <div class="logo-container"></div>
-        </div>
+<div class="content-overlay">
+    <div class="logo-box">
+        <img src="logo.png" alt="SATDNAI">
     </div>
-
-    <div id="docOverlay">
-        <span style="position:fixed; top:20px; right:40px; color:var(--gold); font-size:3rem; cursor:pointer;" onclick="closeDocs()">×</span>
-        <div class="doc-content">
-            <h2>What Does Satoshidnaai (SATDNAAI) Mean?</h2>
-            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project:</p>
-            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
-            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that keeps the project alive, dynamic, evolving, and unique.</p>
-            <p><span class="highlight">AI</span> symbolizes uniqueness, intelligence, and the future; a force that pushes the boundaries of what is possible and drives the project forward.</p>
-            <p style="text-align:center; color:var(--gold); font-size:1.5rem; margin:20px 0;">📌 Satoshidnaai = SATDNAAI</p>
-            <p>Satoshidnaai is more than a memecoin; it reflects a new mindset in the crypto world, built on transparency, financial fairness, and community-driven values.</p>
-            
-            <h2>🔥 Tokenomics & Tax Policy</h2>
-            <p>Total Tax: 0.5%<br>Buy Tax: 0.5%<br>Sell Tax: 0.5%<br>Transfer Tax: 0%</p>
-        </div>
+    <div class="caption">
+        <span>GENETIC ALGORITHM INITIALIZED</span>
     </div>
+</div>
 
-    <script>
-        function openDocs() { document.getElementById('docOverlay').style.display = 'block'; }
-        function closeDocs() { document.getElementById('docOverlay').style.display = 'none'; }
+<script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    let width, height;
+    const fontSize = 16;
+    const chars = "01ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    // پارامترهای DNA
+    let columns;
+    let frame = 0;
 
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ中文符号";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+    function init() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        columns = Math.floor(width / fontSize);
+    }
 
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function draw() {
+        // افکت محو شدن برای ایجاد دنباله نوری
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.font = fontSize + "px monospace";
+        frame++;
+
+        for (let i = 0; i < columns; i++) {
+            // محاسبه مسیر مارپیچ DNA با استفاده از تابع سینوسی
+            // رشته اول
+            const y1 = (Math.sin(frame * 0.05 + i * 0.2) * 100) + (height / 2);
+            // رشته دوم (با اختلاف فاز ۱۸۰ درجه)
+            const y2 = (Math.sin(frame * 0.05 + i * 0.2 + Math.PI) * 100) + (height / 2);
+
+            const char1 = chars[Math.floor(Math.random() * chars.length)];
+            const char2 = chars[Math.floor(Math.random() * chars.length)];
+
+            // رسم رشته اول (سبز ماتریکسی)
             ctx.fillStyle = "#00ff41";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+            ctx.fillText(char1, i * fontSize, y1 + (Math.random() * 50));
+
+            // رسم رشته دوم (آبی/طلایی برای هارمونی با لوگو)
+            ctx.fillStyle = i % 2 === 0 ? "#FFD700" : "#00d4ff";
+            ctx.fillText(char2, i * fontSize, y2 - (Math.random() * 50));
+
+            // درخشش تصادفی کاراکترها
+            if(Math.random() > 0.98) {
+                ctx.fillStyle = "#fff";
+                ctx.fillText(char1, i * fontSize, y1);
             }
         }
-        setInterval(draw, 35);
-    </script>
+    }
+
+    window.addEventListener("resize", init);
+    init();
+    setInterval(draw, 30);
+</script>
 </body>
 </html>
