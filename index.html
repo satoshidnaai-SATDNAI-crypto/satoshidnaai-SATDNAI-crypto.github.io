@@ -3,44 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI (SATDNAAI)</title>
+    <title>SATOSHI DNA AI | Layout Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #ffd700; }
+        :root { 
+            --gold: #ffd700; 
+            --satoshi-blue: #00d4ff;
+            --dna-green: #39ff14;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Rajdhani', sans-serif; }
         
-        #matrixCanvas { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.5; }
+        #matrixCanvas { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.4; }
 
-        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; background: rgba(0,0,0,0.75); transition: 0.5s; }
+        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; background: rgba(0,0,0,0.75); }
         
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 50px; }
-        .nav-links a { color: var(--gold); text-decoration: none; margin-left: 30px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; }
+        /* هدر نوار ناوبری */
+        nav { 
+            display: flex; 
+            justify-content: flex-end; 
+            padding: 20px 50px; 
+        }
+        .nav-links a { color: var(--gold); text-decoration: none; margin-left: 25px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; }
 
-        .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .circle-wrap { display: flex; align-items: center; gap: 20px; }
-        .g-circle { width: 150px; height: 150px; border: 3px solid var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--gold); font-family: 'Orbitron'; font-weight: 900; box-shadow: 0 0 20px var(--gold); }
-        .plus { color: var(--gold); font-size: 2.2rem; font-weight: bold; }
-
-        /* Full Documentation Overlay */
-        #aboutPage {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 100; display: none;
-            overflow-y: auto; backdrop-filter: blur(15px); padding: 50px 20px;
+        /* بخش اصلی که دایره‌ها در آن هستند */
+        .content-area { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            /* جابجایی کل محتوا به سمت بالا */
+            padding-top: 50px; 
         }
 
-        .content-box { max-width: 850px; margin: 0 auto; color: #ffffff; line-height: 1.6; }
-        .close-btn { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 2.5rem; cursor: pointer; font-family: 'Orbitron'; z-index: 110; }
-
-        h2 { color: var(--gold); font-family: 'Orbitron'; font-size: 1.6rem; margin-top: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 10px; }
-        p { margin-bottom: 15px; font-size: 1.1rem; }
-        .highlight { color: var(--gold); font-weight: bold; }
+        /* چیدمان دایره‌ها - ۵ سانت بالاتر */
+        .circle-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px;
+            margin-bottom: 60px; /* فاصله دایره‌ها از اسم پایین */
+        }
         
-        .tax-section { background: rgba(255, 215, 0, 0.05); border: 1px solid var(--gold); padding: 25px; border-radius: 10px; margin: 30px 0; }
-        .tax-list { list-style: none; margin: 15px 0; }
-        .tax-list li { margin-bottom: 8px; font-size: 1.1rem; }
+        .gold-circle {
+            width: 160px; height: 160px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
 
-        .final-summary { border-top: 1px solid var(--gold); margin-top: 50px; padding-top: 30px; font-size: 1.3rem; text-align: center; font-style: italic; }
+        /* رنگ‌های اختصاصی شما */
+        .txt-satoshi { color: var(--satoshi-blue); text-shadow: 0 0 10px var(--satoshi-blue); }
+        .txt-dna { color: var(--dna-green); text-shadow: 0 0 10px var(--dna-green); }
+        .txt-ai { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
+        .plus { color: var(--gold); font-size: 2.5rem; font-weight: bold; }
+
+        /* نام برند زیر دایره‌ها */
+        .brand-name { 
+            color: white; 
+            font-family: 'Orbitron'; 
+            letter-spacing: 15px; 
+            font-size: 3.5rem; 
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            margin-bottom: 40px;
+        }
+
+        .action-btn { 
+            background: none; border: 1px solid var(--gold); color: var(--gold); 
+            padding: 12px 50px; cursor: pointer; font-family: 'Orbitron'; 
+            font-weight: bold; transition: 0.3s; 
+        }
+        .action-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 30px var(--gold); }
+
+        /* استایل صفحه مستندات */
+        #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
+        .doc-content { max-width: 800px; margin: 0 auto; color: white; line-height: 1.8; }
+        .close-x { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 3rem; cursor: pointer; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -49,103 +89,53 @@
 
     <div class="main-ui" id="mainUI">
         <nav>
-            <div style="color:var(--gold); font-family:'Orbitron'; font-weight:900; font-size:1.6rem;">SATDNAAI</div>
             <div class="nav-links">
-                <a onclick="showDoc()">ABOUT</a>
-                <a onclick="showDoc()">TOKENOMICS</a>
-                <a style="border:1px solid var(--gold); padding:5px 15px; border-radius:3px;">BUY NOW</a>
+                <a onclick="openDocs()">ABOUT</a>
+                <a onclick="openDocs()">TOKENOMICS</a>
+                <a style="border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px;">BUY NOW</a>
             </div>
         </nav>
-        <div class="hero">
-            <div class="circle-wrap">
-                <div class="g-circle">SATOSHI</div>
+
+        <div class="content-area">
+            <div class="circle-container">
+                <div class="gold-circle txt-satoshi">SATOSHI</div>
                 <div class="plus">+</div>
-                <div class="g-circle">DNA</div>
+                <div class="gold-circle txt-dna">DNA</div>
                 <div class="plus">+</div>
-                <div class="g-circle">AI</div>
+                <div class="gold-circle txt-ai">AI</div>
             </div>
-            <h1 style="color:white; margin-top:50px; font-family:'Orbitron'; letter-spacing:10px; font-size:3.2rem; text-shadow: 0 0 20px rgba(255,255,255,0.2);">SATOSHIDNAAI</h1>
-            <button onclick="showDoc()" style="margin-top:30px; background:none; border:1px solid var(--gold); color:var(--gold); padding:12px 45px; cursor:pointer; font-family:'Orbitron'; font-weight:bold; transition:0.3s;">ENTER DOCUMENTATION</button>
+
+            <h1 class="brand-name">SATOSHIDNAAI</h1>
+            <button class="action-btn" onclick="openDocs()">ENTER DOCUMENTATION</button>
         </div>
     </div>
 
-    <div id="aboutPage">
-        <div class="close-btn" onclick="hideDoc()">×</div>
-        <div class="content-box">
-            
-            <h2>What Does Satoshidnaai (SATDNAAI) Mean?</h2>
-            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project:</p>
-            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
-            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that keeps the project alive, dynamic, evolving, and unique.</p>
-            <p><span class="highlight">AI</span> symbolizes uniqueness, intelligence, and the future; a force that pushes the boundaries of what is possible and drives the project forward.</p>
-            
-            <p style="text-align:center; font-size: 1.4rem; margin: 30px 0; font-family: 'Orbitron'; color: var(--gold);">📌 Satoshidnaai = SATDNAAI</p>
-            <p style="text-align:center; font-weight: bold; margin-bottom: 30px;">A place where idea, creativity, and intelligence become one.</p>
-
-            <p>Satoshidnaai is more than a memecoin; it reflects a new mindset in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language of trust, innovation, and sustainable growth.</p>
-            <p>This project is designed to create a healthy and lasting ecosystem—one where users are not merely traders, but an essential part of the project’s identity and journey. SATDNAAI aims to prove that a project can be both simple and people-driven, while also being deep, intelligent, and forward-looking.</p>
-
-            <h2>🔥 Tokenomics & Tax Policy (Minimal and Transparent)</h2>
-            <p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax, designed to be nearly unnoticeable for users and to avoid any negative impact on buying, selling, or natural price growth.</p>
-
-            <div class="tax-section">
-                <p class="highlight">✅ Tax Details:</p>
-                <ul class="tax-list">
-                    <li>Total Tax: 0.5%</li>
-                    <li>Buy Tax: 0.5%</li>
-                    <li>Sell Tax: 0.5%</li>
-                    <li>Transfer Tax: 0%</li>
-                </ul>
-                <p>This tax is used exclusively for:</p>
-                <ul class="tax-list">
-                    <li>● Technical development of the project</li>
-                    <li>● Ecosystem growth</li>
-                    <li>● Maintaining long-term sustainability and continuity</li>
-                </ul>
-                <p style="color: #ff4d4d; margin-top: 15px;">❌ No hidden taxes</p>
-                <p style="color: #ff4d4d;">❌ No non-transparent withdrawals in the contract</p>
-                <p style="margin-top: 10px; font-weight: bold; color: #00ff41;">This tax is permanent, transparent, and non-increasable.</p>
-            </div>
-
-            <h2>🧠 SATDNAAI Philosophy</h2>
-            <p>SATDNAAI believes that:</p>
-            <p>● Trust is the most valuable asset of any project</p>
-            <p>● Real growth comes from the community, not from financial pressure</p>
-            <p>● Lasting projects are built with honesty and integrity</p>
-            <p>For this reason, the interests of the team and the community are fully aligned, and the success of the team depends solely on the real growth of the project’s value.</p>
-
-            <div class="final-summary">
-                <h2 style="border:none; margin:0;">🌍 Final Summary</h2>
-                <p>SATDNAAI is the intersection of a great idea, living creativity, and unmatched intelligence— a project created to prove that memecoins can be fair, transparent, and sustainable.</p>
-            </div>
-
+    <div id="docOverlay">
+        <span class="close-x" onclick="closeDocs()">×</span>
+        <div class="doc-content">
+            <h2 style="color:var(--gold); font-family:'Orbitron'; margin-bottom:20px;">What Does Satoshidnaai (SATDNAAI) Mean?</h2>
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project...</p>
+            <p style="margin-top:40px; border-top:1px solid var(--gold); padding-top:20px; font-style:italic; text-align:center;">
+                SATDNAAI is the intersection of a great idea, living creativity, and unmatched intelligence.
+            </p>
         </div>
     </div>
 
     <script>
-        function showDoc() {
-            document.getElementById('aboutPage').style.display = 'block';
-            document.getElementById('mainUI').style.opacity = '0';
-        }
-        function hideDoc() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('mainUI').style.opacity = '1';
-        }
+        function openDocs() { document.getElementById('docOverlay').style.display = 'block'; }
+        function closeDocs() { document.getElementById('docOverlay').style.display = 'none'; }
 
+        /* Matrix Animation */
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const letters = "0101SATOSHI+DNA+AI";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
-
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#003300";
-            ctx.font = fontSize + "px monospace";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#003b00"; ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
