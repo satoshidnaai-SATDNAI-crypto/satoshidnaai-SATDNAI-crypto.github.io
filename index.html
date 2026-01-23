@@ -1,78 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #ffd700; --satoshi-blue: #00d4ff; --dna-green: #39ff14; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Rajdhani', sans-serif; }
-        
-        #matrixCanvas { position: fixed; top: 0; left: 0; z-index: 1; }
+<meta charset="UTF-8">
+<title>SATDNAI — Satoshi’s Idea Reborn With AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; align-items: center; background: transparent; overflow-y: auto; }
-        
-        .brand-name { color: white; font-family: 'Orbitron'; letter-spacing: 12px; font-size: 3rem; margin: 30px 0; text-shadow: 0 0 10px #000; }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    background:black;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+}
 
-        /* --- حذف ۱۰۰ درصد پس‌زمینه سیاه --- */
-        .logo-box {
-            width: 450px;
-            margin-top: 10px;
-            /* این دستور جادویی است: هر پیکسلی که سیاه باشد را کاملاً شفاف می‌کند */
-            mix-blend-mode: lighten; 
-            filter: contrast(1.1) brightness(1.2);
-            position: relative;
-        }
+/* Matrix background */
+#matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+}
 
-        .logo-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+/* Content */
+.content{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
 
-        /* جلوگیری از ایجاد کادر دور عکس در حالت فوکوس */
-        img:focus { outline: none; }
-    </style>
+h1{
+    font-size:64px;
+    letter-spacing:6px;
+    margin-bottom:20px;
+}
+
+p{
+    max-width:900px;
+    font-size:20px;
+    line-height:1.6;
+    color:#b5f5d5;
+}
+
+.button{
+    margin-top:30px;
+    padding:14px 36px;
+    border-radius:40px;
+    background:linear-gradient(90deg,#00ffcc,#9cff00);
+    color:black;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+.button:hover{transform:scale(1.05);}
+</style>
 </head>
+
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+<canvas id="matrix"></canvas>
 
-    <div class="main-ui">
-        <h1 class="brand-name">SATOSHIDNAAI</h1>
-        
-        <div class="logo-box">
-            <img src="logo.png" alt="SATDNAAI Logo">
-        </div>
-    </div>
+<div class="content">
+    <h1>SATDNAI</h1>
+    <p>
+        SATDNAI represents the rebirth of Satoshi’s idea — a concept originally crafted years ago by the creator of Bitcoin, now reimagined through the power of artificial intelligence.
+    </p>
+    <a class="button">Coming Soon on Solana</a>
+</div>
 
-    <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+<script>
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-        const char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺ";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
 
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff41";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = char.charAt(Math.floor(Math.random() * char.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
+const letters = "010101 SATDNAI AI BLOCKCHAIN SOLANA CRYPTO ";
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(0);
+
+function draw(){
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#00ff88";
+    ctx.font = fontSize + "px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text = letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.98){
+            drops[i] = 0;
         }
-        setInterval(draw, 35);
-        window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-    </script>
+        drops[i] += 0.3;
+    }
+}
+
+setInterval(draw, 33);
+
+window.addEventListener("resize", () => {
+    resize();
+});
+</script>
+
 </body>
 </html>
