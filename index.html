@@ -6,157 +6,135 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:black;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-
-/* ===== Layout ===== */
-.section{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-/* ===== Page 1 ===== */
-.hero{
-  background:black;
+/* لوگوی اصلی */
+.logo-bg{
+    position:fixed;
+    inset:0;
+    background:url("logo.jpg") no-repeat center center;
+    background-size: contain;
+    z-index:1;
 }
 
-.hero .logo-bg{
-  position:absolute;
-  inset:0;
-  background:url("logo.jpg") no-repeat center center;
-  background-size:contain;
-  z-index:1;
+/* محافظ ملایم */
+.logo-protect{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.05);
+    z-index:2;
 }
 
-.hero .logo-protect{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.05);
-  z-index:2;
+/* ماتریکس */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    opacity:0.22;
 }
 
-#matrix{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  opacity:.25;
-}
-
-.caption{
-  position:absolute;
-  bottom:40px;
-  width:100%;
-  text-align:center;
-  z-index:5;
-  animation:float 4s ease-in-out infinite;
+/* نوار موشن متن */
+.banner{
+    position:fixed;
+    bottom:60px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 28px;
+    border-radius:50px;
+    background:rgba(0,0,0,0.6);
+    z-index:5;
+    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+    0%,100%{transform:translate(-50%,0)}
+    50%{transform:translate(-50%,-12px)}
 }
 
-.caption span{font-size:24px;color:#8fd3ff}
-
-/* ===== Page 2 ===== */
-#bitcoinSection{
-  background:black;
+.banner-text{
+    color:white;
+    font-size:22px;
+    letter-spacing:1px;
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
-#bitcoinCanvas{
-  position:absolute;
-  inset:0;
+@keyframes glow{
+    from{ text-shadow:0 0 5px #00ffa3 }
+    to{ text-shadow:0 0 18px #00ffa3 }
 }
 
-.section-title{
-  position:absolute;
-  top:40px;
-  width:100%;
-  text-align:center;
-  font-size:36px;
-  color:gold;
-  z-index:3;
-  text-shadow:0 0 18px rgba(255,215,0,.9);
+/* لوگوی سولانا */
+.solana-logo{
+    width:34px;
+    height:34px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<section class="section hero">
-  <div class="logo-bg"></div>
-  <div class="logo-protect"></div>
-  <canvas id="matrix"></canvas>
-  <div class="caption"><span>Coming Soon on the Blockchain</span></div>
-</section>
+<div class="logo-bg"></div>
+<div class="logo-protect"></div>
+<canvas id="matrix"></canvas>
 
-<!-- PAGE 2 -->
-<section class="section" id="bitcoinSection">
-  <div class="section-title">BITCOIN RAIN</div>
-  <canvas id="bitcoinCanvas"></canvas>
-</section>
+<div class="banner">
+    <span class="banner-text">Coming Soon on the Solana Blockchain</span>
+    <svg class="solana-logo" viewBox="0 0 256 256">
+        <defs>
+            <linearGradient id="sol" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#00ffa3"/>
+                <stop offset="100%" stop-color="#dc1fff"/>
+            </linearGradient>
+        </defs>
+        <rect x="40" y="40" width="176" height="30" rx="10" fill="url(#sol)"/>
+        <rect x="40" y="113" width="176" height="30" rx="10" fill="url(#sol)"/>
+        <rect x="40" y="186" width="176" height="30" rx="10" fill="url(#sol)"/>
+    </svg>
+</div>
 
 <script>
-// MATRIX
-const m=document.getElementById("matrix"),mctx=m.getContext("2d");
-function resizeM(){m.width=innerWidth;m.height=innerHeight}
-resizeM();addEventListener("resize",resizeM);
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
 
-const chars="01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ",font=18;
-let cols=Math.floor(innerWidth/font),drops=new Array(cols).fill(1);
-
-setInterval(()=>{
-  mctx.fillStyle="rgba(0,0,0,.05)";
-  mctx.fillRect(0,0,m.width,m.height);
-  mctx.fillStyle="#FFD700";
-  mctx.font=font+"px monospace";
-  for(let i=0;i<drops.length;i++){
-    let c=chars[Math.floor(Math.random()*chars.length)];
-    mctx.fillText(c,i*font,drops[i]*font);
-    if(drops[i]*font>m.height&&Math.random()>.975)drops[i]=0;
-    drops[i]++;
-  }
-},33);
-
-// BITCOIN RAIN
-const b=document.getElementById("bitcoinCanvas"),bctx=b.getContext("2d");
-function resizeB(){b.width=innerWidth;b.height=innerHeight}
-resizeB();addEventListener("resize",resizeB);
-
-const img=new Image();
-img.src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg";
-let coins=[];
-
-function spawn(){
-  coins.push({
-    x:Math.random()*b.width,
-    y:-60,
-    s:24+Math.random()*26,
-    v:1+Math.random()*3,
-    r:Math.random()*Math.PI,
-    spin:(Math.random()-.5)*.05
-  });
+function resize(){
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
 }
+resize();
+addEventListener('resize', resize);
+
+const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 18;
+let columns = Math.floor(canvas.width / fontSize);
+let drops = new Array(columns).fill(1);
 
 function draw(){
-  bctx.clearRect(0,0,b.width,b.height);
-  if(Math.random()<.06)spawn();
-  for(let i=0;i<coins.length;i++){
-    let c=coins[i];
-    bctx.save();
-    bctx.translate(c.x,c.y);
-    bctx.rotate(c.r);
-    bctx.drawImage(img,-c.s/2,-c.s/2,c.s,c.s);
-    bctx.restore();
-    c.y+=c.v;c.r+=c.spin;
-    if(c.y>b.height+60){coins.splice(i,1);i--}
-  }
-  requestAnimationFrame(draw);
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#FFD700"; // طلایی
+    ctx.font = fontSize + "px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const char = chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
 }
-img.onload=draw;
+setInterval(draw,33);
 </script>
 
 </body>
