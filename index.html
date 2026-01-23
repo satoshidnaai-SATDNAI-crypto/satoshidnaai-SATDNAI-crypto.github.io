@@ -1,235 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>SATOSHI DNA AI | SATDNAAI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATOSHI DNA AI | ULTIMATE EDITION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --gold: #ffd700; 
+            --satoshi-blue: #00d4ff;
+            --dna-green: #39ff14;
+            --matrix-glow: #00ff41;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Rajdhani', sans-serif; }
+        
+        #matrixCanvas { 
+            position: fixed; top: 0; left: 0; z-index: 1; 
+            filter: saturate(1.8) contrast(1.2) drop-shadow(0 0 4px var(--matrix-glow));
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        .main-ui { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; background: rgba(0,0,0,0.5); overflow-y: auto; }
+        
+        nav { display: flex; justify-content: flex-end; padding: 20px 50px; flex-shrink: 0; }
+        .nav-links a { color: var(--gold); text-decoration: none; margin-left: 25px; font-family: 'Orbitron'; font-size: 0.8rem; cursor: pointer; text-shadow: 0 0 10px #000; }
 
-html,body{
-    width:100%;
-    /* تغییر مهم: حذف overflow:hidden برای فعال شدن اسکرول */
-    background:#000;
-    font-family:Arial,Helvetica,sans-serif;
-    color: #fff;
-}
+        .content-area { flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 30px; padding-bottom: 50px; }
 
-/* بخش صفحه اول */
-.hero-section {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* ارتفاع دقیقاً یک صفحه */
-    overflow: hidden;
-}
+        .circle-container { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+        .gold-circle {
+            width: 155px; height: 155px; border: 3px solid var(--gold); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem;
+            background: rgba(0,0,0,0.85); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
 
-/* لوگوی اصلی - حالا فقط در محدوده hero-section است */
-.logo-bg{
-    position:absolute; /* تغییر از fixed به absolute */
-    inset:0;
-    background:url("./logo.png") no-repeat center center;
-    background-size:contain;
-    z-index:1;
-}
+        .txt-satoshi { color: var(--satoshi-blue); text-shadow: 0 0 12px var(--satoshi-blue); }
+        .txt-dna { color: var(--dna-green); text-shadow: 0 0 12px var(--dna-green); }
+        .txt-ai { color: var(--gold); text-shadow: 0 0 12px var(--gold); }
+        .plus { color: var(--gold); font-size: 2.5rem; font-weight: bold; }
 
-.logo-protect{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.08);
-    z-index:2;
-}
+        .brand-name { color: white; font-family: 'Orbitron'; letter-spacing: 15px; font-size: 3.5rem; margin-bottom: 30px; text-shadow: 0 0 20px #000; }
+        
+        .action-btn { 
+            background: rgba(0,0,0,0.8); border: 2px solid var(--gold); color: var(--gold); 
+            padding: 14px 60px; cursor: pointer; font-family: 'Orbitron'; 
+            font-weight: bold; transition: 0.3s; margin-bottom: 40px;
+        }
+        .action-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 40px var(--gold); }
 
-/* ماتریکس */
-canvas{
-    position:absolute;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    opacity:0.25;
-}
+        /* استایل لوگوی جدید */
+        .footer-logo {
+            width: 450px; /* ابعاد لوگو */
+            height: auto;
+            opacity: 1; /* شفافیت ۱۰۰ درصد */
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+        }
 
-/* متن پایین */
-.caption{
-    position:absolute;
-    bottom:40px;
-    width:100%;
-    text-align:center;
-    z-index:5;
-    animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
-}
-
-.caption span{
-    font-size:24px;
-    color:#8fd3ff;
-    letter-spacing:1px;
-}
-
-.solana{
-    font-weight:bold;
-    background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow{
-    from{ text-shadow:0 0 8px rgba(0,255,163,.4) }
-    to{ text-shadow:0 0 18px rgba(3,225,255,.9) }
-}
-
-/* شبکه‌های اجتماعی */
-.socials{
-    position:fixed; /* این بخش می‌تواند ثابت بماند */
-    right:20px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    z-index:100;
-}
-
-.socials a{
-    width:46px;
-    height:46px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,0.08);
-    transition:0.3s;
-}
-
-.socials a:hover{
-    background:rgba(0,255,163,0.3);
-    transform:scale(1.15);
-}
-
-.socials img{
-    width:26px;
-    height:26px;
-}
-
-/* ================= PAGE 2 ================= */
-
-.page-2{
-    position:relative;
-    z-index:20;
-    background:#000;
-    padding:120px 20px;
-}
-
-.page-2 .content{
-    max-width:900px;
-    margin:0 auto;
-    color:#fff;
-    line-height:1.8;
-}
-
-.page-2 h2{
-    color:#ffd700;
-    font-size:2rem;
-    margin:50px 0 20px;
-    border-bottom:1px solid rgba(255,215,0,.3);
-    padding-bottom:10px;
-}
-
-.page-2 p{
-    font-size:1.1rem;
-    margin-bottom:15px;
-}
-
-.page-2 ul{
-    margin-left:20px;
-    margin-bottom:20px;
-}
-
-.final-box{
-    margin-top:60px;
-    border-top:1px solid #ffd700;
-    padding-top:30px;
-    text-align:center;
-    font-size:1.3rem;
-    font-style:italic;
-}
-</style>
+        /* Overlay */
+        #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
+        .doc-content { max-width: 850px; margin: 0 auto; color: white; line-height: 1.8; font-size: 1.1rem; text-align: left; }
+        .close-x { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 3.5rem; cursor: pointer; font-family: 'Orbitron'; }
+        h2 { color: var(--gold); font-family: 'Orbitron'; margin: 40px 0 20px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
+        .highlight { color: var(--gold); font-weight: bold; }
+    </style>
 </head>
-
 <body>
 
-<div class="hero-section">
-    <div class="logo-bg"></div>
-    <div class="logo-protect"></div>
-    <canvas id="matrix"></canvas>
+    <canvas id="matrixCanvas"></canvas>
 
-    <div class="caption">
-        <span>Coming Soon on the <span class="solana">Solana</span> Blockchain</span>
-    </div>
-</div>
+    <div class="main-ui" id="mainUI">
+        <nav>
+            <div class="nav-links">
+                <a onclick="openDocs()">ABOUT</a>
+                <a onclick="openDocs()">TOKENOMICS</a>
+                <a style="border: 1px solid var(--gold); padding: 5px 20px; border-radius: 4px; background: rgba(0,0,0,0.6);">BUY NOW</a>
+            </div>
+        </nav>
 
-<div class="socials">
-    <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-    <a href="https://www.tiktok.com/@satoshidnaai" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png"></a>
-    <a href="https://www.youtube.com/@SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-    <a href="https://x.com/SatoDnaAi" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
-</div>
+        <div class="content-area">
+            <div class="circle-container">
+                <div class="gold-circle txt-satoshi">SATOSHI</div>
+                <div class="plus">+</div>
+                <div class="gold-circle txt-dna">DNA</div>
+                <div class="plus">+</div>
+                <div class="gold-circle txt-ai">AI</div>
+            </div>
+            <h1 class="brand-name">SATOSHIDNAAI</h1>
+            
+            <button class="action-btn" onclick="openDocs()">ENTER DOCUMENTATION</button>
 
-<section class="page-2">
-    <div class="content">
-        <h2>Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
-        <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts...</p>
-        <p><strong>Satoshi</strong>: A revolutionary idea...</p>
-        <p><strong>DNA</strong>: Innate creativity...</p>
-        <p><strong>AI</strong>: Future intelligence...</p>
-        <div class="final-box">
-            SATDNAAI is the meeting point of a great idea...
+            <img src="https://raw.githubusercontent.com/satoshidnaai-satdnai-crypto/satoshidnaai-satdnai-crypto.github.io/main/1000060428.png" alt="SATDNAAI Logo" class="footer-logo">
         </div>
     </div>
-</section>
 
-<script>
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+    <div id="docOverlay">
+        <span class="close-x" onclick="closeDocs()">×</span>
+        <div class="doc-content">
+            <h2>What Does Satoshidnaai (SATDNAAI) Mean?</h2>
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project:</p>
+            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
+            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that keeps the project alive, dynamic, evolving, and unique.</p>
+            <p><span class="highlight">AI</span> symbolizes uniqueness, intelligence, and the future; a force that pushes the boundaries of what is possible and drives the project forward.</p>
+            <p style="text-align:center; font-size: 1.5rem; margin: 30px 0; color: var(--gold);">📌 Satoshidnaai = SATDNAAI</p>
+            <p style="text-align:center; font-weight: bold;">A place where idea, creativity, and intelligence become one.</p>
+            <br>
+            <p>Satoshidnaai is more than a memecoin; it reflects a new mindset in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language of trust, innovation, and sustainable growth.</p>
+            <p>This project is designed to create a healthy and lasting ecosystem—one where users are not merely traders, but an essential part of the project’s identity and journey. SATDNAAI aims to prove that a project can be both simple and people-driven, while also being deep, intelligent, and forward-looking.</p>
 
-function resize(){
-    // تغییر کوچک: بوم ماتریکس باید به اندازه کادر والد خود باشد
-    canvas.width = canvas.parentElement.offsetWidth;
-    canvas.height = canvas.parentElement.offsetHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+            <h2>🔥 Tokenomics & Tax Policy (Minimal and Transparent)</h2>
+            <p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax, designed to be nearly unnoticeable for users and to avoid any negative impact on buying, selling, or natural price growth.</p>
+            
+            <h3 style="color:var(--gold); margin-top:20px;">✅ Tax Details:</h3>
+            <p>Total Tax: 0.5%<br>Buy Tax: 0.5%<br>Sell Tax: 0.5%<br>Transfer Tax: 0%</p>
+            
+            <p>This tax is used exclusively for:</p>
+            <ul style="margin-left: 20px;">
+                <li>Technical development of the project</li>
+                <li>Ecosystem growth</li>
+                <li>Maintaining long-term sustainability and continuity</li>
+            </ul>
+            <p style="color: #ff4d4d; font-weight: bold; margin-top:10px;">❌ No hidden taxes</p>
+            <p style="color: #ff4d4d; font-weight: bold;">❌ No non-transparent withdrawals in the contract</p>
+            <p>This tax is permanent, transparent, and non-increasable.</p>
 
-const chars = "01SATDNAIΞ₿ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(1);
+            <h2>🧠 SATDNAAI Philosophy</h2>
+            <p>SATDNAAI believes that:</p>
+            <ul style="margin-left: 20px;">
+                <li>Trust is the most valuable asset of any project</li>
+                <li>Real growth comes from the community, not from financial pressure</li>
+                <li>Lasting projects are built with honesty and integrity</li>
+            </ul>
 
-function draw(){
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "#FFD700";
-    ctx.font = fontSize + "px monospace";
+            <div style="margin-top:50px; border-top:1px solid var(--gold); padding-top:30px; text-align:center;">
+                <h2>🌍 Final Summary</h2>
+                <p style="font-size: 1.4rem; font-style: italic;">
+                    SATDNAAI is the intersection of a great idea, living creativity, and unmatched intelligence— a project created to prove that memecoins can be fair, transparent, and sustainable.
+                </p>
+            </div>
+        </div>
+    </div>
 
-    for(let i=0;i<drops.length;i++){
-        const char = chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-            drops[i] = 0;
+    <script>
+        function openDocs() { document.getElementById('docOverlay').style.display = 'block'; }
+        function closeDocs() { document.getElementById('docOverlay').style.display = 'none'; }
+
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ中文符号!@#$%^&*()_+-=[]{}|;:,.<>?";
+        const fontSize = 19;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#00ff41";
+                ctx.fillStyle = "#e0ffeb"; 
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                ctx.fillStyle = "#00ff41";
+                ctx.fillText(text, i * fontSize, (drops[i] - 1) * fontSize);
+                ctx.shadowBlur = 0;
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
         }
-        drops[i]++;
-    }
-}
-setInterval(draw,33);
-</script>
-
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        setInterval(draw, 35);
+    </script>
 </body>
 </html>
