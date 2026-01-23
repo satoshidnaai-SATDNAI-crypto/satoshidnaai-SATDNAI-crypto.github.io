@@ -49,12 +49,13 @@
         }
         .action-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 40px var(--gold); }
 
-        /* استایل لوگوی اصلی از فایل logo.jpg */
+        /* حذف حاشیه سیاه لوگو و درخشان کردن آن */
         .footer-logo {
             width: 500px;
             height: auto;
-            opacity: 1; /* شفافیت ۱۰۰ درصد */
-            display: block;
+            mix-blend-mode: screen; /* این خط جادویی تمام سیاهی‌های لوگو را حذف می‌کند */
+            opacity: 1;
+            filter: contrast(1.1) brightness(1.2); /* افزایش درخشش لوگو روی ماتریکس */
         }
 
         #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
