@@ -1,225 +1,110 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satoshidnaai (SATDNAAI) | Official Website</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>Centered Galaxy</title>
     <style>
-        /* استایل اختصاصی با الهام از تم Ryujin */
-        :root {
-            --primary-blue: #0084ff;
-            --dark-bg: #0a0e17;
-            --text-gray: #8a99af;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
-
-        body {
-            background: radial-gradient(circle at center, #16263d 0%, #0a0e17 100%);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* هدر و منو */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 8%;
-            background: rgba(10, 14, 23, 0.8);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--primary-blue);
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        nav a:hover {
-            color: white;
-            text-shadow: 0 0 10px var(--primary-blue);
-        }
-
-        /* بخش اصلی (Hero Section) */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 15%;
-            margin-top: 50px;
-        }
-
-        .buy-now-btn {
-            background: white;
-            color: black;
-            padding: 8px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 30px;
-            transition: 0.3s;
-        }
-
-        .buy-now-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, #4da3ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            max-width: 700px;
-            line-height: 1.8;
-            margin-bottom: 40px;
-        }
-
-        .get-started {
-            border: 1px solid white;
-            padding: 12px 40px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .get-started:hover {
-            background: white;
-            color: black;
-        }
-
-        /* افکت ذرات پس‌زمینه (اختیاری) */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.5;
-        }
+        body { margin: 0; padding: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-dna" style="color: #0084ff;"></i>
-            SATOSHI<span>DNAAI</span>
-        </div>
-        <nav>
-            <a href="#about">About</a>
-            <a href="#how">How to Buy</a>
-            <a href="#tokenomics">Tokenomics</a>
-            <a href="#whitepaper">Whitepaper</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <a href="#" class="buy-now-btn">BUY $SATDNAAI</a>
-        <h1>Welcome to Satoshidnaai</h1>
-        <p>
-            تلاقی هوش مصنوعی و میراث ساتوشی. 
-            <strong>SATDNAAI</strong> 
-            نسل جدید اکوسیستم‌های غیرمتمرکز است که امنیت بلاکچین را با قدرت DNA مصنوعی ترکیب می‌کند.
-        </p>
-        <a href="#" class="get-started">شروع کنید</a>
-    </section>
-
-    <canvas class="particles" id="canvas"></canvas>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // یک اسکریپت ساده برای حرکت ملایم پس‌زمینه
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const scene = new THREE.Scene();
+        
+        // تنظیمات ابعاد صفحه
+        const sizes = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
-        let particlesArray = [];
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+        // تنظیم دوربین برای قرارگیری در مرکز
+        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+        // دوربین را کمی عقب‌تر و بالاتر می‌بریم تا اشراف کامل داشته باشد
+        camera.position.set(0, 4, 6); 
+        // مهم: دوربین حتماً به مرکز مختصات (0,0,0) نگاه کند
+        camera.lookAt(0, 0, 0); 
+        scene.add(camera);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.body.appendChild(renderer.domElement);
+
+        const parameters = {
+            count: 80000,
+            size: 0.015,
+            radius: 5,
+            branches: 3,
+            spin: 1,
+            randomness: 0.2,
+            randomnessPower: 3,
+            insideColor: '#ff6030',
+            outsideColor: '#1b3984'
+        };
+
+        let geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(parameters.count * 3);
+        const colors = new Float32Array(parameters.count * 3);
+
+        const colorInside = new THREE.Color(parameters.insideColor);
+        const colorOutside = new THREE.Color(parameters.outsideColor);
+
+        for(let i = 0; i < parameters.count; i++) {
+            const i3 = i * 3;
+            const radius = Math.random() * parameters.radius;
+            const spinAngle = radius * parameters.spin;
+            const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2;
+
+            const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+            const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+            const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+
+            positions[i3    ] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+            positions[i3 + 1] = randomY;
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+            const mixedColor = colorInside.clone();
+            mixedColor.lerp(colorOutside, radius / parameters.radius);
+            colors[i3] = mixedColor.r;
+            colors[i3 + 1] = mixedColor.g;
+            colors[i3 + 2] = mixedColor.b;
         }
 
-        function init() {
-            for (let i = 0; i < 100; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
+        // متریال مطابق تصویر اول شما
+        const material = new THREE.PointsMaterial({
+            size: parameters.size,
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            vertexColors: true
+        });
 
-        init();
-        animate();
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        // اصلاح سایز هنگام تغییر اندازه پنجره مرورگر
+        window.addEventListener('resize', () => {
+            sizes.width = window.innerWidth;
+            sizes.height = window.innerHeight;
+            camera.aspect = sizes.width / sizes.height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(sizes.width, sizes.height);
+        });
+
+        const clock = new THREE.Clock();
+        const tick = () => {
+            const elapsedTime = clock.getElapsedTime();
+            points.rotation.y = elapsedTime * 0.1; // چرخش دور مرکز
+            renderer.render(scene, camera);
+            window.requestAnimationFrame(tick);
+        };
+        tick();
     </script>
 </body>
 </html>
