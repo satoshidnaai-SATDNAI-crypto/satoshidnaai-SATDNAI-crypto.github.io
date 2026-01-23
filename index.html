@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | ULTIMATE EDITION</title>
+    <title>SATOSHI DNA AI | OFFICIAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -49,15 +49,14 @@
         }
         .action-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 40px var(--gold); }
 
-        /* استایل لوگوی جدید */
+        /* استایل لوگوی اصلی از فایل logo.jpg */
         .footer-logo {
-            width: 450px; /* ابعاد لوگو */
+            width: 500px;
             height: auto;
             opacity: 1; /* شفافیت ۱۰۰ درصد */
-            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+            display: block;
         }
 
-        /* Overlay */
         #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; overflow-y: auto; padding: 60px 20px; }
         .doc-content { max-width: 850px; margin: 0 auto; color: white; line-height: 1.8; font-size: 1.1rem; text-align: left; }
         .close-x { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 3.5rem; cursor: pointer; font-family: 'Orbitron'; }
@@ -90,7 +89,7 @@
             
             <button class="action-btn" onclick="openDocs()">ENTER DOCUMENTATION</button>
 
-            <img src="https://raw.githubusercontent.com/satoshidnaai-satdnai-crypto/satoshidnaai-satdnai-crypto.github.io/main/1000060428.png" alt="SATDNAAI Logo" class="footer-logo">
+            <img src="logo.jpg" alt="SATDNAAI Official Logo" class="footer-logo">
         </div>
     </div>
 
@@ -158,7 +157,6 @@
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
