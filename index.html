@@ -1,162 +1,192 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satoshi DNA AI - Official</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Satoshi DNA Professional</title>
     <style>
-        :root { --m-green: #00FF41; --m-gold: #FFD700; --m-white: #FFFFFF; }
-        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
-
-        /* --- شبکه‌های اجتماعی --- */
-        .social-sidebar { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px; z-index: 3000; }
-        .social-sidebar i { font-size: 24px; color: var(--m-gold); animation: slowFloat 4s ease-in-out infinite; }
-        @keyframes slowFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-
-        /* --- بخش اول: لوگو و ماتریس --- */
-        .hero { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-        #main-logo { width: 320px; position: absolute; z-index: 1; filter: drop-shadow(0 0 25px rgba(255,255,255,0.1)); }
-        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 2; mix-blend-mode: screen; opacity: 0.8; }
-
-        .info-under-logo {
-            position: relative; z-index: 10; margin-top: 420px; text-align: center;
-            background: rgba(0,0,0,0.7); padding: 15px 30px; border-radius: 20px; border: 1px solid var(--m-gold);
-        }
-        .prices { color: var(--m-green); font-size: 0.85rem; margin-bottom: 8px; letter-spacing: 1px; }
-        .datetime { color: var(--m-white); font-size: 1.1rem; text-shadow: 0 0 10px var(--m-gold); }
-
-        .footer-counter { position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 10; }
-        .score-box {
-            display: inline-block; padding: 8px 20px; border: 2px solid var(--m-green);
-            color: var(--m-green); font-size: 1.4rem; background: rgba(0,0,0,0.8);
-            box-shadow: 0 0 20px var(--m-green);
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
         }
 
-        /* --- بخش دوم: بارش توکن‌ها --- */
-        .rings-section { 
-            position: relative; min-height: 100vh; background: #050505; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            border-top: 2px solid var(--m-gold); overflow: hidden;
+        /* --- Professional Header --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(20, 20, 20, 0.9);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        #tokenCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        
-        .ring-group { position: relative; z-index: 5; display: flex; align-items: center; gap: 25px; }
-        .ring { 
-            width: 130px; height: 130px; border: 4px solid var(--m-gold); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-weight: bold;
-            background: rgba(0,0,0,0.8); box-shadow: 0 0 30px var(--m-gold);
+
+        nav a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+            transition: 0.3s;
         }
-        .plus { font-size: 2rem; color: var(--m-white); }
+
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* --- Price List Section --- */
+        .price-ticker {
+            text-align: center;
+            padding: 10px;
+            background: #111;
+            color: #0f0;
+            font-family: monospace;
+            border-bottom: 1px solid #222;
+        }
+
+        /* --- Logo Section --- */
+        .logo-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .logo-img {
+            width: 250px; /* لوگوی بزرگتر */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: -2px;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #fff, #00ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Clock & Date --- */
+        #clock-section {
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* --- Matrix Canvas --- */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* --- Page 2 Content --- */
+        .page-two {
+            margin-top: 100px;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .token-description {
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            color: #ccc;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="social-sidebar">
-        <i class="fab fa-facebook"></i><i class="fab fa-tiktok"></i><i class="fab fa-telegram"></i>
-        <i class="fab fa-twitter"></i><i class="fab fa-instagram"></i>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="price-ticker">
+        BTC: $65,432.10 | ETH: $3,456.78 | SDNA: $1.24 (Prices update live)
     </div>
 
-    <div class="hero">
-        <img src="logo.png" id="main-logo" alt="Satoshi DNA">
-        <canvas id="matrixCanvas"></canvas>
+    <header>
+        <div class="brand">SDNA PRO</div>
+        <nav>
+            <a href="#">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">BUY TOKENS</a>
+            <a href="#">CONNECT WALLET</a>
+        </nav>
+    </header>
 
-        <div class="info-under-logo">
-            <div class="prices">BTC: $68K | SOL: $145 | DNA: $0.0004 | ETH: $3.5K</div>
-            <div id="liveClock" class="datetime">00:00:00 - 2026/01/25</div>
+    <section class="logo-container">
+        <img src="your-logo-path.png" alt="Satoshi DNA Logo" class="logo-img">
+        <div class="logo-text">SATOSHI DNA</div>
+        
+        <div id="clock-section">
+            <div id="date"></div>
+            <div id="clock"></div>
+        </div>
+    </section>
+
+    <section class="page-two">
+        <div class="rings-placeholder">
+            <div style="font-size: 50px;">⭕ ⭕ ⭕</div>
         </div>
 
-        <div class="footer-counter">
-            <div class="score-box" id="score">SEC: 00</div>
-        </div>
-    </div>
-
-    <section class="rings-section">
-        <canvas id="tokenCanvas"></canvas>
-        <div class="ring-group">
-            <div class="ring">SATOSHI</div><div class="plus">+</div>
-            <div class="ring">DNA</div><div class="plus">+</div>
-            <div class="ring">AI</div>
+        <div class="token-description">
+            <h3>Token Specifications</h3>
+            <p>
+                All the professional descriptions about Satoshi DNA tokens go here. 
+                This section is placed right below the three rings as requested.
+                (توضیحات کامل توکن که قبلاً فرستادی در این قسمت قرار می‌گیرد)
+            </p>
         </div>
     </section>
 
     <script>
-        // --- تنظیمات ماتریس (سه رنگ) ---
-        const mCanvas = document.getElementById('matrixCanvas');
-        const mCtx = mCanvas.getContext('2d');
-        mCanvas.width = window.innerWidth; mCanvas.height = window.innerHeight;
+        // --- Matrix Effect ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        const chars = "SATO-DNA-AI-01";
-        const mColors = ["#00FF41", "#FFD700", "#FFFFFF"];
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789サトシDNA中国数字货币";
         const fontSize = 16;
-        const columns = mCanvas.width / fontSize;
-        const mDrops = Array(Math.floor(columns)).fill(1);
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
-            mCtx.fillStyle = "rgba(0, 0, 0, 0.08)";
-            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
-            for (let i = 0; i < mDrops.length; i++) {
-                mCtx.fillStyle = mColors[Math.floor(Math.random() * mColors.length)];
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                mCtx.fillText(text, i * fontSize, mDrops[i] * fontSize);
-                if (mDrops[i] * fontSize > mCanvas.height && Math.random() > 0.975) mDrops[i] = 0;
-                mDrops[i]++;
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
             }
         }
+        setInterval(drawMatrix, 50);
 
-        // --- تنظیمات بارش توکن (صفحه دوم) ---
-        const tCanvas = document.getElementById('tokenCanvas');
-        const tCtx = tCanvas.getContext('2d');
-        tCanvas.width = window.innerWidth; tCanvas.height = window.innerHeight;
-
-        const tokens = ["₿", "S", "Ξ", "DNA"]; // نمادهای BTC, SOL, ETH, DNA
-        const tokenParticles = [];
-
-        class Token {
-            constructor() {
-                this.x = Math.random() * tCanvas.width;
-                this.y = Math.random() * tCanvas.height - tCanvas.height;
-                this.size = Math.random() * 20 + 15;
-                this.speed = Math.random() * 3 + 2;
-                this.symbol = tokens[Math.floor(Math.random() * tokens.length)];
-            }
-            draw() {
-                tCtx.fillStyle = "#FFD700";
-                tCtx.font = this.size + "px Arial";
-                tCtx.fillText(this.symbol, this.x, this.y);
-            }
-            update() {
-                this.y += this.speed;
-                if (this.y > tCanvas.height) { this.y = -20; this.x = Math.random() * tCanvas.width; }
-            }
-        }
-
-        for(let i=0; i<50; i++) tokenParticles.push(new Token());
-
-        function drawTokens() {
-            tCtx.clearRect(0, 0, tCanvas.width, tCanvas.height);
-            tokenParticles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(drawTokens);
-        }
-
-        // --- ساعت و ثانیه‌شمار ---
-        let secCounter = 0;
-        function updateUI() {
+        // --- Live Clock & Date ---
+        function updateClock() {
             const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString() + " - " + now.toLocaleDateString('fa-IR');
-            secCounter++;
-            document.getElementById('score').innerText = "SEC: " + (secCounter < 10 ? "0"+secCounter : secCounter);
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('date').innerText = dateStr;
+            document.getElementById('clock').innerText = timeStr;
         }
-
-        setInterval(drawMatrix, 40);
-        setInterval(updateUI, 1000);
-        drawTokens();
-
-        window.onresize = () => { 
-            mCanvas.width = tCanvas.width = window.innerWidth; 
-            mCanvas.height = tCanvas.height = window.innerHeight; 
-        };
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
