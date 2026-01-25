@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- کدهای استایل اصلی و طراحی بخش اول --- */
+        /* --- کدهای استایل اصلی بدون تغییر --- */
         *{ margin:0; padding:0; box-sizing:border-box; }
         html,body{ width:100%; background:#000; font-family:Arial,Helvetica,sans-serif; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
 
@@ -18,7 +18,9 @@
             background-size:contain; z-index:1;
         }
         .logo-protect{ position:absolute; inset:0; background:rgba(0,0,0,0.08); z-index:2; }
-        #matrix1 { position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0.35; }
+        
+        /* افزایش شفافیت لایه ماتریکس برای وضوح بیشتر */
+        #matrix1 { position:absolute; inset:0; z-index:3; pointer-events:none; opacity: 0.5; }
         
         .caption{
             position:absolute; bottom:40px; width:100%; text-align:center; z-index:5;
@@ -28,16 +30,14 @@
         .caption span{ font-size:24px; color:#8fd3ff; letter-spacing:1px; }
         .solana{ font-weight:bold; background:linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-        /* شبکه‌های اجتماعی ثابت */
         .socials{ position:fixed; right:20px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:16px; z-index:100; }
         .socials a{ width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.08); transition:0.3s; }
         .socials a:hover{ background:rgba(0,255,163,0.3); transform:scale(1.15); }
         .socials img{ width:26px; height:26px; }
 
-        /* --- استایل بخش دوم --- */
         :root { --gold: #ffd700; --satoshi-blue: #00d4ff; --dna-green: #39ff14; }
         .ultimate-section { position: relative; width: 100%; min-height: 100vh; background: #000; font-family: 'Rajdhani', sans-serif; border-top: 1px solid var(--gold); }
-        #matrixCanvas2 { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.6; }
+        #matrixCanvas2 { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.7; }
         .main-ui { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; background: rgba(0,0,0,0.6); }
         
         nav { display: flex; justify-content: flex-end; padding: 20px 50px; }
@@ -63,7 +63,6 @@
         }
         .action-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 40px var(--gold); }
 
-        /* --- استایل مستندات (Overlay) --- */
         #docOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; display: none; overflow-y: auto; padding: 60px 20px; }
         .doc-content { max-width: 850px; margin: 0 auto; color: white; line-height: 1.8; font-size: 1.1rem; text-align: left; }
         .close-x { position: fixed; top: 20px; right: 40px; color: var(--gold); font-size: 3.5rem; cursor: pointer; font-family: 'Orbitron'; }
@@ -137,84 +136,65 @@
             <p style="text-align:center; font-size: 1.5rem; margin: 30px 0; color: var(--gold); font-family: 'Orbitron';">Satoshidnaai = SATDNAAI</p>
             <p style="text-align:center; font-weight: bold; font-size: 1.2rem;">A place where idea, creativity, and intelligence become one.</p>
             
-            <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
-            <p>This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey. SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.</p>
+            <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values.</p>
 
             <h2>Tokenomics and Tax Policy</h2>
-            <p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax. This tax is designed to be almost unnoticeable for users and does not create pressure on buying, selling, or natural price growth.</p>
-            
             <ul class="tax-list">
                 <li><span class="highlight">Total Tax:</span> 0.5%</li>
                 <li><span class="highlight">Buy Tax:</span> 0.5%</li>
                 <li><span class="highlight">Sell Tax:</span> 0.5%</li>
                 <li><span class="highlight">Transfer Tax:</span> 0%</li>
             </ul>
-
-            <p>This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.</p>
-            <p>• There are no hidden taxes.</p>
-            <p>• There are no non-transparent mechanisms in the contract.</p>
-            <p>• This tax is permanent, transparent, and will never be increased.</p>
-
-            <h2>SATDNAAI Philosophy</h2>
-            <p>SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly.</p>
-            <p>For this reason, the interests of the team and the community are fully aligned, and the success of the team depends directly on the real growth of the project’s value.</p>
-
-            <div style="margin-top:50px; border-top:1px solid var(--gold); padding-top:30px; text-align:center;">
-                <h2>Final Summary</h2>
-                <p style="font-size: 1.4rem; font-style: italic;">
-                    SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence. A project created to prove that memecoins can be fair, transparent, and long-lasting.
-                </p>
-            </div>
         </div>
     </div>
 
     <script>
-        // توابع باز و بسته کردن مستندات
         function openDocs() { document.getElementById('docOverlay').style.display = 'block'; document.body.style.overflow = 'hidden'; }
         function closeDocs() { document.getElementById('docOverlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        // پیکربندی کاراکترها و رنگ‌ها
+        // پیکربندی کاراکترهای شفاف و واضح
         const charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄナニヌネノハヒフヘホ天地人私公誠信愛光";
         const colors = ["#FFD700", "#00FF41", "#FFFFFF"]; // طلایی، سبز، سفید
 
-        // ماتریکس بخش اول
+        // ماتریکس بخش اول (Hero) - با وضوح بالا
         const c1 = document.getElementById("matrix1");
         const ctx1 = c1.getContext("2d");
         let d1;
-        function res1(){ c1.width = window.innerWidth; c1.height = window.innerHeight; d1 = Array(Math.floor(c1.width/18)).fill(1); }
+        function res1(){ c1.width = window.innerWidth; c1.height = window.innerHeight; d1 = Array(Math.floor(c1.width/20)).fill(1); }
         function dr1(){
-            ctx1.fillStyle = "rgba(0,0,0,0.1)"; 
+            // استفاده از Opacity کمتر در fillRect برای دنباله شفاف‌تر حروف
+            ctx1.fillStyle = "rgba(0,0,0,0.15)"; 
             ctx1.fillRect(0,0,c1.width,c1.height);
+            
             d1.forEach((y, i) => {
                 const char = charset[Math.floor(Math.random()*charset.length)];
                 ctx1.fillStyle = colors[Math.floor(Math.random()*colors.length)];
-                ctx1.font = "18px monospace";
-                ctx1.fillText(char, i*18, y*18);
-                if(y*18 > c1.height && Math.random() > 0.975) d1[i] = 0; d1[i]++;
+                ctx1.font = "bold 18px monospace"; // فونت Bold برای شفافیت بیشتر
+                ctx1.fillText(char, i*20, y*20);
+                if(y*20 > c1.height && Math.random() > 0.975) d1[i] = 0; d1[i]++;
             });
         }
-        res1(); setInterval(dr1, 33);
+        res1(); setInterval(dr1, 40);
 
-        // ماتریکس بخش دوم
+        // ماتریکس بخش دوم (Ultimate) - با کنتراست بالا
         const c2 = document.getElementById("matrixCanvas2");
         const ctx2 = c2.getContext("2d");
         let d2;
-        function res2(){ c2.width = window.innerWidth; c2.height = window.innerHeight; d2 = Array(Math.floor(c2.width/19)).fill(1); }
+        function res2(){ c2.width = window.innerWidth; c2.height = window.innerHeight; d2 = Array(Math.floor(c2.width/22)).fill(1); }
         function dr2(){
-            ctx2.fillStyle = "rgba(0,0,0,0.1)"; 
+            ctx2.fillStyle = "rgba(0,0,0,0.15)"; 
             ctx2.fillRect(0,0,c2.width,c2.height);
+            
             d2.forEach((y, i) => {
                 const char = charset[Math.floor(Math.random()*charset.length)];
-                const color = colors[Math.floor(Math.random()*colors.length)];
-                ctx2.shadowBlur = 5; ctx2.shadowColor = color; 
-                ctx2.fillStyle = color;
-                ctx2.font = "19px monospace";
-                ctx2.fillText(char, i*19, y*19);
-                ctx2.shadowBlur = 0;
-                if(y*19 > c2.height && Math.random() > 0.975) d2[i] = 0; d2[i]++;
+                ctx2.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+                ctx2.font = "bold 20px monospace";
+                ctx2.fillText(char, i*22, y*22);
+                if(y*22 > c2.height && Math.random() > 0.98) d2[i] = 0; d2[i]++;
             });
         }
-        res2(); setInterval(dr2, 35);
+        res2(); setInterval(dr2, 45);
+
         window.addEventListener('resize', () => { res1(); res2(); });
     </script>
 </body>
