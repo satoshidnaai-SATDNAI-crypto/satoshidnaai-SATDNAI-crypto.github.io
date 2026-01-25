@@ -12,7 +12,15 @@
             --solana: #00ffa3;
         }
 
-        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            background: #000; 
+            color: white; 
+            font-family: 'Orbitron', sans-serif; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+        }
 
         /* --- نوار قیمت‌های زنده --- */
         .price-ticker {
@@ -36,7 +44,7 @@
         }
         .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
 
-        /* --- ناوبری --- */
+        /* --- ناوبری (Navbar) --- */
         nav {
             width: 100%;
             height: 70px;
@@ -64,56 +72,66 @@
         }
         .connect-btn:hover { background: var(--gold); color: black; }
 
-        /* --- بخش هیرو و ماتریکس روی لوگو --- */
-        .hero-section { 
-            width: 100%; 
-            height: 100vh; 
-            position: relative; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden;
-        }
-
-        /* لوگو در لایه زیرین */
-        .logo-container {
-            position: absolute;
-            z-index: 1;
+        /* --- بخش هیرو: ترکیب لوگو و ماتریکس --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        .logo-box { 
-            width: 400px; 
-            /* حذف پس‌زمینه سیاه لوگو با متد اسکرین */
-            mix-blend-mode: screen; 
-            filter: drop-shadow(0 0 15px var(--matrix-green));
+            justify-content: center;
+            background: #000;
+            overflow: hidden;
         }
 
-        /* ماتریکس در لایه رویی */
-        #matrixCanvas { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            z-index: 5; 
-            /* اجازه عبور کلیک به لایه‌های زیرین در صورت نیاز */
-            pointer-events: none; 
-            opacity: 0.8;
+        /* لایه ۱: لوگو (پایین ماتریکس) */
+        .logo-under-matrix {
+            position: absolute;
+            width: 500px; /* اندازه لوگو */
+            z-index: 1;
+            mix-blend-mode: screen; /* حذف پس‌زمینه سیاه لوگو */
+            filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.4));
+            pointer-events: none;
         }
 
-        .hero-text-overlay {
+        /* لایه ۲: ماتریکس (روی لوگو) */
+        #matrixCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            opacity: 0.85; /* تنظیم شدت باران ماتریکس روی لوگو */
+        }
+
+        /* لایه ۳: متن و ساعت (بالای همه) */
+        .hero-ui {
             position: relative;
             z-index: 10;
             text-align: center;
-            margin-top: 450px; /* تنظیم متن زیر لوگو */
+            margin-top: 480px; /* فاصله از مرکز برای قرارگیری زیر لوگو */
         }
 
-        /* استایل ساعت */
-        #liveClock { font-size: 2rem; color: var(--gold); margin: 10px 0; text-shadow: 0 0 10px black; }
+        #liveClock {
+            font-size: 3.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 25px var(--gold);
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
 
-        /* --- بخش دوم --- */
-        .rings-section { background: #050505; border-top: 2px solid var(--gold); padding: 100px 0; text-align: center; }
-        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 50px; }
+        /* --- بخش دوم: محتوا --- */
+        .about-section { 
+            background: #050505; 
+            border-top: 2px solid var(--gold); 
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 100;
+        }
+        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 50px 0; }
         .ring {
             width: 180px; height: 180px;
             border: 4px solid var(--matrix-green);
@@ -121,14 +139,14 @@
             display: flex; align-items: center; justify-content: center;
             font-weight: bold; font-size: 1.2rem;
             box-shadow: 0 0 20px var(--matrix-green);
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
         }
         .plus-sign { font-size: 2.5rem; color: var(--gold); font-weight: 900; }
         .description-box {
-            max-width: 800px; margin: 60px auto; padding: 30px;
+            max-width: 800px; margin: 0 auto; padding: 30px;
             border-left: 5px solid var(--gold);
             background: rgba(255,255,255,0.05);
-            line-height: 1.8; text-align: justify; dir: rtl;
+            line-height: 1.8; text-align: justify; direction: rtl;
         }
     </style>
 </head>
@@ -136,35 +154,35 @@
 
     <div class="price-ticker">
         <div class="ticker-content">
-            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>BNB: $590.12</span>
-            <span>SATOSHI DNA: $0.00001 (PRE-SALE)</span> <span>DOGE: $0.16</span>
+            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> 
+            <span>SATOSHI DNA: $0.00001 (PRE-SALE)</span> <span>BNB: $590.12</span>
+            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>AVAX: $38.90</span>
         </div>
     </div>
 
     <nav>
-        <div class="logo-text">SATOSHI+DNA+AI</div>
+        <div class="logo-text" style="font-weight: 900; color: var(--matrix-green);">SATOSHI+DNA+AI</div>
         <div class="nav-links">
             <a href="#">HOME</a>
             <a href="#about">ABOUT</a>
+            <a href="#">TOKENOMICS</a>
             <button class="connect-btn">CONNECT WALLET</button>
         </div>
     </nav>
 
     <section class="hero-section">
-        <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo-box">
-        </div>
+        <img src="logo.png" alt="Satoshi DNA AI Logo" class="logo-under-matrix">
 
         <canvas id="matrixCanvas"></canvas>
 
-        <div class="hero-text-overlay">
+        <div class="hero-ui">
             <div id="liveClock">00:00:00</div>
-            <p style="color: var(--solana); letter-spacing: 5px;">DECENTRALIZED INTELLIGENCE</p>
+            <p style="color: var(--solana); letter-spacing: 7px; font-weight: bold;">DECENTRALIZED INTELLIGENCE</p>
         </div>
     </section>
 
-    <section id="about" class="rings-section">
-        <h2 style="color: var(--gold);">THE CORE STRUCTURE</h2>
+    <section id="about" class="about-section">
+        <h2 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 40px;">THE CORE STRUCTURE</h2>
         <div class="rings-container">
             <div class="ring">SATOSHI</div>
             <div class="plus-sign">+</div>
@@ -172,9 +190,14 @@
             <div class="plus-sign">+</div>
             <div class="ring">AI</div>
         </div>
+
         <div class="description-box">
-            <h3>درباره پروژه</h3>
-            <p>پروژه SATOSHI DNA AI تلفیقی از میراث بیت‌کوین، کدهای زیستی هوشمند و هوش مصنوعی پیشرفته است. این پلتفرم بر بستر شبکه سولانا طراحی شده تا سرعت، امنیت و هوش را همزمان به ارمغان بیاورد.</p>
+            <h3 style="color: var(--matrix-green);">درباره پروژه</h3>
+            <p>
+                پروژه SATOSHI DNA AI تلفیقی از میراث بیت‌کوین، کدهای زیستی هوشمند و هوش مصنوعی پیشرفته است. 
+                این پلتفرم بر بستر شبکه سولانا طراحی شده تا سرعت، امنیت و هوش را همزمان به ارمغان بیاورد. 
+                در این فضا، هر توکن نمایانگر بخشی از یک شبکه عصبی غیرمتمرکز است که به سمت آینده مالی حرکت می‌کند.
+            </p>
         </div>
     </section>
 
@@ -182,6 +205,7 @@
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
 
+        // تنظیم اندازه کانوای ماتریکس
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -189,27 +213,38 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const chars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789龙币";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        // کاراکترهای سه زبانه
+        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+        const chinese = "龙币人工智能DNA";
+        const english = "SATOSHIDNAAI0123456789";
+        const allChars = japanese + chinese + english;
+
+        const fontSize = 18;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
 
         function drawMatrix() {
-            // ایجاد افکت دنباله‌دار با شفافیت کم
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+            // اثر محو شدن تدریجی برای دنباله‌ها
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
                 
-                // ایجاد تنوع رنگی ماتریکس
-                if (Math.random() > 0.9) ctx.fillStyle = "#FFFFFF"; 
-                else ctx.fillStyle = "#00FF41";
+                // تعیین رنگ اختصاصی برای هر زبان
+                if (english.includes(text)) {
+                    ctx.fillStyle = "#FFFFFF"; // انگلیسی: سفید
+                } else if (chinese.includes(text)) {
+                    ctx.fillStyle = "#FFD700"; // چینی: طلایی
+                } else {
+                    ctx.fillStyle = "#00FF41"; // ژاپنی: سبز
+                }
 
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
+                // بازگشت قطره به بالا پس از عبور از ارتفاع صفحه
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -217,11 +252,14 @@
             }
         }
 
+        // بروزرسانی ساعت
         function updateClock() {
             const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+            const timeString = now.toLocaleTimeString('en-GB', { hour12: false });
+            document.getElementById('liveClock').innerText = timeString;
         }
 
+        // اجرای انیمیشن‌ها
         setInterval(drawMatrix, 50);
         setInterval(updateClock, 1000);
     </script>
