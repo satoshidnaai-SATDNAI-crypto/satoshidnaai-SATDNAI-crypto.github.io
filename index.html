@@ -2,139 +2,188 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SATOSHI DNA AI - Matrix Hero</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATOSHI DNA AI | SATDNAAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Orbitron', sans-serif; }
-        
-        /* استایل بوم ماتریس */
-        #matrixCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+        /* --- کدهای استایل اصلی --- */
+        *{ margin:0; padding:0; box-sizing:border-box; }
+        html,body{ width:100%; height: 100vh; background:#000; font-family: 'Rajdhani', sans-serif; color: #fff; overflow: hidden; }
+
+        /* بخش اصلی (تنها بخش سایت) */
+        .hero-section { 
+            position: relative; 
+            width: 100%; 
+            height: 100vh; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
         }
 
-        /* محتوای روی صفحه */
-        .hero-container {
+        /* پس‌زمینه ماتریکس طلایی */
+        #matrix1 { position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0.25; }
+        
+        /* بخش توضیحات رسمی سمت چپ */
+        .content-left {
             position: relative;
             z-index: 10;
-            width: 100%;
-            height: 100vh;
+            flex: 1.2;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding-right: 40px;
+            scrollbar-width: thin;
+            scrollbar-color: #ffd700 #000;
+        }
+        .content-left::-webkit-scrollbar { width: 5px; }
+        .content-left::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
+
+        .brand-name { font-family: 'Orbitron'; color: #ffd700; font-size: 3rem; letter-spacing: 8px; margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,215,0,0.3); }
+        
+        h2 { color: #ffd700; font-family: 'Orbitron'; font-size: 1.4rem; margin: 30px 0 15px; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 5px; }
+        p { line-height: 1.7; margin-bottom: 15px; font-size: 1.1rem; text-align: justify; color: #e0e0e0; }
+        .highlight { color: #ffd700; font-weight: bold; }
+
+        /* باکس مالیات */
+        .tax-info { 
+            background: rgba(255,215,0,0.05); 
+            border: 1px solid rgba(255,215,0,0.3); 
+            padding: 20px; 
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        /* بخش لوگو سمت راست */
+        .content-right {
+            position: relative;
+            z-index: 10;
+            flex: 0.8;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 0, 0.2); /* یک لایه بسیار نازک برای خوانایی بهتر لوگو */
         }
-
-        .logo-box {
-            width: 80%;
-            max-width: 600px;
-            /* این کد پس‌زمینه سیاه عکس را حذف و آن را با ماتریس ترکیب می‌کند */
-            mix-blend-mode: screen; 
-            animation: glow 3s ease-in-out infinite;
+        .logo-main {
+            width: 100%;
+            max-width: 500px;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+            animation: float 4s ease-in-out infinite;
         }
+        @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
 
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.8)); transform: scale(1.02); }
+        /* ناوبری بالا */
+        nav {
+            position: absolute;
+            top: 30px;
+            right: 5%;
+            z-index: 100;
+            display: flex;
+            gap: 30px;
         }
-
-        .solana-tag {
-            margin-top: 30px;
-            padding: 15px 30px;
-            border: 2px solid #00ffa3;
-            background: rgba(0, 0, 0, 0.8);
-            color: #00ffa3;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .clock-container {
-            margin-top: 20px;
+        nav a {
             color: #ffd700;
-            text-align: center;
+            text-decoration: none;
+            font-family: 'Orbitron';
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        nav a:hover { text-shadow: 0 0 10px #ffd700; }
+        .buy-now { border: 1px solid #ffd700; padding: 5px 20px; border-radius: 4px; background: rgba(0,0,0,0.5); }
 
-        #liveClock { font-size: 2.5rem; text-shadow: 0 0 15px #ffd700; }
-        #liveDate { font-size: 1rem; opacity: 0.8; margin-bottom: 5px; }
+        /* شبکه‌های اجتماعی ثابت */
+        .socials{ position:absolute; bottom:30px; left:5%; display:flex; gap:20px; z-index:100; }
+        .socials a img{ width:26px; transition:0.3s; opacity: 0.8; }
+        .socials a:hover img{ opacity: 1; transform: scale(1.2); }
+
+        .solana-tag { position: absolute; bottom: 30px; right: 5%; font-family: 'Orbitron'; color: #00ffa3; font-size: 0.8rem; letter-spacing: 2px; }
+
+        @media (max-width: 1024px) {
+            .hero-section { flex-direction: column; padding-top: 100px; }
+            .content-left { order: 2; padding-right: 0; }
+            .content-right { order: 1; margin-bottom: 30px; }
+            .logo-main { max-width: 300px; }
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+    <div class="hero-section">
+        <canvas id="matrix1"></canvas>
 
-    <div class="hero-container">
-        <img src="logo.png" alt="SATOSHI DNA AI" class="logo-box">
-        
-        <div class="clock-container">
-            <div id="liveDate">LOADING DATE...</div>
-            <div id="liveClock">00:00:00</div>
+        <nav>
+            <a href="#">ABOUT</a>
+            <a href="#">TOKENOMICS</a>
+            <a class="buy-now">BUY NOW</a>
+        </nav>
+
+        <div class="content-left">
+            <h1 class="brand-name">SATDNAAI</h1>
+            
+            <h2>Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.</p>
+            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
+            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
+            <p><span class="highlight">AI</span> represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
+            
+            <p style="text-align:center; font-size: 1.3rem; margin: 25px 0; color: #ffd700; font-family: 'Orbitron';">Satoshidnaai = SATDNAAI</p>
+            <p style="text-align:center; font-weight: bold; margin-bottom: 25px;">A place where idea, creativity, and intelligence become one.</p>
+            
+            <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values.</p>
+
+            <h2>Tokenomics and Tax Policy</h2>
+            <p>To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax.</p>
+            
+            <div class="tax-info">
+                <div><span class="highlight">Total Tax:</span> 0.5%</div>
+                <div><span class="highlight">Buy Tax:</span> 0.5%</div>
+                <div><span class="highlight">Sell Tax:</span> 0.5%</div>
+                <div><span class="highlight">Transfer Tax:</span> 0%</div>
+            </div>
+
+            <p>• There are no hidden taxes.<br>
+            • This tax is permanent, transparent, and will never be increased.</p>
+
+            <h2>SATDNAAI Philosophy</h2>
+            <p>SATDNAAI believes that trust is the most important asset. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly.</p>
+
+            <p style="border-top: 1px solid rgba(255,215,0,0.3); padding-top: 20px; font-style: italic; text-align: center; color: #ffd700;">
+                SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence.
+            </p>
         </div>
 
-        <div class="solana-tag">
-            COMING SOON ON SOLANA NETWORK
+        <div class="content-right">
+            <img src="./logo.png" alt="SATDNAAI Logo" class="logo-main">
         </div>
     </div>
 
+    <div class="socials">
+        <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+        <a href="https://x.com/SatoDnaAi" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
+        <a href="https://www.youtube.com/@SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+    </div>
+
+    <div class="solana-tag">COMING SOON ON SOLANA</div>
+
     <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // کاراکترها: ژاپنی (کاتاکانا)، چینی، و انگلیسی
-        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
-        const chinese = "龙币人工智能DNA";
-        const english = "SATOSHIDNAAI0123456789";
-        const allChars = japanese + chinese + english;
-
-        const fontSize = 18;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            // ایجاد افکت محو شدن دنباله کاراکترها
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.font = fontSize + "px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-                // انتخاب تصادفی کاراکتر
-                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                
-                // تغییر رنگ بر اساس نوع زبان برای وضوح بیشتر
-                if (english.includes(text)) ctx.fillStyle = "#FFFFFF"; // انگلیسی سفید
-                else if (chinese.includes(text)) ctx.fillStyle = "#FFD700"; // چینی طلایی
-                else ctx.fillStyle = "#00FF41"; // ژاپنی سبز ماتریسی
-
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
+        const c1 = document.getElementById("matrix1");
+        const ctx1 = c1.getContext("2d");
+        let d1;
+        function res1(){ c1.width = window.innerWidth; c1.height = window.innerHeight; d1 = Array(Math.floor(c1.width/18)).fill(1); }
+        function dr1(){
+            ctx1.fillStyle = "rgba(0,0,0,0.05)"; ctx1.fillRect(0,0,c1.width,c1.height);
+            ctx1.fillStyle = "#FFD700"; ctx1.font = "18px monospace";
+            d1.forEach((y, i) => {
+                const char = "01SATDNAI"[Math.floor(Math.random()*9)];
+                ctx1.fillText(char, i*18, y*18);
+                if(y*18 > c1.height && Math.random() > 0.975) d1[i] = 0; d1[i]++;
+            });
         }
-
-        // آپدیت ساعت و تاریخ
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
-            document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        }
-
-        setInterval(drawMatrix, 50);
-        setInterval(updateClock, 1000);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        res1(); setInterval(dr1, 33);
+        window.addEventListener('resize', res1);
     </script>
 </body>
 </html>
