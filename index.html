@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SATOSHI DNA AI | Official Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --matrix-green: #00FF41;
@@ -19,6 +20,38 @@
             font-family: 'Orbitron', sans-serif; 
             scroll-behavior: smooth; 
             overflow-x: hidden; 
+        }
+
+        /* --- Social Sidebar (طراحی اختصاصی برای سمت چپ) --- */
+        .social-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 3000; /* قرارگیری بالاتر از همه لایه‌ها */
+        }
+        .social-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--matrix-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .social-icon:hover {
+            background: var(--matrix-green);
+            color: black;
+            transform: scale(1.2) translateX(8px);
+            box-shadow: 0 0 20px var(--matrix-green);
         }
 
         /* --- Price Ticker --- */
@@ -70,7 +103,7 @@
         }
         .connect-btn:hover { background: var(--gold); color: black; }
 
-        /* --- Hero Section (Logo & Matrix) --- */
+        /* --- Hero Section --- */
         .hero-section {
             position: relative;
             width: 100%;
@@ -158,6 +191,16 @@
 </head>
 <body>
 
+    <div class="social-sidebar">
+        <a href="https://t.me/yourlink" target="_blank" class="social-icon"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://twitter.com/yourlink" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://instagram.com/yourlink" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/yourlink" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="https://tiktok.com/@yourlink" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        <a href="https://facebook.com/yourlink" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://snapchat.com/add/yourlink" target="_blank" class="social-icon"><i class="fab fa-snapchat-ghost"></i></a>
+    </div>
+
     <div class="price-ticker">
         <div class="ticker-content">
             <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>SATDNAAI: $0.00001</span>
@@ -211,31 +254,14 @@
 
     <section id="tokenomics" class="tokenomics-section">
         <h2 style="color: var(--gold);">Tokenomics and Tax Policy</h2>
-        <p style="max-width: 800px; margin: 0 auto; opacity: 0.8;">To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax.</p>
-        
         <div class="tax-grid">
             <div class="tax-card"><h4>Buy Tax</h4><p>0.5%</p></div>
             <div class="tax-card"><h4>Sell Tax</h4><p>0.5%</p></div>
             <div class="tax-card"><h4>Transfer Tax</h4><p>0%</p></div>
         </div>
-
-        <div class="content-box" style="margin: 0 auto; border-left: 4px solid var(--matrix-green);">
-            <ul style="list-style: none; padding: 0; text-align: left;">
-                <li>✅ This tax is used only for technical development and ecosystem growth.</li>
-                <li>✅ There are no hidden taxes.</li>
-                <li>✅ There are no non-transparent mechanisms in the contract.</li>
-                <li>✅ <span class="green-text">This tax is permanent, transparent, and will never be increased.</span></li>
-            </ul>
-        </div>
-
-        <div style="margin-top: 50px;">
-            <h3 style="color: var(--gold);">SATDNAAI Philosophy</h3>
-            <p style="max-width: 800px; margin: 0 auto;">SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly.</p>
-        </div>
-
         <div style="margin-top: 40px; padding: 20px; border: 1px dashed var(--gold);">
             <h3 class="green-text">Final Summary</h3>
-            <p>SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence. A project created to prove that memecoins can be fair, transparent, and long-lasting.</p>
+            <p>SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence.</p>
         </div>
     </section>
 
@@ -266,16 +292,12 @@
 
             for (let i = 0; i < drops.length; i++) {
                 const char = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                
                 if (english.includes(char)) ctx.fillStyle = "#FFFFFF"; 
                 else if (chinese.includes(char)) ctx.fillStyle = "#FFD700"; 
                 else ctx.fillStyle = "#00FF41"; 
 
                 ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
