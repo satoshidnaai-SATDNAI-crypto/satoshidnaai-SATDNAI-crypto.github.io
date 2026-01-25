@@ -1,194 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | Official Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Satoshi DNA AI - New Version</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --matrix-green: #00FF41;
-            --gold: #FFD700;
-            --solana: #00ffa3;
+            --m-green: #00FF41;
+            --m-gold: #FFD700;
+            --m-white: #FFFFFF;
         }
 
-        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; overflow-x: hidden; }
 
-        /* --- نوار قیمت‌های زنده --- */
-        .price-ticker {
-            width: 100%;
-            background: rgba(0, 255, 65, 0.1);
-            border-bottom: 1px solid var(--matrix-green);
-            padding: 5px 0;
-            position: fixed;
-            top: 0;
-            z-index: 2000;
-            overflow: hidden;
-            white-space: nowrap;
+        /* --- شبکه‌های اجتماعی اسلو موشن --- */
+        .social-sidebar {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px; z-index: 3000;
         }
-        .ticker-content {
-            display: inline-block;
-            animation: ticker 30s linear infinite;
+        .social-sidebar i {
+            font-size: 24px; color: var(--m-gold); animation: slowFloat 4s ease-in-out infinite;
         }
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
+        @keyframes slowFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* --- ناوبری (Navbar) --- */
-        nav {
-            width: 100%;
-            height: 70px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 30px; /* زیر نوار قیمت */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 50px;
-            box-sizing: border-box;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .nav-links a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); }
-        .connect-btn { 
-            background: transparent; 
-            border: 1px solid var(--gold); 
-            color: var(--gold); 
-            padding: 8px 20px; 
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .connect-btn:hover { background: var(--gold); color: black; }
+        /* --- کانتینر اصلی --- */
+        .hero { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        #main-logo { width: 350px; position: absolute; z-index: 1; filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
+        
+        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 2; mix-blend-mode: screen; opacity: 0.7; }
 
-        /* --- بخش اول: هیرو و ماتریس --- */
-        section { width: 100%; height: 100vh; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 1; }
-        .hero-content { z-index: 10; text-align: center; }
-        .logo-box { width: 350px; mix-blend-mode: screen; filter: drop-shadow(0 0 20px var(--matrix-green)); }
-
-        /* --- بخش دوم: سه حلقه عملیاتی --- */
-        .rings-section { background: #050505; border-top: 2px solid var(--gold); }
-        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 50px; }
-        .ring {
-            width: 180px;
-            height: 180px;
-            border: 4px solid var(--matrix-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px var(--matrix-green);
-            position: relative;
-            background: rgba(0,0,0,0.5);
+        /* --- بخش زیر لوگو (ساعت، تاریخ، قیمت) --- */
+        .info-under-logo {
+            position: relative; z-index: 10; margin-top: 400px; text-align: center;
+            background: rgba(0,0,0,0.6); padding: 20px; border-radius: 15px; border: 1px solid var(--m-gold);
         }
-        .plus-sign { font-size: 2.5rem; color: var(--gold); font-weight: 900; }
-        .description-box {
-            max-width: 800px;
-            margin-top: 60px;
-            padding: 30px;
-            border-left: 5px solid var(--gold);
-            background: rgba(255,255,255,0.05);
-            line-height: 1.8;
-            text-align: justify;
+        .prices { color: var(--m-green); font-size: 0.9rem; margin-bottom: 10px; word-spacing: 15px; }
+        .datetime { color: var(--m-white); font-size: 1.2rem; font-weight: bold; }
+        
+        /* --- ثانیه‌شمار پایین صفحه --- */
+        .footer-counter {
+            position: absolute; bottom: 20px; width: 100%; text-align: center; z-index: 10;
+        }
+        .score-box {
+            display: inline-block; padding: 10px 25px; border: 2px solid var(--m-green);
+            color: var(--m-green); font-size: 1.5rem; background: rgba(0,255,65,0.1);
+            box-shadow: 0 0 15px var(--m-green); text-shadow: 0 0 5px #000;
         }
 
-        /* استایل ساعت */
-        #liveClock { font-size: 2rem; color: var(--gold); margin: 10px 0; }
+        /* صفحه دوم */
+        .rings-section { min-height: 100vh; background: #080808; display: flex; flex-direction: column; align-items: center; justify-content: center; border-top: 2px solid var(--m-gold); }
+        .ring-group { display: flex; align-items: center; gap: 20px; margin: 50px 0; }
+        .ring { width: 120px; height: 120px; border: 3px solid var(--m-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 0 20px var(--m-gold); }
     </style>
 </head>
 <body>
 
-    <div class="price-ticker">
-        <div class="ticker-content">
-            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>BNB: $590.12</span>
-            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>AVAX: $38.90</span> <span>DOT: $7.20</span>
-            <span>SATOSHI DNA: $0.00001 (PRE-SALE)</span> <span>DOGE: $0.16</span> <span>LINK: $18.40</span>
+    <div class="social-sidebar">
+        <i class="fab fa-facebook"></i><i class="fab fa-tiktok"></i><i class="fab fa-telegram"></i>
+        <i class="fab fa-twitter"></i><i class="fab fa-instagram"></i>
+    </div>
+
+    <div class="hero">
+        <img src="logo.png" id="main-logo" alt="Satoshi DNA">
+        
+        <canvas id="matrixCanvas"></canvas>
+
+        <div class="info-under-logo">
+            <div class="prices">
+                BTC: $68,432 &nbsp; SOL: $145 &nbsp; DNA: $0.0004 &nbsp; ETH: $3,510
+            </div>
+            <div class="datetime" id="liveClock">
+                00:00:00 - 2026/01/25
+            </div>
+        </div>
+
+        <div class="footer-counter">
+            <div class="score-box" id="score">SEC: 00</div>
         </div>
     </div>
 
-    <nav>
-        <div class="logo-text">SATOSHI DNA</div>
-        <div class="nav-links">
-            <a href="#">HOME</a>
-            <a href="#about">ABOUT</a>
-            <a href="#">TOKENOMICS</a>
-            <a href="#">WHITEPAPER</a>
-            <button class="connect-btn">CONNECT WALLET</button>
-        </div>
-    </nav>
-
-    <section>
-        <canvas id="matrixCanvas"></canvas>
-        <div class="hero-content">
-            <img src="logo.png" alt="Logo" class="logo-box">
-            <div id="liveClock">00:00:00</div>
-            <p style="color: var(--solana); letter-spacing: 5px;">DECENTRALIZED INTELLIGENCE</p>
-        </div>
-    </section>
-
-    <section id="about" class="rings-section">
-        <h2 style="color: var(--gold); margin-bottom: 30px;">THE CORE STRUCTURE</h2>
-        <div class="rings-container">
-            <div class="ring">SATOSHI</div>
-            <div class="plus-sign">+</div>
-            <div class="ring">DNA</div>
-            <div class="plus-sign">+</div>
+    <section class="rings-section">
+        <div class="ring-group">
+            <div class="ring">SATOSHI</div> <span>+</span>
+            <div class="ring">DNA</div> <span>+</span>
             <div class="ring">AI</div>
-        </div>
-
-        <div class="description-box">
-            <h3>ABOUT THE PROJECT</h3>
-            <p>
-                پروژه SATOSHI DNA AI تلفیقی از میراث بیت‌کوین، کدهای زیستی هوشمند و هوش مصنوعی پیشرفته است. این پلتفرم بر بستر شبکه سولانا طراحی شده تا سرعت، امنیت و هوش را همزمان به ارمغان بیاورد. در این فضا، هر توکن نمایانگر بخشی از یک شبکه عصبی غیرمتمرکز است که به سمت آینده مالی حرکت می‌کند.
-            </p>
         </div>
     </section>
 
     <script>
-        // کدهای ماتریس (مانند قبل با ۳ زبان)
+        // کدهای ماتریس با سه رنگ سفید، طلایی و سبز
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
-        const chinese = "龙币人工智能DNA";
-        const english = "SATOSHIDNAAI0123456789";
-        const allChars = japanese + chinese + english;
-
-        const fontSize = 18;
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const colors = ["#00FF41", "#FFD700", "#FFFFFF"]; // سبز، طلایی، سفید
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
-                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                if (english.includes(text)) ctx.fillStyle = "#FFFFFF";
-                else if (chinese.includes(text)) ctx.fillStyle = "#FFD700";
-                else ctx.fillStyle = "#00FF41";
-
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
 
+        // ساعت و ثانیه شمار
+        let seconds = 0;
         function updateClock() {
             const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+            const timeStr = now.toLocaleTimeString();
+            const dateStr = now.toLocaleDateString();
+            document.getElementById('liveClock').innerText = `${timeStr} - ${dateStr}`;
+            
+            seconds++;
+            document.getElementById('score').innerText = "SEC: " + (seconds < 10 ? "0" + seconds : seconds);
         }
 
-        setInterval(drawMatrix, 50);
+        setInterval(drawMatrix, 40);
         setInterval(updateClock, 1000);
 
         window.addEventListener('resize', () => {
