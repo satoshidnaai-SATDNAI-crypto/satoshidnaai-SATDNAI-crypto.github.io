@@ -7,147 +7,156 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --matrix-green: #00FF41;
-            --gold: #FFD700;
+        :root { --m-green: #00FF41; --m-gold: #FFD700; --m-white: #FFFFFF; }
+        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* --- شبکه‌های اجتماعی --- */
+        .social-sidebar { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px; z-index: 3000; }
+        .social-sidebar i { font-size: 24px; color: var(--m-gold); animation: slowFloat 4s ease-in-out infinite; }
+        @keyframes slowFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* --- بخش اول: لوگو و ماتریس --- */
+        .hero { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        #main-logo { width: 320px; position: absolute; z-index: 1; filter: drop-shadow(0 0 25px rgba(255,255,255,0.1)); }
+        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 2; mix-blend-mode: screen; opacity: 0.8; }
+
+        .info-under-logo {
+            position: relative; z-index: 10; margin-top: 420px; text-align: center;
+            background: rgba(0,0,0,0.7); padding: 15px 30px; border-radius: 20px; border: 1px solid var(--m-gold);
+        }
+        .prices { color: var(--m-green); font-size: 0.85rem; margin-bottom: 8px; letter-spacing: 1px; }
+        .datetime { color: var(--m-white); font-size: 1.1rem; text-shadow: 0 0 10px var(--m-gold); }
+
+        .footer-counter { position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 10; }
+        .score-box {
+            display: inline-block; padding: 8px 20px; border: 2px solid var(--m-green);
+            color: var(--m-green); font-size: 1.4rem; background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px var(--m-green);
         }
 
-        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Orbitron', sans-serif; overflow-x: hidden; }
-
-        /* --- نوار قیمت زنده --- */
-        .price-ticker {
-            width: 100%; background: rgba(0, 255, 65, 0.1); border-bottom: 1px solid var(--matrix-green);
-            padding: 5px 0; position: fixed; top: 0; z-index: 2000; overflow: hidden; white-space: nowrap;
-        }
-        .ticker-content { display: inline-block; animation: ticker 40s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: #00ffa3; }
-
-        /* --- شبکه‌های اجتماعی (Slow Motion) --- */
-        .social-sidebar {
-            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 20px; z-index: 3000;
-        }
-        .social-sidebar i {
-            font-size: 24px; color: var(--gold); cursor: pointer;
-            transition: transform 0.8s ease-in-out, color 0.3s;
-            animation: slowFloat 4s ease-in-out infinite;
-        }
-        .social-sidebar i:hover { color: var(--matrix-green); transform: scale(1.3); }
-        @keyframes slowFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* --- لایه‌بندی لوگو و ماتریس --- */
-        .hero-container { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
-        
-        /* لوگو در لایه زیرین */
-        #main-logo {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 400px; z-index: 1; /* زیر ماتریس */
-            filter: drop-shadow(0 0 30px #000);
-        }
-
-        /* بوم ماتریس روی لوگو */
-        #matrixCanvas {
-            position: absolute; top: 0; left: 0;
-            z-index: 5; /* روی لوگو */
-            mix-blend-mode: screen; /* باعث می‌شود سیاهی ماتریس حذف و فقط نوشته‌ها روی لوگو بیفتند */
-            opacity: 0.8;
-        }
-
-        /* --- صفحه دوم: حلقه‌ها --- */
+        /* --- بخش دوم: بارش توکن‌ها --- */
         .rings-section { 
-            min-height: 100vh; background: #050505; border-top: 2px solid var(--gold);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: relative; z-index: 10;
+            position: relative; min-height: 100vh; background: #050505; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            border-top: 2px solid var(--m-gold); overflow: hidden;
         }
-        .rings-container { display: flex; align-items: center; justify-content: center; gap: 30px; margin: 40px 0; }
-        .ring {
-            width: 150px; height: 150px; border: 3px solid var(--matrix-green); border-radius: 50%;
+        #tokenCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        .ring-group { position: relative; z-index: 5; display: flex; align-items: center; gap: 25px; }
+        .ring { 
+            width: 130px; height: 130px; border: 4px solid var(--m-gold); border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-weight: bold;
-            box-shadow: 0 0 15px var(--matrix-green); background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.8); box-shadow: 0 0 30px var(--m-gold);
         }
-        .plus { font-size: 2rem; color: var(--gold); }
-        .token-info {
-            max-width: 800px; padding: 30px; border: 1px solid var(--gold);
-            background: rgba(255,255,255,0.05); text-align: center; line-height: 1.6;
-        }
+        .plus { font-size: 2rem; color: var(--m-white); }
     </style>
 </head>
 <body>
 
-    <div class="price-ticker">
-        <div class="ticker-content">
-            <span>BTC: $68,432</span> <span>ETH: $3,542</span> <span>SOL: $145</span> <span>SATOSHI DNA: $0.00001</span>
-        </div>
-    </div>
-
     <div class="social-sidebar">
-        <i class="fab fa-facebook"></i>
-        <i class="fab fa-twitter"></i>
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-telegram"></i>
-        <i class="fab fa-snapchat"></i>
-        <i class="fab fa-tiktok"></i>
+        <i class="fab fa-facebook"></i><i class="fab fa-tiktok"></i><i class="fab fa-telegram"></i>
+        <i class="fab fa-twitter"></i><i class="fab fa-instagram"></i>
     </div>
 
-    <div class="hero-container">
-        <img src="logo.png" id="main-logo" alt="Satoshi DNA Logo">
+    <div class="hero">
+        <img src="logo.png" id="main-logo" alt="Satoshi DNA">
         <canvas id="matrixCanvas"></canvas>
+
+        <div class="info-under-logo">
+            <div class="prices">BTC: $68K | SOL: $145 | DNA: $0.0004 | ETH: $3.5K</div>
+            <div id="liveClock" class="datetime">00:00:00 - 2026/01/25</div>
+        </div>
+
+        <div class="footer-counter">
+            <div class="score-box" id="score">SEC: 00</div>
+        </div>
     </div>
 
     <section class="rings-section">
-        <h2 style="color: var(--gold);">SYSTEM ARCHITECTURE</h2>
-        <div class="rings-container">
-            <div class="ring">SATOSHI</div>
-            <div class="plus">+</div>
-            <div class="ring">DNA</div>
-            <div class="plus">+</div>
+        <canvas id="tokenCanvas"></canvas>
+        <div class="ring-group">
+            <div class="ring">SATOSHI</div><div class="plus">+</div>
+            <div class="ring">DNA</div><div class="plus">+</div>
             <div class="ring">AI</div>
-        </div>
-        <div class="token-info">
-            <h3>TOKENOMICS & DETAILS</h3>
-            <p>اینجا تمامی توضیحات مربوط به توکن، شبکه سولانا و اهداف پروژه به صورت کامل قرار می‌گیرد. 
-               ترکیب هوش مصنوعی با کدهای ژنتیکی بلاکچین برای خلق یک اکوسیستم پایدار.</p>
         </div>
     </section>
 
     <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+        // --- تنظیمات ماتریس (سه رنگ) ---
+        const mCanvas = document.getElementById('matrixCanvas');
+        const mCtx = mCanvas.getContext('2d');
+        mCanvas.width = window.innerWidth; mCanvas.height = window.innerHeight;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const chars = "ｱｲｳｴｵｶｷｸｹｺ0123456789DNAAI";
+        const chars = "SATO-DNA-AI-01";
+        const mColors = ["#00FF41", "#FFD700", "#FFFFFF"];
         const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const columns = mCanvas.width / fontSize;
+        const mDrops = Array(Math.floor(columns)).fill(1);
 
-        function draw() {
-            // استفاده از شفافیت برای دیده شدن لوگوی زیرین
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00FF41";
-            ctx.font = fontSize + "px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+        function drawMatrix() {
+            mCtx.fillStyle = "rgba(0, 0, 0, 0.08)";
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            for (let i = 0; i < mDrops.length; i++) {
+                mCtx.fillStyle = mColors[Math.floor(Math.random() * mColors.length)];
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                mCtx.fillText(text, i * fontSize, mDrops[i] * fontSize);
+                if (mDrops[i] * fontSize > mCanvas.height && Math.random() > 0.975) mDrops[i] = 0;
+                mDrops[i]++;
             }
         }
 
-        setInterval(draw, 33);
+        // --- تنظیمات بارش توکن (صفحه دوم) ---
+        const tCanvas = document.getElementById('tokenCanvas');
+        const tCtx = tCanvas.getContext('2d');
+        tCanvas.width = window.innerWidth; tCanvas.height = window.innerHeight;
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        const tokens = ["₿", "S", "Ξ", "DNA"]; // نمادهای BTC, SOL, ETH, DNA
+        const tokenParticles = [];
+
+        class Token {
+            constructor() {
+                this.x = Math.random() * tCanvas.width;
+                this.y = Math.random() * tCanvas.height - tCanvas.height;
+                this.size = Math.random() * 20 + 15;
+                this.speed = Math.random() * 3 + 2;
+                this.symbol = tokens[Math.floor(Math.random() * tokens.length)];
+            }
+            draw() {
+                tCtx.fillStyle = "#FFD700";
+                tCtx.font = this.size + "px Arial";
+                tCtx.fillText(this.symbol, this.x, this.y);
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > tCanvas.height) { this.y = -20; this.x = Math.random() * tCanvas.width; }
+            }
+        }
+
+        for(let i=0; i<50; i++) tokenParticles.push(new Token());
+
+        function drawTokens() {
+            tCtx.clearRect(0, 0, tCanvas.width, tCanvas.height);
+            tokenParticles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(drawTokens);
+        }
+
+        // --- ساعت و ثانیه‌شمار ---
+        let secCounter = 0;
+        function updateUI() {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString() + " - " + now.toLocaleDateString('fa-IR');
+            secCounter++;
+            document.getElementById('score').innerText = "SEC: " + (secCounter < 10 ? "0"+secCounter : secCounter);
+        }
+
+        setInterval(drawMatrix, 40);
+        setInterval(updateUI, 1000);
+        drawTokens();
+
+        window.onresize = () => { 
+            mCanvas.width = tCanvas.width = window.innerWidth; 
+            mCanvas.height = tCanvas.height = window.innerHeight; 
+        };
     </script>
 </body>
 </html>
