@@ -2,139 +2,191 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SATOSHI DNA AI - Matrix Hero</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satoshi DNA Professional</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Orbitron', sans-serif; }
-        
-        /* استایل بوم ماتریس */
-        #matrixCanvas {
-            position: absolute;
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Professional Header --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(20, 20, 20, 0.9);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* --- Price List Section --- */
+        .price-ticker {
+            text-align: center;
+            padding: 10px;
+            background: #111;
+            color: #0f0;
+            font-family: monospace;
+            border-bottom: 1px solid #222;
+        }
+
+        /* --- Logo Section --- */
+        .logo-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .logo-img {
+            width: 250px; /* لوگوی بزرگتر */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: -2px;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #fff, #00ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Clock & Date --- */
+        #clock-section {
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* --- Matrix Canvas --- */
+        #matrix-canvas {
+            position: fixed;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: -1;
+            opacity: 0.3;
         }
 
-        /* محتوای روی صفحه */
-        .hero-container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.2); /* یک لایه بسیار نازک برای خوانایی بهتر لوگو */
-        }
-
-        .logo-box {
-            width: 80%;
-            max-width: 600px;
-            /* این کد پس‌زمینه سیاه عکس را حذف و آن را با ماتریس ترکیب می‌کند */
-            mix-blend-mode: screen; 
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.8)); transform: scale(1.02); }
-        }
-
-        .solana-tag {
-            margin-top: 30px;
-            padding: 15px 30px;
-            border: 2px solid #00ffa3;
-            background: rgba(0, 0, 0, 0.8);
-            color: #00ffa3;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .clock-container {
-            margin-top: 20px;
-            color: #ffd700;
+        /* --- Page 2 Content --- */
+        .page-two {
+            margin-top: 100px;
             text-align: center;
+            padding: 50px;
         }
 
-        #liveClock { font-size: 2.5rem; text-shadow: 0 0 15px #ffd700; }
-        #liveDate { font-size: 1rem; opacity: 0.8; margin-bottom: 5px; }
+        .token-description {
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            color: #ccc;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+    <canvas id="matrix-canvas"></canvas>
 
-    <div class="hero-container">
-        <img src="logo.png" alt="SATOSHI DNA AI" class="logo-box">
-        
-        <div class="clock-container">
-            <div id="liveDate">LOADING DATE...</div>
-            <div id="liveClock">00:00:00</div>
-        </div>
-
-        <div class="solana-tag">
-            COMING SOON ON SOLANA NETWORK
-        </div>
+    <div class="price-ticker">
+        BTC: $65,432.10 | ETH: $3,456.78 | SDNA: $1.24 (Prices update live)
     </div>
 
-    <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+    <header>
+        <div class="brand">SDNA PRO</div>
+        <nav>
+            <a href="#">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">BUY TOKENS</a>
+            <a href="#">CONNECT WALLET</a>
+        </nav>
+    </header>
 
+    <section class="logo-container">
+        <img src="your-logo-path.png" alt="Satoshi DNA Logo" class="logo-img">
+        <div class="logo-text">SATOSHI DNA</div>
+        
+        <div id="clock-section">
+            <div id="date"></div>
+            <div id="clock"></div>
+        </div>
+    </section>
+
+    <section class="page-two">
+        <div class="rings-placeholder">
+            <div style="font-size: 50px;">⭕ ⭕ ⭕</div>
+        </div>
+
+        <div class="token-description">
+            <h3>Token Specifications</h3>
+            <p>
+                All the professional descriptions about Satoshi DNA tokens go here. 
+                This section is placed right below the three rings as requested.
+                (توضیحات کامل توکن که قبلاً فرستادی در این قسمت قرار می‌گیرد)
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // --- Matrix Effect ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // کاراکترها: ژاپنی (کاتاکانا)، چینی، و انگلیسی
-        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
-        const chinese = "龙币人工智能DNA";
-        const english = "SATOSHIDNAAI0123456789";
-        const allChars = japanese + chinese + english;
-
-        const fontSize = 18;
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789サトシDNA中国数字货币";
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
-            // ایجاد افکت محو شدن دنباله کاراکترها
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+            ctx.fillStyle = "#0F0";
             ctx.font = fontSize + "px monospace";
-
             for (let i = 0; i < drops.length; i++) {
-                // انتخاب تصادفی کاراکتر
-                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                
-                // تغییر رنگ بر اساس نوع زبان برای وضوح بیشتر
-                if (english.includes(text)) ctx.fillStyle = "#FFFFFF"; // انگلیسی سفید
-                else if (chinese.includes(text)) ctx.fillStyle = "#FFD700"; // چینی طلایی
-                else ctx.fillStyle = "#00FF41"; // ژاپنی سبز ماتریسی
-
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
+        setInterval(drawMatrix, 50);
 
-        // آپدیت ساعت و تاریخ
+        // --- Live Clock & Date ---
         function updateClock() {
             const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
-            document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('date').innerText = dateStr;
+            document.getElementById('clock').innerText = timeStr;
         }
-
-        setInterval(drawMatrix, 50);
         setInterval(updateClock, 1000);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        updateClock();
     </script>
 </body>
 </html>
