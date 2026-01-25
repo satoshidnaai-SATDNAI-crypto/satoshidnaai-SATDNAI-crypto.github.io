@@ -2,167 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | SATDNAAI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <title>SATOSHI DNA AI - Matrix Hero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
     <style>
-        /* --- Base Styles --- */
-        *{ margin:0; padding:0; box-sizing:border-box; }
-        html,body{ width:100%; background:#000; font-family: 'Rajdhani', sans-serif; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-        :root { --gold: #ffd700; --satoshi-blue: #00d4ff; --dna-green: #39ff14; --matrix-green: #00ff41; }
-
-        /* --- Navigation & Socials (Fixed) --- */
-        nav { position: fixed; top: 30px; right: 5%; z-index: 1000; display: flex; gap: 25px; font-family: 'Orbitron'; }
-        nav a { color: var(--gold); text-decoration: none; font-size: 0.8rem; transition: 0.3s; cursor: pointer; }
-        nav a:hover { text-shadow: 0 0 10px var(--gold); }
-        .buy-now { border: 1px solid var(--gold); padding: 5px 20px; border-radius: 4px; background: rgba(0,0,0,0.6); }
-
-        .socials{ position: fixed; bottom: 30px; left: 5%; display: flex; gap: 20px; z-index: 1000; }
-        .socials a img{ width: 26px; transition: 0.3s; opacity: 0.8; }
-        .socials a:hover img{ opacity: 1; transform: scale(1.2); }
-
-        /* --- Section 1: Hero & Matrix (Japanese/Chinese/English) --- */
-        .hero-section { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        #matrix1 { position: absolute; inset: 0; z-index: 1; opacity: 0.3; }
-        .hero-content { position: relative; z-index: 2; padding: 20px; }
-        .logo-main { width: 100%; max-width: 600px; filter: drop-shadow(0 0 50px rgba(255,215,0,0.5)); animation: float 4s ease-in-out infinite; }
-        @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
-        .countdown { font-family: 'Orbitron'; font-size: 2rem; color: var(--satoshi-blue); margin-top: 20px; text-shadow: 0 0 10px var(--satoshi-blue); }
-        .solana-status { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--dna-green); margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--dna-green); }
-
-        /* --- Section 2: Tokenomics & Philosophy (Bitcoin Rain) --- */
-        .tokenomics-section { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #000; padding: 50px 5%; border-top: 2px solid var(--gold); }
-        #matrix2 { position: absolute; inset: 0; z-index: 1; opacity: 0.5; }
-        .tokenomics-content { position: relative; z-index: 2; text-align: center; background: rgba(0,0,0,0.7); padding: 40px; border-radius: 10px; max-width: 900px; }
-        .circle-container { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
-        .gold-circle { width: 120px; height: 120px; border: 2px solid var(--gold); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: 'Orbitron'; font-weight: 900; font-size: 1rem; background: rgba(0,0,0,0.85); box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-        .plus { color: var(--gold); font-size: 2rem; display: flex; align-items: center; }
-        h2 { color: var(--gold); font-family: 'Orbitron'; margin-top: 20px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
-        p { margin-top: 10px; color: #e0e0e0; }
-
-        /* --- Section 3: Gallery & Live Prices --- */
-        .gallery-section { position: relative; width: 100%; min-height: 100vh; padding: 100px 5%; background: #0e0e0e; border-top: 2px solid var(--satoshi-blue); }
-        .gallery-content { position: relative; z-index: 2; }
-        h2.gallery-title { text-align: center; margin-bottom: 40px; color: var(--satoshi-blue); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; justify-items: center; }
-        .gallery-item { width: 150px; height: 150px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,d4ff,0.2); display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden; }
-        .live-prices { margin-top: 40px; background: rgba(0,0,0,0.5); padding: 20px; border: 1px solid var(--dna-green); }
-
-        @media (max-width: 768px) {
-            .logo-main { max-width: 350px; }
-            .countdown { font-size: 1.2rem; }
-            .circle-container { gap: 10px; }
-            .gold-circle { width: 90px; height: 90px; font-size: 0.8rem; }
-            nav { top: 15px; gap: 15px; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Orbitron', sans-serif; }
+        
+        /* استایل بوم ماتریس */
+        #matrixCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
+
+        /* محتوای روی صفحه */
+        .hero-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2); /* یک لایه بسیار نازک برای خوانایی بهتر لوگو */
+        }
+
+        .logo-box {
+            width: 80%;
+            max-width: 600px;
+            /* این کد پس‌زمینه سیاه عکس را حذف و آن را با ماتریس ترکیب می‌کند */
+            mix-blend-mode: screen; 
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.8)); transform: scale(1.02); }
+        }
+
+        .solana-tag {
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: 2px solid #00ffa3;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ffa3;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .clock-container {
+            margin-top: 20px;
+            color: #ffd700;
+            text-align: center;
+        }
+
+        #liveClock { font-size: 2.5rem; text-shadow: 0 0 15px #ffd700; }
+        #liveDate { font-size: 1rem; opacity: 0.8; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a onclick="scrollToSection(1)">ABOUT / HOME</a>
-        <a onclick="scrollToSection(2)">TOKENOMICS</a>
-        <a onclick="scrollToSection(3)">GALLERY</a>
-        <a class="buy-now" href="#">BUY NOW</a>
-    </nav>
+    <canvas id="matrixCanvas"></canvas>
 
-    <div class="socials">
-        <a href="https://t.me/SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram"></a>
-        <a href="https://x.com/SatoDnaAi" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X"></a>
-        <a href="https://www.youtube.com/@SATDNAI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+    <div class="hero-container">
+        <img src="logo.png" alt="SATOSHI DNA AI" class="logo-box">
+        
+        <div class="clock-container">
+            <div id="liveDate">LOADING DATE...</div>
+            <div id="liveClock">00:00:00</div>
+        </div>
+
+        <div class="solana-tag">
+            COMING SOON ON SOLANA NETWORK
+        </div>
     </div>
 
-    <section id="section1" class="hero-section">
-        <canvas id="matrix1"></canvas>
-        <div class="hero-content">
-            <img src="./logo.png" alt="SATDNAAI Logo" class="logo-main">
-            <div class="countdown" id="countdown"></div>
-            <div class="solana-status">Coming Soon on the <span style="color:#00ffa3;">Solana</span> Blockchain</div>
-            <p style="color:var(--gold); margin-top:10px;">SATOSHI + DNA + AI: Idea, Creativity, Intelligence Unified.</p>
-        </div>
-    </section>
-
-    <section id="section2" class="tokenomics-section">
-        <canvas id="matrix2"></canvas>
-        <div class="tokenomics-content">
-            <div class="circle-container">
-                <div class="gold-circle txt-satoshi">SATOSHI</div>
-                <div class="plus">+</div>
-                <div class="gold-circle txt-dna">DNA</div>
-                <div class="plus">+</div>
-                <div class="gold-circle txt-ai">AI</div>
-            </div>
-            <h2>Tokenomics & Philosophy</h2>
-            <p>Satoshidnaai ($SATDNAAI) merges revolutionary ideas (Satoshi), innate creativity (DNA), and future intelligence (AI). A unique memecoin project on Solana built on transparency and sustainable growth.</p>
-            <p><span class="highlight">Tax Policy:</span> A transparent and permanent 0.5% transaction tax (Buy/Sell/Transfer: 0.5%, 0.5%, 0% respectively) dedicated to development and ecosystem growth. No hidden mechanisms.</p>
-        </div>
-    </section>
-
-    <section id="section3" class="gallery-section">
-        <div class="gallery-content">
-            <h2 class="gallery-title">SATDNAAI Gallery & Live Market</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">Image 1</div><div class="gallery-item">Image 2</div><div class="gallery-item">Image 3</div>
-                <div class="gallery-item">Image 4</div><div class="gallery-item">Image 5</div><div class="gallery-item">Image 6</div>
-                <div class="gallery-item">Image 7</div><div class="gallery-item">Image 8</div><div class="gallery-item">Image 9</div>
-                <div class="gallery-item">Image 10</div><div class="gallery-item">Image 11</div><div class="gallery-item">Image 12</div>
-                </div>
-            <div class="live-prices">
-                <h2>Live Crypto Prices (20-25 Tokens)</h2>
-                <p>Live price data integration placeholder...</p>
-            </div>
-        </div>
-    </section>
-
     <script>
-        // Smooth Scroll
-        function scrollToSection(section) {
-            document.getElementById('section' + section).scrollIntoView({ behavior: 'smooth' });
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // کاراکترها: ژاپنی (کاتاکانا)، چینی، و انگلیسی
+        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+        const chinese = "龙币人工智能DNA";
+        const english = "SATOSHIDNAAI0123456789";
+        const allChars = japanese + chinese + english;
+
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            // ایجاد افکت محو شدن دنباله کاراکترها
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                // انتخاب تصادفی کاراکتر
+                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
+                
+                // تغییر رنگ بر اساس نوع زبان برای وضوح بیشتر
+                if (english.includes(text)) ctx.fillStyle = "#FFFFFF"; // انگلیسی سفید
+                else if (chinese.includes(text)) ctx.fillStyle = "#FFD700"; // چینی طلایی
+                else ctx.fillStyle = "#00FF41"; // ژاپنی سبز ماتریسی
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
         }
 
-        // --- Matrix 1 (Japanese/Chinese/English) ---
-        const c1 = document.getElementById("matrix1");
-        const ctx1 = c1.getContext("2d");
-        let d1;
-        function res1(){ c1.width = window.innerWidth; c1.height = window.innerHeight; d1 = Array(Math.floor(c1.width/20)).fill(1); }
-        function dr1(){
-            ctx1.fillStyle = "rgba(0,0,0,0.08)"; ctx1.fillRect(0,0,c1.width,c1.height);
-            ctx1.fillStyle = "#FFD700"; ctx1.font = "20px monospace";
-            d1.forEach((y, i) => {
-                const char = Math.random() > 0.5 ? String.fromCharCode(0x30A0 + Math.random()*96) : (Math.random() > 0.7 ? String.fromCharCode(0x4E00 + Math.random()*200) : String.fromCharCode(0x0021 + Math.random()*94));
-                ctx1.fillText(char, i*20, y*20);
-                if(y*20 > c1.height && Math.random() > 0.975) d1[i] = 0; d1[i]++;
-            });
+        // آپدیت ساعت و تاریخ
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+            document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         }
-        res1(); setInterval(dr1, 40);
 
-        // --- Matrix 2 (Bitcoin Rain simulation) ---
-        const c2 = document.getElementById("matrix2");
-        const ctx2 = c2.getContext("2d");
-        let d2;
-        function res2(){ c2.width = window.innerWidth; c2.height = window.innerHeight; d2 = Array(Math.floor(c2.width/15)).fill(1); }
-        function dr2(){
-            ctx2.fillStyle = "rgba(0,0,0,0.1)"; ctx2.fillRect(0,0,c2.width,c2.height);
-            ctx2.fillStyle = var(--matrix-green); ctx2.font = "15px monospace";
-            d2.forEach((y, i) => {
-                const char = Math.random() > 0.9 ? '₿' : (Math.random() > 0.5 ? '1' : '0');
-                ctx2.fillText(char, i*15, y*15);
-                if(y*15 > c2.height && Math.random() > 0.98) d2[i] = 0; d2[i]++;
-            });
-        }
-        res2(); setInterval(dr2, 45);
+        setInterval(drawMatrix, 50);
+        setInterval(updateClock, 1000);
 
-        // --- Countdown (Placeholder) ---
-        function updateCountdown() {
-            const countdownElement = document.getElementById('countdown');
-            // Implement actual countdown logic here (e.g., to Solana launch date)
-            countdownElement.textContent = "25 Days : 10 Hours : 34 Minutes : 52 Seconds";
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        window.addEventListener('resize', () => { res1(); res2(); });
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
