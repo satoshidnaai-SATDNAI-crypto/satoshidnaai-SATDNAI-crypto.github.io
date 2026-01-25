@@ -18,7 +18,7 @@
             background-size:contain; z-index:1;
         }
         .logo-protect{ position:absolute; inset:0; background:rgba(0,0,0,0.08); z-index:2; }
-        #matrix1 { position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0.25; }
+        #matrix1 { position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0.35; }
         
         .caption{
             position:absolute; bottom:40px; width:100%; text-align:center; z-index:5;
@@ -173,35 +173,43 @@
         function openDocs() { document.getElementById('docOverlay').style.display = 'block'; document.body.style.overflow = 'hidden'; }
         function closeDocs() { document.getElementById('docOverlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        // ماتریکس بخش اول (طلایی)
+        // پیکربندی کاراکترها و رنگ‌ها
+        const charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄナニヌネノハヒフヘホ天地人私公誠信愛光";
+        const colors = ["#FFD700", "#00FF41", "#FFFFFF"]; // طلایی، سبز، سفید
+
+        // ماتریکس بخش اول
         const c1 = document.getElementById("matrix1");
         const ctx1 = c1.getContext("2d");
         let d1;
         function res1(){ c1.width = window.innerWidth; c1.height = window.innerHeight; d1 = Array(Math.floor(c1.width/18)).fill(1); }
         function dr1(){
-            ctx1.fillStyle = "rgba(0,0,0,0.05)"; ctx1.fillRect(0,0,c1.width,c1.height);
-            ctx1.fillStyle = "#FFD700"; ctx1.font = "18px monospace";
+            ctx1.fillStyle = "rgba(0,0,0,0.1)"; 
+            ctx1.fillRect(0,0,c1.width,c1.height);
             d1.forEach((y, i) => {
-                const char = "01SATDNAI"[Math.floor(Math.random()*9)];
+                const char = charset[Math.floor(Math.random()*charset.length)];
+                ctx1.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+                ctx1.font = "18px monospace";
                 ctx1.fillText(char, i*18, y*18);
                 if(y*18 > c1.height && Math.random() > 0.975) d1[i] = 0; d1[i]++;
             });
         }
         res1(); setInterval(dr1, 33);
 
-        // ماتریکس بخش دوم (سبز ماتریکسی)
+        // ماتریکس بخش دوم
         const c2 = document.getElementById("matrixCanvas2");
         const ctx2 = c2.getContext("2d");
         let d2;
         function res2(){ c2.width = window.innerWidth; c2.height = window.innerHeight; d2 = Array(Math.floor(c2.width/19)).fill(1); }
         function dr2(){
-            ctx2.fillStyle = "rgba(0,0,0,0.05)"; ctx2.fillRect(0,0,c2.width,c2.height);
-            ctx2.font = "19px monospace";
+            ctx2.fillStyle = "rgba(0,0,0,0.1)"; 
+            ctx2.fillRect(0,0,c2.width,c2.height);
             d2.forEach((y, i) => {
-                const char = String.fromCharCode(0x30A0 + Math.random()*96);
-                ctx2.shadowBlur = 15; ctx2.shadowColor = "#00ff41"; ctx2.fillStyle = "#e0ffeb";
+                const char = charset[Math.floor(Math.random()*charset.length)];
+                const color = colors[Math.floor(Math.random()*colors.length)];
+                ctx2.shadowBlur = 5; ctx2.shadowColor = color; 
+                ctx2.fillStyle = color;
+                ctx2.font = "19px monospace";
                 ctx2.fillText(char, i*19, y*19);
-                ctx2.fillStyle = "#00ff41"; ctx2.fillText(char, i*19, (y-1)*19);
                 ctx2.shadowBlur = 0;
                 if(y*19 > c2.height && Math.random() > 0.975) d2[i] = 0; d2[i]++;
             });
