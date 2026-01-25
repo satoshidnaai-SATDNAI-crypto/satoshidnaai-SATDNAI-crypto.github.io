@@ -36,14 +36,14 @@
         }
         .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
 
-        /* --- ناوبری (Navbar) --- */
+        /* --- ناوبری --- */
         nav {
             width: 100%;
             height: 70px;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(10px);
             position: fixed;
-            top: 30px; /* زیر نوار قیمت */
+            top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -64,42 +64,72 @@
         }
         .connect-btn:hover { background: var(--gold); color: black; }
 
-        /* --- بخش اول: هیرو و ماتریس --- */
-        section { width: 100%; height: 100vh; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 1; }
-        .hero-content { z-index: 10; text-align: center; }
-        .logo-box { width: 350px; mix-blend-mode: screen; filter: drop-shadow(0 0 20px var(--matrix-green)); }
-
-        /* --- بخش دوم: سه حلقه عملیاتی --- */
-        .rings-section { background: #050505; border-top: 2px solid var(--gold); }
-        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 50px; }
-        .ring {
-            width: 180px;
-            height: 180px;
-            border: 4px solid var(--matrix-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px var(--matrix-green);
-            position: relative;
-            background: rgba(0,0,0,0.5);
+        /* --- بخش هیرو و ماتریکس روی لوگو --- */
+        .hero-section { 
+            width: 100%; 
+            height: 100vh; 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
         }
-        .plus-sign { font-size: 2.5rem; color: var(--gold); font-weight: 900; }
-        .description-box {
-            max-width: 800px;
-            margin-top: 60px;
-            padding: 30px;
-            border-left: 5px solid var(--gold);
-            background: rgba(255,255,255,0.05);
-            line-height: 1.8;
-            text-align: justify;
+
+        /* لوگو در لایه زیرین */
+        .logo-container {
+            position: absolute;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-box { 
+            width: 400px; 
+            /* حذف پس‌زمینه سیاه لوگو با متد اسکرین */
+            mix-blend-mode: screen; 
+            filter: drop-shadow(0 0 15px var(--matrix-green));
+        }
+
+        /* ماتریکس در لایه رویی */
+        #matrixCanvas { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            z-index: 5; 
+            /* اجازه عبور کلیک به لایه‌های زیرین در صورت نیاز */
+            pointer-events: none; 
+            opacity: 0.8;
+        }
+
+        .hero-text-overlay {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-top: 450px; /* تنظیم متن زیر لوگو */
         }
 
         /* استایل ساعت */
-        #liveClock { font-size: 2rem; color: var(--gold); margin: 10px 0; }
+        #liveClock { font-size: 2rem; color: var(--gold); margin: 10px 0; text-shadow: 0 0 10px black; }
+
+        /* --- بخش دوم --- */
+        .rings-section { background: #050505; border-top: 2px solid var(--gold); padding: 100px 0; text-align: center; }
+        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 50px; }
+        .ring {
+            width: 180px; height: 180px;
+            border: 4px solid var(--matrix-green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem;
+            box-shadow: 0 0 20px var(--matrix-green);
+            background: rgba(0,0,0,0.7);
+        }
+        .plus-sign { font-size: 2.5rem; color: var(--gold); font-weight: 900; }
+        .description-box {
+            max-width: 800px; margin: 60px auto; padding: 30px;
+            border-left: 5px solid var(--gold);
+            background: rgba(255,255,255,0.05);
+            line-height: 1.8; text-align: justify; dir: rtl;
+        }
     </style>
 </head>
 <body>
@@ -107,33 +137,34 @@
     <div class="price-ticker">
         <div class="ticker-content">
             <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>BNB: $590.12</span>
-            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>AVAX: $38.90</span> <span>DOT: $7.20</span>
-            <span>SATOSHI DNA: $0.00001 (PRE-SALE)</span> <span>DOGE: $0.16</span> <span>LINK: $18.40</span>
+            <span>SATOSHI DNA: $0.00001 (PRE-SALE)</span> <span>DOGE: $0.16</span>
         </div>
     </div>
 
     <nav>
-        <div class="logo-text">SATOSHI+DNA+AI  SATDNAI </div>
+        <div class="logo-text">SATOSHI+DNA+AI</div>
         <div class="nav-links">
             <a href="#">HOME</a>
             <a href="#about">ABOUT</a>
-            <a href="#">TOKENOMICS</a>
-            <a href="#">WHITEPAPER</a>
             <button class="connect-btn">CONNECT WALLET</button>
         </div>
     </nav>
 
-    <section>
-        <canvas id="matrixCanvas"></canvas>
-        <div class="hero-content">
+    <section class="hero-section">
+        <div class="logo-container">
             <img src="logo.png" alt="Logo" class="logo-box">
+        </div>
+
+        <canvas id="matrixCanvas"></canvas>
+
+        <div class="hero-text-overlay">
             <div id="liveClock">00:00:00</div>
             <p style="color: var(--solana); letter-spacing: 5px;">DECENTRALIZED INTELLIGENCE</p>
         </div>
     </section>
 
     <section id="about" class="rings-section">
-        <h2 style="color: var(--gold); margin-bottom: 30px;">THE CORE STRUCTURE</h2>
+        <h2 style="color: var(--gold);">THE CORE STRUCTURE</h2>
         <div class="rings-container">
             <div class="ring">SATOSHI</div>
             <div class="plus-sign">+</div>
@@ -141,44 +172,47 @@
             <div class="plus-sign">+</div>
             <div class="ring">AI</div>
         </div>
-
         <div class="description-box">
-            <h3>ABOUT THE PROJECT</h3>
-            <p>
-                پروژه SATOSHI DNA AI تلفیقی از میراث بیت‌کوین، کدهای زیستی هوشمند و هوش مصنوعی پیشرفته است. این پلتفرم بر بستر شبکه سولانا طراحی شده تا سرعت، امنیت و هوش را همزمان به ارمغان بیاورد. در این فضا، هر توکن نمایانگر بخشی از یک شبکه عصبی غیرمتمرکز است که به سمت آینده مالی حرکت می‌کند.
-            </p>
+            <h3>درباره پروژه</h3>
+            <p>پروژه SATOSHI DNA AI تلفیقی از میراث بیت‌کوین، کدهای زیستی هوشمند و هوش مصنوعی پیشرفته است. این پلتفرم بر بستر شبکه سولانا طراحی شده تا سرعت، امنیت و هوش را همزمان به ارمغان بیاورد.</p>
         </div>
     </section>
 
     <script>
-        // کدهای ماتریس (مانند قبل با ۳ زبان)
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
-        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
-        const chinese = "龙币人工智能DNA";
-        const english = "SATOSHIDNAAI0123456789";
-        const allChars = japanese + chinese + english;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        const fontSize = 18;
+        const chars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789龙币";
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            // ایجاد افکت دنباله‌دار با شفافیت کم
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
-                const text = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                if (english.includes(text)) ctx.fillStyle = "#FFFFFF";
-                else if (chinese.includes(text)) ctx.fillStyle = "#FFD700";
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                
+                // ایجاد تنوع رنگی ماتریکس
+                if (Math.random() > 0.9) ctx.fillStyle = "#FFFFFF"; 
                 else ctx.fillStyle = "#00FF41";
 
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
                 drops[i]++;
             }
         }
@@ -190,11 +224,6 @@
 
         setInterval(drawMatrix, 50);
         setInterval(updateClock, 1000);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
     </script>
 </body>
 </html>
