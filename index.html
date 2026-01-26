@@ -90,9 +90,10 @@
             width: 100%; background: rgba(0, 255, 65, 0.1); border-bottom: 1px solid var(--matrix-green);
             padding: 5px 0; position: fixed; top: 0; z-index: 2000; overflow: hidden; white-space: nowrap;
         }
-        .ticker-content { display: inline-block; animation: ticker 30s linear infinite; }
+        .ticker-content { display: inline-block; animation: ticker 120s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
+        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); font-weight: bold; }
+        .ticker-content b { color: white; margin-left: 5px; }
 
         nav {
             width: 100%; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
@@ -127,48 +128,49 @@
         .tax-card { border: 1px solid var(--matrix-green); padding: 20px; background: rgba(0, 255, 65, 0.05); }
         .tax-card h4 { margin: 0; color: var(--solana); }
         .tax-card p { font-size: 1.5rem; font-weight: 900; margin: 10px 0; }
+
+        /* --- Slideshow Styling --- */
+        .slideshow-container {
+            max-width: 900px; position: relative; margin: 40px auto;
+            border: 2px solid var(--matrix-green); box-shadow: 0 0 20px var(--matrix-green);
+            background: #000; overflow: hidden;
+        }
+        .mySlides { display: none; text-align: center; }
+        .mySlides img, .mySlides video { width: 100%; height: auto; display: block; }
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px;
+            margin-top: -22px; color: var(--matrix-green); font-weight: bold; font-size: 24px;
+            transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none;
+            background: rgba(0,0,0,0.5); text-decoration: none;
+        }
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev:hover, .next:hover { background-color: var(--matrix-green); color: black; }
+        .fade { animation: fadeEffect 1.5s; }
+        @keyframes fadeEffect { from {opacity: .4} to {opacity: 1} }
     </style>
 </head>
 <body>
 
     <div class="social-sidebar">
-        <div class="social-item" data-name="TELEGRAM">
-            <a href="#" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
-        </div>
-        <div class="social-item" data-name="X (TWITTER)">
-            <a href="#" class="social-icon x-tw"><i class="fab fa-x-twitter"></i></a>
-        </div>
-        <div class="social-item" data-name="INSTAGRAM">
-            <a href="#" class="social-icon ig"><i class="fab fa-instagram"></i></a>
-        </div>
-        <div class="social-item" data-name="YOUTUBE">
-            <a href="#" class="social-icon yt"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="social-item" data-name="TIKTOK">
-            <a href="#" class="social-icon tk"><i class="fab fa-tiktok"></i></a>
-        </div>
-        <div class="social-item" data-name="FACEBOOK">
-            <a href="#" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
-        </div>
-        <div class="social-item" data-name="SNAPCHAT">
-            <a href="#" class="social-icon sc"><i class="fab fa-snapchat-ghost"></i></a>
-        </div>
+        <div class="social-item" data-name="TELEGRAM"><a href="#" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a></div>
+        <div class="social-item" data-name="X (TWITTER)"><a href="#" class="social-icon x-tw"><i class="fab fa-x-twitter"></i></a></div>
+        <div class="social-item" data-name="INSTAGRAM"><a href="#" class="social-icon ig"><i class="fab fa-instagram"></i></a></div>
+        <div class="social-item" data-name="YOUTUBE"><a href="#" class="social-icon yt"><i class="fab fa-youtube"></i></a></div>
+        <div class="social-item" data-name="TIKTOK"><a href="#" class="social-icon tk"><i class="fab fa-tiktok"></i></a></div>
+        <div class="social-item" data-name="FACEBOOK"><a href="#" class="social-icon fb"><i class="fab fa-facebook-f"></i></a></div>
+        <div class="social-item" data-name="SNAPCHAT"><a href="#" class="social-icon sc"><i class="fab fa-snapchat-ghost"></i></a></div>
     </div>
 
     <div class="price-ticker">
-        <div class="ticker-content">
-            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>SATDNAAI: $0.00001</span>
-            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>DOGE: $0.16</span>
+        <div class="ticker-content" id="ticker-box">
+            <span>LOADING MARKET DATA...</span>
         </div>
     </div>
 
     <nav>
         <div style="font-weight: 900; color: var(--matrix-green);">SATOSHI+DNA+AI</div>
         <div class="nav-links">
-            <a href="#">HOME</a>
-            <a href="#about">ABOUT</a>
-            <a href="#tokenomics">TOKENOMICS</a>
-            <a href="#">WHITEPAPER</a>
+            <a href="#">HOME</a><a href="#about">ABOUT</a><a href="#tokenomics">TOKENOMICS</a><a href="#gallery">GALLERY</a>
             <button class="connect-btn">CONNECT WALLET</button>
         </div>
     </nav>
@@ -183,70 +185,86 @@
 
     <section id="about" class="about-section">
         <h2 style="color: var(--gold); font-size: 2rem; margin-bottom: 30px;">Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
-        
         <div class="content-box">
-            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.</p>
-            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
-            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
-            <p><span class="highlight">AI</span> represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
-            
-            <h3 class="green-text" style="text-align: center; margin: 30px 0;">Satoshidnaai = SATDNAAI</h3>
-            <p style="text-align: center; font-style: italic;">A place where idea, creativity, and intelligence become one.</p>
-            
-            <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
-            <p>This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey. SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.</p>
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts...</p>
+            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea...</p>
+            <p><span class="highlight">DNA</span> represents innate creativity...</p>
+            <p><span class="highlight">AI</span> represents uniqueness, intelligence...</p>
         </div>
-
         <div class="rings-container">
-            <div class="ring">SATOSHI</div>
-            <div class="plus-sign" style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
-            <div class="ring">DNA</div>
-            <div class="plus-sign" style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
+            <div class="ring">SATOSHI</div><div style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
+            <div class="ring">DNA</div><div style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
             <div class="ring">AI</div>
         </div>
     </section>
 
     <section id="tokenomics" class="tokenomics-section">
         <h2 style="color: var(--gold); font-size: 2rem;">Tokenomics and Tax Policy</h2>
-        <p style="max-width: 800px; margin: 20px auto; opacity: 0.8;">To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax.</p>
-        
         <div class="tax-grid">
             <div class="tax-card"><h4>Total Tax</h4><p>0.5%</p></div>
             <div class="tax-card"><h4>Buy Tax</h4><p>0.5%</p></div>
             <div class="tax-card"><h4>Sell Tax</h4><p>0.5%</p></div>
             <div class="tax-card"><h4>Transfer Tax</h4><p>0%</p></div>
         </div>
+    </section>
 
-        <div class="content-box" style="margin: 40px auto;">
-            <p>This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.</p>
-            <ul style="list-style: none; padding: 0;">
-                <li>✅ There are no hidden taxes.</li>
-                <li>✅ There are no non-transparent mechanisms in the contract.</li>
-                <li>✅ <span class="green-text">This tax is permanent, transparent, and will never be increased.</span></li>
-            </ul>
-        </div>
+    <section id="gallery" class="about-section" style="border-top: 1px solid #222;">
+        <h2 style="color: var(--gold); font-size: 2rem;">Multimedia Gallery</h2>
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <video controls muted loop>
+                    <source src="SATOSHIDNAAI.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="mySlides fade"><img src="jpg1.jpg"></div>
+            <div class="mySlides fade"><img src="jpg2.jpg"></div>
+            <div class="mySlides fade"><img src="jpg3.jpg"></div>
+            <div class="mySlides fade"><img src="jpg4.jpg"></div>
+            <div class="mySlides fade"><img src="jpg5.jpg"></div>
+            <div class="mySlides fade"><img src="jpg6.jpg"></div>
+            <div class="mySlides fade"><img src="jpg7.jpg"></div>
+            <div class="mySlides fade"><img src="jpg8.jpg"></div>
+            <div class="mySlides fade"><img src="jpg9.jpg"></div>
+            <div class="mySlides fade"><img src="jpg10.jpg"></div>
+            <div class="mySlides fade"><img src="jpg11.jpg"></div>
+            <div class="mySlides fade"><img src="jpg12.jpg"></div>
 
-        <div style="margin-top: 60px;">
-            <h3 style="color: var(--gold);">SATDNAAI Philosophy</h3>
-            <p style="max-width: 850px; margin: 0 auto; line-height: 1.8;">SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly. For this reason, the interests of the team and the community are fully aligned.</p>
-        </div>
-
-        <div style="margin-top: 50px; padding: 30px; border: 1px dashed var(--matrix-green); display: inline-block;">
-            <h3 class="green-text" style="margin: 0;">Final Summary</h3>
-            <p style="margin: 10px 0 0 0;">SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence.</p>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
     </section>
 
     <script>
+        // --- Market Ticker (100 Tokens) ---
+        async function fetchPrices() {
+            try {
+                const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1');
+                const data = await res.json();
+                let html = `<span>SATDNAAI: <b>$0.00001</b></span>`;
+                data.forEach(c => html += `<span>${c.symbol.toUpperCase()}: <b>$${c.current_price.toLocaleString()}</b></span>`);
+                document.getElementById('ticker-box').innerHTML = html;
+            } catch (e) { document.getElementById('ticker-box').innerHTML = "<span>API LIMIT - RETRYING...</span>"; }
+        }
+        fetchPrices(); setInterval(fetchPrices, 60000);
+
+        // --- Slideshow Logic ---
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        function plusSlides(n) { showSlides(slideIndex += n); }
+        function showSlides(n) {
+            let i; let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {slideIndex = 1} if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        // --- Matrix Canvas (Original) ---
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', resize); resize();
         const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
-        const chinese = "龙币人工智能DNA";
-        const english = "SATOSHIDNAAI0123456789";
-        const allChars = japanese + chinese + english;
+        const allChars = japanese + "龙币人工智能DNA" + "SATOSHIDNAAI0123456789";
         const fontSize = 18;
         const columns = Math.floor(canvas.width / fontSize);
         const drops = Array(columns).fill(1);
@@ -256,9 +274,7 @@
             ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const char = allChars.charAt(Math.floor(Math.random() * allChars.length));
-                if (english.includes(char)) ctx.fillStyle = "#FFFFFF"; 
-                else if (chinese.includes(char)) ctx.fillStyle = "#FFD700"; 
-                else ctx.fillStyle = "#00FF41"; 
+                ctx.fillStyle = (Math.random() > 0.8) ? "#FFFFFF" : "#00FF41"; 
                 ctx.fillText(char, i * fontSize, drops[i] * fontSize);
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
