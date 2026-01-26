@@ -3,105 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | SDNA</title>
+    <title>SATOSHI DNA AI | Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
             --matrix-green: #00FF41;
             --cyan-glow: #00f2ff;
-            --gold: #FFD700;
+            --dark-bg: #000000;
         }
 
         body, html {
             margin: 0; padding: 0;
-            background: #000;
+            background: var(--dark-bg);
             color: white;
             font-family: 'Orbitron', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* Background Matrix Effect */
+        /* ثابت نگه داشتن افکت ماتریکس در پس‌زمینه */
         #matrixCanvas {
             position: fixed; top: 0; left: 0; z-index: -1;
-            width: 100%; height: 100%; opacity: 0.3;
+            width: 100%; height: 100%; opacity: 0.25;
         }
 
-        /* Layout Sections */
         section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             box-sizing: border-box;
-            position: relative;
         }
 
-        /* --- Navigation --- */
+        /* --- نوار ناوبری نئونی --- */
         nav {
-            position: fixed; top: 20px; width: 100%;
-            display: flex; justify-content: space-around;
-            z-index: 1000; background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px); padding: 15px 0;
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: center; gap: 30px;
+            z-index: 1000; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(15px); padding: 20px 0;
             border-bottom: 1px solid var(--matrix-green);
         }
-        nav a { color: white; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; }
-        nav a:hover { color: var(--matrix-green); }
+        nav a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: bold; }
+        nav a:hover { color: var(--cyan-glow); text-shadow: 0 0 10px var(--cyan-glow); }
 
-        /* --- PAGE 1: HERO --- */
-        .hero-container {
-            display: flex; align-items: center; justify-content: center; gap: 40px;
+        /* --- صفحه ۱: مرکزیت لوگو و تصاویر جانبی --- */
+        .hero-group {
+            display: flex; align-items: center; justify-content: center; gap: 50px;
         }
-        .hero-side-img {
-            width: 200px; border: 2px solid var(--matrix-green);
-            box-shadow: 0 0 15px var(--matrix-green); border-radius: 10px;
+        .side-img {
+            width: 180px; border: 2px solid var(--matrix-green);
+            box-shadow: 0 0 20px var(--matrix-green); border-radius: 12px;
         }
-        .main-logo { width: 350px; filter: drop-shadow(0 0 20px var(--cyan-glow)); }
+        .main-logo-img { width: 320px; filter: drop-shadow(0 0 25px var(--cyan-glow)); }
 
-        /* --- PAGE 2: TOKENOMICS (Exact Style) --- */
-        .tokenomics-header { color: var(--cyan-glow); font-size: 2.5rem; margin-bottom: 50px; text-shadow: 0 0 10px var(--cyan-glow); }
-        .token-grid-container {
-            position: relative; width: 100%; max-width: 1000px;
+        /* --- صفحه ۲: طراحی دقیق توکنومیکس (مشابه تصویر ارسالی) --- */
+        .tk-title { color: var(--cyan-glow); font-size: 2.2rem; margin-bottom: 60px; text-shadow: 0 0 15px var(--cyan-glow); }
+        .token-layout {
+            position: relative; width: 100%; max-width: 900px; height: 500px;
             display: flex; justify-content: center; align-items: center;
         }
-        .central-hub {
-            width: 300px; height: 300px; border: 5px solid var(--matrix-green);
+        .hub-circle {
+            width: 260px; height: 260px; border: 4px solid var(--matrix-green);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px var(--matrix-green); background: rgba(0,0,0,0.8);
-            z-index: 2;
+            box-shadow: 0 0 40px var(--matrix-green); background: rgba(0,0,0,0.9);
+            z-index: 5;
         }
-        .central-hub h2 { font-size: 3rem; color: white; margin: 0; letter-spacing: 5px; }
+        .hub-circle h2 { font-size: 2.5rem; color: white; letter-spacing: 4px; }
         
-        .info-panel {
-            position: absolute; width: 220px; padding: 15px;
+        .tk-panel {
+            position: absolute; width: 200px; padding: 20px;
             border: 2px solid var(--matrix-green); background: rgba(0, 255, 65, 0.05);
-            text-align: center; border-radius: 10px; box-shadow: 0 0 15px var(--matrix-green);
+            text-align: center; border-radius: 15px; box-shadow: 0 0 20px var(--matrix-green);
+            backdrop-filter: blur(5px);
         }
-        .panel-top-left { top: -20px; left: 0; }
-        .panel-top-right { top: -20px; right: 0; }
-        .panel-bottom-left { bottom: -20px; left: 0; }
-        .panel-bottom-right { bottom: -20px; right: 0; }
+        .p-tl { top: 0; left: 0; }
+        .p-tr { top: 0; right: 0; }
+        .p-bl { bottom: 0; left: 0; }
+        .p-br { bottom: 0; right: 0; }
         
-        .info-panel h4 { margin: 0; font-size: 0.8rem; color: var(--cyan-glow); }
-        .info-panel p { margin: 10px 0 0; font-size: 1.5rem; font-weight: bold; }
+        .tk-panel h4 { margin: 0; font-size: 0.75rem; color: var(--cyan-glow); letter-spacing: 1px; }
+        .tk-panel p { margin: 12px 0 0; font-size: 1.8rem; font-weight: 900; }
 
-        /* --- PAGE 3: MULTIMEDIA GALLERY --- */
-        .gallery-container {
-            width: 90%; max-width: 1200px; display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        /* --- صفحه ۳: گالری عکس و ویدیو --- */
+        .multimedia-grid {
+            width: 100%; max-width: 1100px; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;
         }
-        .video-box { grid-column: 1 / -1; margin-bottom: 30px; border: 3px solid var(--cyan-glow); box-shadow: 0 0 20px var(--cyan-glow); }
-        .video-box video { width: 100%; display: block; }
+        .main-video-wrapper { 
+            grid-column: 1 / -1; margin-bottom: 40px; 
+            border: 2px solid var(--cyan-glow); box-shadow: 0 0 30px var(--cyan-glow);
+        }
+        .main-video-wrapper video { width: 100%; display: block; }
         
-        .gallery-item {
-            overflow: hidden; border: 1px solid var(--matrix-green);
-            transition: 0.3s; cursor: pointer;
+        .img-card {
+            aspect-ratio: 1/1; overflow: hidden; border: 1px solid var(--matrix-green);
+            position: relative; transition: 0.4s;
         }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .gallery-item:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--matrix-green); }
+        .img-card img { width: 100%; height: 100%; object-fit: cover; }
+        .img-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--matrix-green); border-color: white; }
 
     </style>
 </head>
@@ -112,99 +114,96 @@
     <nav>
         <a href="#home">HOME</a>
         <a href="#tokenomics">TOKENOMICS</a>
-        <a href="#gallery">MULTIMEDIA</a>
+        <a href="#multimedia">MULTIMEDIA</a>
     </nav>
 
     <section id="home">
-        <div class="hero-container">
-            <img src="jpg5.jpg" class="hero-side-img" alt="Left">
-            <img src="logo.png" class="main-logo" alt="SDNA">
-            <img src="jpg11.jpg" class="hero-side-img" alt="Right">
+        <div class="hero-group">
+            <img src="jpg5.jpg" class="side-img" alt="SATOSHI Side">
+            <img src="logo.png" class="main-logo-img" alt="SATOSHI DNA AI">
+            <img src="jpg11.jpg" class="side-img" alt="DNA Side">
         </div>
-        <h1 style="margin-top: 40px; letter-spacing: 10px; color: var(--matrix-green);">SATOSHI DNA AI</h1>
+        <p style="margin-top: 50px; letter-spacing: 6px; font-weight: bold; color: var(--matrix-green);">DECENTRALIZED INTELLIGENCE SYSTEM</p>
     </section>
 
     <section id="tokenomics">
-        <h2 class="tokenomics-header">TOKENOMICS AI</h2>
-        <div class="token-grid-container">
-            <div class="central-hub">
+        <h2 class="tk-title">TOKENOMICS AI</h2>
+        <div class="token-layout">
+            <div class="hub-circle">
                 <h2>SDNA</h2>
             </div>
             
-            <div class="info-panel panel-top-left">
+            <div class="tk-panel p-tl">
                 <h4>BUY TAX</h4>
                 <p>0.5%</p>
             </div>
-            <div class="info-panel panel-top-right">
+            <div class="tk-panel p-tr">
                 <h4>SELL TAX</h4>
                 <p>0.5%</p>
             </div>
-            <div class="info-panel panel-bottom-left">
+            <div class="tk-panel p-bl">
                 <h4>TRANSFER TAX</h4>
                 <p>0%</p>
             </div>
-            <div class="info-panel panel-bottom-right">
+            <div class="tk-panel p-br">
                 <h4>TOTAL SUPPLY</h4>
-                <p>1 TRILLION</p>
+                <p style="font-size: 1.2rem;">1,000,000,000,000</p>
             </div>
         </div>
     </section>
 
-    <section id="gallery">
-        <h2 style="color: var(--gold); margin-bottom: 40px;">MULTIMEDIA HUB</h2>
-        <div class="gallery-container">
-            <div class="video-box">
-                <video controls autoplay muted loop>
+    <section id="multimedia">
+        <h2 style="color: var(--cyan-glow); margin-bottom: 50px; letter-spacing: 4px;">MULTIMEDIA HUB</h2>
+        <div class="multimedia-grid">
+            <div class="main-video-wrapper">
+                <video controls poster="logo.png">
                     <source src="SATOSHIDNAAI.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
             </div>
 
-            <div class="gallery-item"><img src="jpg1.jpg"></div>
-            <div class="gallery-item"><img src="jpg2.jpg"></div>
-            <div class="gallery-item"><img src="jpg3.jpg"></div>
-            <div class="gallery-item"><img src="jpg4.jpg"></div>
-            <div class="gallery-item"><img src="jpg6.jpg"></div>
-            <div class="gallery-item"><img src="jpg7.jpg"></div>
-            <div class="gallery-item"><img src="jpg8.jpg"></div>
-            <div class="gallery-item"><img src="jpg9.jpg"></div>
-            <div class="gallery-item"><img src="jpg10.jpg"></div>
-            <div class="gallery-item"><img src="jpg12.jpg"></div>
-            <div class="gallery-item"><img src="jpg01.jpg"></div>
+            <div class="img-card"><img src="jpg1.jpg"></div>
+            <div class="img-card"><img src="jpg2.jpg"></div>
+            <div class="img-card"><img src="jpg3.jpg"></div>
+            <div class="img-card"><img src="jpg4.jpg"></div>
+            <div class="img-card"><img src="jpg6.jpg"></div>
+            <div class="img-card"><img src="jpg7.jpg"></div>
+            <div class="img-card"><img src="jpg8.jpg"></div>
+            <div class="img-card"><img src="jpg9.jpg"></div>
+            <div class="img-card"><img src="jpg10.jpg"></div>
+            <div class="img-card"><img src="jpg12.jpg"></div>
+            <div class="img-card"><img src="jpg01.jpg"></div>
         </div>
     </section>
 
     <script>
-        // Matrix Background Script
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789SDNA";
-        const fontSize = 16;
+        const letters = "01010101SDNAAI";
+        const fontSize = 14;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#0F0';
             ctx.font = fontSize + 'px monospace';
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
                 drops[i]++;
             }
         }
-        setInterval(draw, 33);
+        setInterval(draw, 40);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
     </script>
-
 </body>
 </html>
