@@ -3,312 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SATOSHI DNA AI | The Evolution of Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <title>SATOSHI DNA AI | Official Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary-green: #00FF41;
-            --deep-black: #020202;
-            --accent-gold: #FFD700;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --neon-glow: 0 0 20px rgba(0, 255, 65, 0.4);
+            --matrix-green: #00FF41;
+            --gold: #FFD700;
+            --solana: #00ffa3;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: var(--deep-black); 
-            color: #fff; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
+        body, html { 
+            margin: 0; padding: 0; 
+            background: #000; 
+            color: white; 
+            font-family: 'Orbitron', sans-serif; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
         }
 
-        /* --- Advanced Background Matrix --- */
-        #matrixCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.25;
-            filter: blur(1px);
+        /* --- Social Sidebar --- */
+        .social-sidebar {
+            position: fixed; left: 15px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 5000;
         }
+        .social-item { position: relative; display: flex; align-items: center; }
+        .social-icon {
+            width: 40px; height: 40px; background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; text-decoration: none; font-size: 1.2rem; transition: 0.3s; z-index: 2;
+        }
+        .social-item::after {
+            content: attr(data-name); position: absolute; left: 50px;
+            background: var(--matrix-green); color: black; padding: 5px 12px;
+            border-radius: 4px; font-size: 0.7rem; font-weight: 900;
+            white-space: nowrap; opacity: 0; transform: translateX(-10px);
+            transition: 0.3s; pointer-events: none;
+        }
+        .social-item:hover::after { opacity: 1; transform: translateX(0); }
+        .social-icon:hover { transform: scale(1.1); }
+        .tg:hover { background: #0088cc; box-shadow: 0 0 15px #0088cc; }
+        .x-tw:hover { background: #000; box-shadow: 0 0 15px #fff; border-color: #fff; }
 
-        /* --- Ultra Modern Navigation --- */
+        /* --- Price Ticker --- */
+        .price-ticker {
+            width: 100%; background: rgba(0, 255, 65, 0.1); border-bottom: 1px solid var(--matrix-green);
+            padding: 5px 0; position: fixed; top: 0; z-index: 2000; overflow: hidden; white-space: nowrap;
+        }
+        .ticker-content { display: inline-block; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
+
+        /* --- Navigation --- */
         nav {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1200px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 100px;
-            padding: 10px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
+            width: 100%; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            position: fixed; top: 30px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 50px; box-sizing: border-box; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a { 
-            color: #aaa; 
-            text-decoration: none; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .nav-links a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); }
+        .connect-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; cursor: pointer; transition: 0.3s; }
+
+        /* --- Hero Section --- */
+        .hero-section { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: #000; }
+        .main-logo { position: absolute; width: 450px; z-index: 10; pointer-events: none; filter: drop-shadow(0 0 20px var(--matrix-green)); }
+        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; mix-blend-mode: lighten; }
+
+        /* --- NEW: High-End Slideshow Section --- */
+        .slideshow-container {
+            width: 100%; background: #000; padding: 50px 0;
+            border-top: 1px solid var(--matrix-green); border-bottom: 1px solid var(--matrix-green);
+            position: relative; overflow: hidden;
         }
-        .nav-links a:hover { color: var(--primary-green); }
-        .btn-gradient {
-            background: linear-gradient(90deg, var(--primary-green), #00ffa3);
-            color: #000 !important;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 800 !important;
-            box-shadow: var(--neon-glow);
+        .slider-track {
+            display: flex; gap: 20px; width: calc(250px * 12);
+            animation: scroll 40s linear infinite;
+        }
+        .slider-track:hover { animation-play-state: paused; }
+        .slide {
+            width: 350px; height: 200px; flex-shrink: 0;
+            border: 2px solid var(--matrix-green); border-radius: 10px;
+            overflow: hidden; box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            transition: 0.5s;
+        }
+        .slide img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .slide:hover { transform: scale(1.05); border-color: var(--gold); box-shadow: 0 0 25px var(--gold); }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-350px * 6)); }
         }
 
-        /* --- Hero Section with Video Mask --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding-top: 100px;
+        /* --- About Section --- */
+        .about-section { background: #050505; border-top: 2px solid var(--gold); padding: 100px 20px; display: flex; flex-direction: column; align-items: center; }
+        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 40px 0; }
+        .ring {
+            width: 160px; height: 160px; border: 3px solid var(--matrix-green); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem;
+            box-shadow: 0 0 15px var(--matrix-green); background: rgba(0,0,0,0.7);
         }
-        .video-container {
-            width: 85%;
-            max-width: 1000px;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            position: relative;
-        }
-        .video-container video { width: 100%; height: 100%; object-fit: cover; }
-        
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 10vw, 6rem);
-            font-weight: 900;
-            margin-top: -50px;
-            z-index: 10;
-            background: linear-gradient(to bottom, #fff 40%, var(--primary-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
+        .content-box { max-width: 900px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.2); padding: 40px; border-radius: 10px; line-height: 1.8; }
+        .highlight { color: var(--gold); font-weight: bold; }
+        .green-text { color: var(--matrix-green); }
 
-        /* --- Bento Grid Section --- */
-        .section-padding { padding: 120px 5%; max-width: 1300px; margin: 0 auto; }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 300px);
-            gap: 20px;
-        }
-        .bento-item {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 30px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-        .bento-item:hover {
-            background: rgba(0, 255, 65, 0.05);
-            border-color: var(--primary-green);
-            transform: translateY(-10px);
-        }
-        .large { grid-column: span 2; }
-        .tall { grid-row: span 2; }
-
-        .bento-item h3 { font-family: 'Orbitron'; color: var(--primary-green); margin-bottom: 15px; font-size: 1.4rem; }
-        .bento-item p { color: #ccc; font-size: 0.95rem; }
-
-        /* --- Gallery System --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 50px;
-        }
-        .gallery-item {
-            height: 250px;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
-        .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: 0.5s; filter: grayscale(50%);
-        }
-        .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
-        .gallery-item::after {
-            content: "VIEW DATA";
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 255, 65, 0.2);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.3s; font-family: 'Orbitron'; font-weight: bold;
-        }
-        .gallery-item:hover::after { opacity: 1; }
-
-        /* --- Professional Footer --- */
-        footer {
-            background: #050505;
-            padding: 80px 5% 40px;
-            border-top: 1px solid var(--glass-border);
-            text-align: center;
-        }
-        .social-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; }
-        .social-btn {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: var(--glass); border: 1px solid var(--glass-border);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; color: #fff; transition: 0.3s;
-        }
-        .social-btn:hover { background: var(--primary-green); color: #000; transform: rotate(360deg); }
-
-        @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-            .large, .tall { grid-column: span 1; grid-row: span 1; }
-            nav { width: 95%; padding: 10px 15px; }
-            .nav-links { display: none; }
-        }
+        /* --- Tokenomics --- */
+        .tokenomics-section { padding: 80px 20px; background: #000; text-align: center; border-top: 1px solid #222; }
+        .tax-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
+        .tax-card { border: 1px solid var(--matrix-green); padding: 20px; background: rgba(0, 255, 65, 0.05); }
     </style>
 </head>
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+    <div class="social-sidebar">
+        <div class="social-item" data-name="TELEGRAM"><a href="#" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a></div>
+        <div class="social-item" data-name="X (TWITTER)"><a href="#" class="social-icon x-tw"><i class="fab fa-x-twitter"></i></a></div>
+        <div class="social-item" data-name="INSTAGRAM"><a href="#" class="social-icon ig"><i class="fab fa-instagram"></i></a></div>
+        <div class="social-item" data-name="YOUTUBE"><a href="#" class="social-icon yt"><i class="fab fa-youtube"></i></a></div>
+        <div class="social-item" data-name="TIKTOK"><a href="#" class="social-icon tk"><i class="fab fa-tiktok"></i></a></div>
+    </div>
+
+    <div class="price-ticker">
+        <div class="ticker-content">
+            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>SATDNAAI: $0.00001</span>
+            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>DOGE: $0.16</span>
+        </div>
+    </div>
 
     <nav>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="logo.png" width="40" alt="SDA">
-            <span style="font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; color: var(--primary-green);">SATOSHI DNA AI</span>
-        </div>
+        <div style="font-weight: 900; color: var(--matrix-green);">SATOSHI+DNA+AI</div>
         <div class="nav-links">
-            <a href="#about">Terminal</a>
-            <a href="#ecosystem">Ecosystem</a>
-            <a href="#gallery">Intelligence</a>
-            <a href="#tokenomics">Policy</a>
-            <a href="#" class="btn-gradient">LAUNCH APP</a>
+            <a href="#">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#tokenomics">TOKENOMICS</a>
+            <button class="connect-btn">CONNECT WALLET</button>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="video-container">
-            <video autoplay muted loop playsinline>
-                <source src="SATOSHIDNAAI.mp4" type="video/mp4">
-            </video>
-        </div>
-        <h1 class="hero-title">SATOSHI DNA</h1>
+    <section class="hero-section">
+        <img src="logo.png" alt="Logo" class="main-logo">
+        <canvas id="matrixCanvas"></canvas>
     </section>
 
-    <section id="about" class="section-padding">
-        <div class="bento-grid">
-            <div class="bento-item large">
-                <h3>THE ORIGIN</h3>
-                <p>SATDNAAI is the fusion of revolutionary ideas. Satoshi represents financial freedom, DNA represents organic evolution, and AI represents the peak of future intelligence. This isn't just a token; it's a digital lifeform.</p>
-                <img src="logo.png" style="position: absolute; right: -20px; bottom: -20px; width: 150px; opacity: 0.1;" alt="">
-            </div>
-            <div class="bento-item tall">
-                <h3>AI CORE</h3>
-                <p>Our intelligence layers analyze blockchain data in real-time, providing a transparent ecosystem that evolves with its community.</p>
-                <div style="margin-top: 40px; font-size: 3rem; color: var(--primary-green);"><i class="fas fa-microchip"></i></div>
-            </div>
-            <div class="bento-item">
-                <h3>0.5% TAX</h3>
-                <p>Ultra-low tax for maximum efficiency. Every drop fuels the development engine.</p>
-            </div>
-            <div class="bento-item">
-                <h3>SOLIDITY</h3>
-                <p>Built on the fastest networks, ensuring security meets speed.</p>
-            </div>
-            <div class="bento-item large">
-                <h3>COMMUNITY DRIVEN</h3>
-                <p>Transparency is our DNA. No hidden mechanisms, no backdoors. Pure decentralized growth.</p>
-            </div>
+    <section class="slideshow-container">
+        <h2 style="text-align: center; color: var(--gold); margin-bottom: 30px; font-size: 1.5rem;">AI EVOLUTION GALLERY</h2>
+        <div class="slider-track">
+            <div class="slide"><img src="jpg1.jpg" alt="AI Data"></div>
+            <div class="slide"><img src="jpg2.jpg" alt="DNA Strand"></div>
+            <div class="slide"><img src="jpg3.jpg" alt="Satoshi Idea"></div>
+            <div class="slide"><img src="jpg4.jpg" alt="Neural Net"></div>
+            <div class="slide"><img src="jpg5.jpg" alt="Crypto Matrix"></div>
+            <div class="slide"><img src="jpg6.jpg" alt="Future AI"></div>
+            <div class="slide"><img src="jpg1.jpg" alt="AI Data"></div>
+            <div class="slide"><img src="jpg2.jpg" alt="DNA Strand"></div>
+            <div class="slide"><img src="jpg3.jpg" alt="Satoshi Idea"></div>
         </div>
     </section>
 
-    <section id="gallery" class="section-padding">
-        <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; margin-bottom: 10px;">INTELLIGENCE GALLERY</h2>
-        <p style="text-align: center; color: var(--primary-green); letter-spacing: 4px; margin-bottom: 50px;">VISUALIZING THE EVOLUTION</p>
-        
-        <div class="gallery-grid">
-            <div class="gallery-item"><img src="jpg1.jpg" alt="Data 1"></div>
-            <div class="gallery-item"><img src="jpg2.jpg" alt="Data 2"></div>
-            <div class="gallery-item"><img src="jpg3.jpg" alt="Data 3"></div>
-            <div class="gallery-item"><img src="jpg4.jpg" alt="Data 4"></div>
-            <div class="gallery-item"><img src="jpg5.jpg" alt="Data 5"></div>
-            <div class="gallery-item"><img src="jpg6.jpg" alt="Data 6"></div>
-            <div class="gallery-item"><img src="jpg10.jpg" alt="Data 10"></div>
-            <div class="gallery-item"><img src="jpg12.jpg" alt="Data 12"></div>
+    <section id="about" class="about-section">
+        <h2 style="color: var(--gold); font-size: 2rem; margin-bottom: 30px;">Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
+        <div class="content-box">
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts...</p>
+            <p><span class="highlight">Satoshi</span> represents a pure idea. <span class="highlight">DNA</span> is the essence. <span class="highlight">AI</span> is the future.</p>
+        </div>
+        <div class="rings-container">
+            <div class="ring">SATOSHI</div>
+            <div style="font-size: 2.5rem; color: var(--gold);">+</div>
+            <div class="ring">DNA</div>
+            <div style="font-size: 2.5rem; color: var(--gold);">+</div>
+            <div class="ring">AI</div>
         </div>
     </section>
 
-    <footer>
-        <div class="social-row">
-            <a href="#" class="social-btn"><i class="fab fa-telegram"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-github"></i></a>
+    <section id="tokenomics" class="tokenomics-section">
+        <h2 style="color: var(--gold); font-size: 2rem;">Tokenomics and Tax Policy</h2>
+        <div class="tax-grid">
+            <div class="tax-card"><h4>Total Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Buy Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Sell Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Transfer Tax</h4><p>0%</p></div>
         </div>
-        <p style="opacity: 0.5; font-size: 0.8rem; letter-spacing: 2px;">© 2024 SATOSHI DNA AI | ALL RIGHTS RESERVED</p>
-    </footer>
+    </section>
 
     <script>
-        // Professional Matrix Effect
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-        let width, height, columns, drops;
-
-        function initMatrix() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            columns = Math.floor(width / 20);
-            drops = Array(columns).fill(1);
-        }
-
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@&";
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(2, 2, 2, 0.1)";
-            ctx.fillRect(0, 0, width, height);
-            ctx.fillStyle = "#00FF41";
-            ctx.font = "15px monospace";
-
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        const allChars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀ0123456789SATDNAAI";
+        const fontSize = 18;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                if (drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
+                const char = allChars.charAt(Math.floor(Math.random() * allChars.length));
+                ctx.fillStyle = (Math.random() > 0.9) ? "#FFFFFF" : "#00FF41"; 
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
-
-        initMatrix();
-        window.addEventListener('resize', initMatrix);
-        setInterval(drawMatrix, 50);
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+        setInterval(draw, 50);
     </script>
 </body>
 </html>
