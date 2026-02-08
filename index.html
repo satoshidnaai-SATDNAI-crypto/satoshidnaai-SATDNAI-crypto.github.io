@@ -1,582 +1,279 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پلتفرم هوش مصنوعی | Ryujin AI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SATOSHI DNA AI | Official Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /* تنظیمات کلی */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --matrix-green: #00FF41;
+            --gold: #FFD700;
+            --solana: #00ffa3;
         }
-        
-        body {
-            background-color: #0a0a0f;
-            color: #f0f0f0;
-            overflow-x: hidden;
-            line-height: 1.6;
+
+        body, html { 
+            margin: 0; padding: 0; 
+            background: #000; 
+            color: white; 
+            font-family: 'Orbitron', sans-serif; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* هدر و ناوبری */
-        header {
-            padding: 20px 0;
+
+        /* --- Social Sidebar Enhanced with Tooltips --- */
+        .social-sidebar {
             position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            background-color: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(80, 80, 120, 0.2);
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-decoration: none;
-        }
-        
-        .logo i {
-            color: #6c63ff;
-            margin-left: 8px;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-right: 30px;
-        }
-        
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #6c63ff;
-        }
-        
-        .cta-button {
-            background: linear-gradient(90deg, #6c63ff, #8a84ff);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
-        }
-        
-        /* بخش هیرو */
-        .hero {
-            padding: 180px 0 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, rgba(108, 99, 255, 0) 70%);
+            left: 15px;
             top: 50%;
-            right: 50%;
-            transform: translate(50%, -50%);
-            z-index: -1;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #ffffff, #a29bfe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: #b0b0d0;
-        }
-        
-        /* بخش ویژگی‌ها */
-        .features {
-            padding: 100px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: #ffffff;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: rgba(30, 30, 45, 0.7);
-            border-radius: 20px;
-            padding: 35px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(80, 80, 120, 0.3);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(108, 99, 255, 0.5);
-        }
-        
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #6c63ff, #3a36a0);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-        
-        .feature-card p {
-            color: #b0b0d0;
-            font-size: 1.1rem;
-        }
-        
-        /* بخش عملکرد */
-        .workflow {
-            padding: 100px 0;
-            background: rgba(15, 15, 25, 0.7);
-        }
-        
-        .workflow-steps {
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
+            gap: 15px;
+            z-index: 5000;
         }
-        
-        .step {
+        .social-item {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 25px;
-            padding: 25px;
-            background: rgba(40, 40, 60, 0.5);
-            border-radius: 15px;
-            position: relative;
         }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #6c63ff, #3a36a0);
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        
-        .step-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        
-        .step-content p {
-            color: #b0b0d0;
-        }
-        
-        /* بخش CTA */
-        .cta-section {
-            padding: 100px 0;
-            text-align: center;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-        
-        .cta-section p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: #b0b0d0;
-        }
-        
-        /* فوتر */
-        footer {
-            padding: 70px 0 30px;
-            background: rgba(5, 5, 10, 0.9);
-            border-top: 1px solid rgba(80, 80, 120, 0.2);
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 50px;
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-        
-        .footer-column h4 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-column ul li a {
-            color: #b0b0d0;
+            color: white;
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            z-index: 2;
         }
         
-        .footer-column ul li a:hover {
-            color: #6c63ff;
+        /* Tooltip Style */
+        .social-item::after {
+            content: attr(data-name);
+            position: absolute;
+            left: 50px;
+            background: var(--matrix-green);
+            color: black;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .social-item:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .social-icon:hover { transform: scale(1.1); }
+        .tg:hover { background: #0088cc; box-shadow: 0 0 15px #0088cc; }
+        .x-tw:hover { background: #000; box-shadow: 0 0 15px #fff; border-color: #fff; }
+        .ig:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); box-shadow: 0 0 15px #d6249f; }
+        .yt:hover { background: #ff0000; box-shadow: 0 0 15px #ff0000; }
+        .tk:hover { background: #010101; box-shadow: 0 0 15px #ff0050; border-color: #00f2ea; }
+        .fb:hover { background: #1877f2; box-shadow: 0 0 15px #1877f2; }
+        .sc:hover { background: #fffc00; color: #000; box-shadow: 0 0 15px #fffc00; }
+
+        /* --- Rest of your original styling --- */
+        .price-ticker {
+            width: 100%; background: rgba(0, 255, 65, 0.1); border-bottom: 1px solid var(--matrix-green);
+            padding: 5px 0; position: fixed; top: 0; z-index: 2000; overflow: hidden; white-space: nowrap;
+        }
+        .ticker-content { display: inline-block; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .ticker-content span { margin-right: 40px; font-size: 0.8rem; color: var(--solana); }
+
+        nav {
+            width: 100%; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            position: fixed; top: 30px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 50px; box-sizing: border-box; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-links a { color: white; text-decoration: none; margin: 0 20px; font-size: 0.8rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); }
+        .connect-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; cursor: pointer; transition: 0.3s; }
+        .connect-btn:hover { background: var(--gold); color: black; }
+
+        .hero-section { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; background: #000; }
+        .main-logo { position: absolute; width: 500px; z-index: 1; pointer-events: none; }
+        #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; mix-blend-mode: lighten; }
+        .hero-footer-text { position: absolute; bottom: 10%; z-index: 10; text-align: center; }
+
+        .about-section { background: #050505; border-top: 2px solid var(--gold); padding: 100px 20px; display: flex; flex-direction: column; align-items: center; }
+        .rings-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 40px 0; }
+        .ring {
+            width: 160px; height: 160px; border: 3px solid var(--matrix-green); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem;
+            box-shadow: 0 0 15px var(--matrix-green); background: rgba(0,0,0,0.7);
         }
         
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(80, 80, 120, 0.2);
-            color: #8888a8;
-            font-size: 0.9rem;
-        }
-        
-        /* طراحی واکنش‌گرا */
-        @media (max-width: 992px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .features, .workflow, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 40px;
-            }
-            
-            .step {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        
-        /* انیمیشن‌ها */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-fadeInUp {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-        
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-        
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
+        .content-box { max-width: 900px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.2); padding: 40px; border-radius: 10px; line-height: 1.8; text-align: left; }
+        .highlight { color: var(--gold); font-weight: bold; }
+        .green-text { color: var(--matrix-green); }
+
+        .tokenomics-section { padding: 80px 20px; background: #000; text-align: center; border-top: 1px solid #222; }
+        .tax-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 40px auto; }
+        .tax-card { border: 1px solid var(--matrix-green); padding: 20px; background: rgba(0, 255, 65, 0.05); }
+        .tax-card h4 { margin: 0; color: var(--solana); }
+        .tax-card p { font-size: 1.5rem; font-weight: 900; margin: 10px 0; }
     </style>
 </head>
 <body>
-    <!-- هدر و ناوبری -->
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-robot"></i>
-                Ryujin AI
-            </a>
-            <ul class="nav-links">
-                <li><a href="#features">ویژگی‌ها</a></li>
-                <li><a href="#workflow">نحوه عملکرد</a></li>
-                <li><a href="#pricing">تعرفه‌ها</a></li>
-                <li><a href="#about">درباره ما</a></li>
+
+    <div class="social-sidebar">
+    <div class="social-item" data-name="X (TWITTER)">
+        <a href="https://x.com/SatoDnaAi" target="_blank" class="social-icon x-tw">
+            <i class="fab fa-x-twitter"></i>
+        </a>
+    </div>
+
+    <div class="social-item" data-name="INSTAGRAM">
+        <a href="https://www.instagram.com/satoshidnaai?utm_source=qr&igsh=MnkzOWpzcGV1NTQ0" target="_blank" class="social-icon ig">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+
+    <div class="social-item" data-name="YOUTUBE">
+        <a href="https://youtube.com/@satdnai?si=dZfvYqP3ROtUCXjH" target="_blank" class="social-icon yt">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+
+    <div class="social-item" data-name="FACEBOOK">
+        <a href="https://www.facebook.com/share/1GSWN2rL4q/" target="_blank" class="social-icon fb">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    </div>
+
+    <div class="social-item" data-name="SNAPCHAT">
+        <a href="https://www.snapchat.com/add/satoshidnaai?share_id=YQSWPEipj5Q&locale=de-DE" target="_blank" class="social-icon sc">
+            <i class="fab fa-snapchat-ghost"></i>
+        </a>
+    </div>
+
+    </div>
+
+    <div class="price-ticker">
+        <div class="ticker-content">
+            <span>BTC: $68,432.21</span> <span>ETH: $3,542.10</span> <span>SOL: $145.65</span> <span>SATDNAAI: $0.00001</span>
+            <span>XRP: $0.62</span> <span>ADA: $0.45</span> <span>DOGE: $0.16</span>
+        </div>
+    </div>
+
+    <nav>
+        <div style="font-weight: 900; color: var(--matrix-green);">SATOSHI+DNA+AI</div>
+        <div class="nav-links">
+            <a href="#">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#tokenomics">TOKENOMICS</a>
+            <a href="#">WHITEPAPER</a>
+            <button class="connect-btn">CONNECT WALLET</button>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <img src="logo.png" alt="Logo" class="main-logo">
+        <canvas id="matrixCanvas"></canvas>
+        <div class="hero-footer-text">
+            <p style="color: var(--solana); letter-spacing: 8px; font-weight: bold;">DECENTRALIZED INTELLIGENCE</p>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <h2 style="color: var(--gold); font-size: 2rem; margin-bottom: 30px;">Satoshidnaai (SATDNAAI) – What Does It Mean?</h2>
+        
+        <div class="content-box">
+            <p>Satoshidnaai / SATDNAAI is a purposeful combination of three fundamental concepts that shape the identity and philosophy of this project.</p>
+            <p><span class="highlight">Satoshi</span> represents a pure and revolutionary idea; a way of thinking that challenged old systems and gave meaning to financial freedom.</p>
+            <p><span class="highlight">DNA</span> represents innate creativity and inner structure; the essence that makes the project alive, dynamic, evolving, and unique.</p>
+            <p><span class="highlight">AI</span> represents uniqueness, intelligence, and the future; a power that pushes the boundaries of what is possible.</p>
+            
+            <h3 class="green-text" style="text-align: center; margin: 30px 0;">Satoshidnaai = SATDNAAI</h3>
+            <p style="text-align: center; font-style: italic;">A place where idea, creativity, and intelligence become one.</p>
+            
+            <p>Satoshidnaai is more than a memecoin. This project reflects a new way of thinking in the crypto world, built on transparency, financial fairness, and community-driven values. In SATDNAAI, technology is not just a tool, but a language for trust, innovation, and sustainable growth.</p>
+            <p>This project is designed to create a healthy and long-lasting ecosystem, where users are not just traders, but a real part of the project’s identity and journey. SATDNAAI aims to show that a project can be simple and people-oriented, while also being deep, intelligent, and future-focused.</p>
+        </div>
+
+        <div class="rings-container">
+            <div class="ring">SATOSHI</div>
+            <div class="plus-sign" style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
+            <div class="ring">DNA</div>
+            <div class="plus-sign" style="font-size: 2.5rem; color: var(--gold); font-weight: 900;">+</div>
+            <div class="ring">AI</div>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="tokenomics-section">
+        <h2 style="color: var(--gold); font-size: 2rem;">Tokenomics and Tax Policy</h2>
+        <p style="max-width: 800px; margin: 20px auto; opacity: 0.8;">To support the progress, development, and long-term sustainability of the project, the SATDNAAI token applies a very low and fully transparent 0.5% transaction tax.</p>
+        
+        <div class="tax-grid">
+            <div class="tax-card"><h4>Total Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Buy Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Sell Tax</h4><p>0.5%</p></div>
+            <div class="tax-card"><h4>Transfer Tax</h4><p>0%</p></div>
+        </div>
+
+        <div class="content-box" style="margin: 40px auto;">
+            <p>This tax is used only for the technical development of the project, ecosystem growth, and maintaining the long-term continuation of the project.</p>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ There are no hidden taxes.</li>
+                <li>✅ There are no non-transparent mechanisms in the contract.</li>
+                <li>✅ <span class="green-text">This tax is permanent, transparent, and will never be increased.</span></li>
             </ul>
-            <a href="#cta" class="cta-button">شروع کنید</a>
         </div>
-    </header>
 
-    <!-- بخش هیرو -->
-    <section class="hero">
-        <div class="container">
-            <h1 class="animate-fadeInUp">هوش مصنوعی نسل بعدی برای کسب‌وکارهای آینده</h1>
-            <p class="animate-fadeInUp delay-1">پلتفرم پیشرفته Ryujin AI با قابلیت‌های منحصر به فرد، تجربه‌ای متفاوت از هوش مصنوعی را ارائه می‌دهد. از پردازش زبان طبیعی تا تحلیل داده‌های پیچیده.</p>
-            <a href="#cta" class="cta-button animate-fadeInUp delay-2">شروع رایگان</a>
+        <div style="margin-top: 60px;">
+            <h3 style="color: var(--gold);">SATDNAAI Philosophy</h3>
+            <p style="max-width: 850px; margin: 0 auto; line-height: 1.8;">SATDNAAI believes that trust is the most important asset of any project. Real growth comes from the community, not from financial pressure. The future belongs to projects that are built honestly. For this reason, the interests of the team and the community are fully aligned.</p>
+        </div>
+
+        <div style="margin-top: 50px; padding: 30px; border: 1px dashed var(--matrix-green); display: inline-block;">
+            <h3 class="green-text" style="margin: 0;">Final Summary</h3>
+            <p style="margin: 10px 0 0 0;">SATDNAAI is the meeting point of a great idea, living creativity, and unmatched intelligence.</p>
         </div>
     </section>
-
-    <!-- بخش ویژگی‌ها -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">قابلیت‌های منحصر به فرد</h2>
-            <div class="features-grid">
-                <div class="feature-card animate-fadeInUp">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>مدل‌های پیشرفته</h3>
-                    <p>استفاده از جدیدترین مدل‌های زبانی با قابلیت درک متن و پردازش زبان طبیعی در سطح انسانی.</p>
-                </div>
-                <div class="feature-card animate-fadeInUp delay-1">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>پردازش سریع</h3>
-                    <p>پردازش اطلاعات با سرعت بالا و پاسخ‌دهی آنی حتی برای درخواست‌های پیچیده.</p>
-                </div>
-                <div class="feature-card animate-fadeInUp delay-2">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>امنیت بالا</h3>
-                    <p>اطلاعات شما با بالاترین سطح امنیتی محافظت می‌شود و حریم خصوصی شما اولویت ماست.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- بخش عملکرد -->
-    <section id="workflow" class="workflow">
-        <div class="container">
-            <h2 class="section-title">نحوه عملکرد ساده و موثر</h2>
-            <div class="workflow-steps">
-                <div class="step animate-fadeInUp">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>ثبت‌نام و ایجاد حساب</h3>
-                        <p>در کمتر از یک دقیقه ثبت‌نام کنید و به دنیای هوش مصنوعی دسترسی پیدا کنید.</p>
-                    </div>
-                </div>
-                <div class="step animate-fadeInUp delay-1">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>انتخاب مدل مورد نیاز</h3>
-                        <p>از بین مدل‌های تخصصی موجود، مناسب‌ترین گزینه را برای کار خود انتخاب کنید.</p>
-                    </div>
-                </div>
-                <div class="step animate-fadeInUp delay-2">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>شروع استفاده از API</h3>
-                        <p>با اتصال به API قدرتمند ما، قابلیت‌های هوش مصنوعی را در محصول خود ادغام کنید.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- بخش CTA -->
-    <section id="cta" class="cta-section">
-        <div class="container">
-            <h2 class="animate-fadeInUp">آماده شروع هستید؟</h2>
-            <p class="animate-fadeInUp delay-1">همین امروز به جامعه هزاران کسب‌وکاری که از Ryujin AI استفاده می‌کنند بپیوندید و تحولی بزرگ در کار خود ایجاد کنید.</p>
-            <a href="#" class="cta-button animate-fadeInUp delay-2">شروع رایگان ۱۴ روزه</a>
-        </div>
-    </section>
-
-    <!-- فوتر -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <div class="footer-logo">
-                        <i class="fas fa-robot"></i>
-                        Ryujin AI
-                    </div>
-                    <p style="color: #b0b0d0; max-width: 300px;">پلتفرم پیشرفته هوش مصنوعی برای کسب‌وکارهای آینده</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>محصول</h4>
-                        <ul>
-                            <li><a href="#">ویژگی‌ها</a></li>
-                            <li><a href="#">تعرفه‌ها</a></li>
-                            <li><a href="#">مقایسه مدل‌ها</a></li>
-                            <li><a href="#">آپدیت‌ها</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>منابع</h4>
-                        <ul>
-                            <li><a href="#">مستندات</a></li>
-                            <li><a href="#">راهنمای API</a></li>
-                            <li><a href="#">وبلاگ</a></li>
-                            <li><a href="#">پشتیبانی</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>شرکت</h4>
-                        <ul>
-                            <li><a href="#">درباره ما</a></li>
-                            <li><a href="#">شغل‌ها</a></li>
-                            <li><a href="#">تماس با ما</a></li>
-                            <li><a href="#">قوانین</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>© 2023 Ryujin AI. تمامی حقوق محفوظ است.</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
-        // انیمیشن اسکرول برای بخش‌ها
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fadeInUp');
-                    }
-                });
-            }, observerOptions);
-            
-            // مشاهده عناصر برای انیمیشن
-            document.querySelectorAll('.feature-card, .step, .cta-section h2, .cta-section p').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // اسکرول نرم برای لینک‌ها
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // تغییر استایل هدر هنگام اسکرول
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('header');
-                if (window.scrollY > 50) {
-                    header.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
-                    header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-                } else {
-                    header.style.backgroundColor = 'rgba(10, 10, 15, 0.9)';
-                    header.style.boxShadow = 'none';
-                }
-            });
-        });
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+        const chinese = "龙币人工智能DNA";
+        const english = "SATOSHIDNAAI0123456789";
+        const allChars = japanese + chinese + english;
+        const fontSize = 18;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const char = allChars.charAt(Math.floor(Math.random() * allChars.length));
+                if (english.includes(char)) ctx.fillStyle = "#FFFFFF"; 
+                else if (chinese.includes(char)) ctx.fillStyle = "#FFD700"; 
+                else ctx.fillStyle = "#00FF41"; 
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 50);
     </script>
 </body>
 </html>
