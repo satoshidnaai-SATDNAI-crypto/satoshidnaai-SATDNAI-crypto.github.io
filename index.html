@@ -275,5 +275,71 @@
         }
         setInterval(draw, 50);
     </script>
+    <div class="container" style="margin-top: 100px; padding-bottom: 100px;">
+        <section id="media-video" style="margin-bottom: 120px;">
+            <h2 style="color: var(--matrix-green); border-left: 5px solid var(--matrix-green); padding-left: 20px; margin-bottom: 40px; font-size: 2rem;">NEURAL NETWORK BROADCAST</h2>
+            <div class="main-video-container" style="width: 100%; border: 2px solid var(--matrix-green); border-radius: 15px; overflow: hidden; background: #000; box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);">
+                <video id="mainVideo" controls autoplay muted style="width: 100%; display: block; aspect-ratio: 16/9;">
+                    <source src="01.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-playlist" id="playlist" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 25px;">
+                <div class="playlist-item active" data-src="01.mp4" style="cursor: pointer; border: 2px solid var(--matrix-green); border-radius: 10px; overflow: hidden; transition: 0.3s; background: #111;"><video src="01.mp4" style="width: 100%; opacity: 0.8;"></video></div>
+                <div class="playlist-item" data-src="02.mp4" style="cursor: pointer; border: 2px solid #333; border-radius: 10px; overflow: hidden; transition: 0.3s; background: #111;"><video src="02.mp4" style="width: 100%; opacity: 0.5;"></video></div>
+                <div class="playlist-item" data-src="03.mp4" style="cursor: pointer; border: 2px solid #333; border-radius: 10px; overflow: hidden; transition: 0.3s; background: #111;"><video src="03.mp4" style="width: 100%; opacity: 0.5;"></video></div>
+                <div class="playlist-item" data-src="04.mp4" style="cursor: pointer; border: 2px solid #333; border-radius: 10px; overflow: hidden; transition: 0.3s; background: #111;"><video src="04.mp4" style="width: 100%; opacity: 0.5;"></video></div>
+            </div>
+        </section>
+
+        <section id="media-gallery" style="text-align: center;">
+            <h2 style="color: var(--gold); border-left: 5px solid var(--gold); padding-left: 20px; margin-bottom: 40px; text-align: left; font-size: 2rem;">DNA VISUAL ARCHIVE</h2>
+            <div class="main-image-view" style="width: 100%; height: 650px; border: 2px solid var(--gold); border-radius: 20px; background: #080808; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 30px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.1);">
+                <img src="1.jpg" id="activeImg" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.5s ease, opacity 0.3s ease;">
+            </div>
+            <div class="image-thumbnails" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <img src="1.jpg" class="thumb active" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--gold); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+                <img src="2.jpg" class="thumb" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #222; border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+                <img src="10.jpg" class="thumb" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #222; border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+                <img src="11.png" class="thumb" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #222; border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+                <img src="12.png" class="thumb" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #222; border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+                <img src="14.png" class="thumb" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #222; border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="changeImage(this)">
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const mainVid = document.getElementById('mainVideo');
+        const vItems = document.querySelectorAll('.playlist-item');
+        let currentIdx = 0;
+        mainVid.onended = function() {
+            currentIdx++;
+            if (currentIdx >= vItems.length) currentIdx = 0;
+            updateVideo(currentIdx);
+        };
+        function updateVideo(n) {
+            vItems.forEach(item => {
+                item.style.borderColor = '#333';
+                item.querySelector('video').style.opacity = '0.5';
+            });
+            vItems[n].style.borderColor = 'var(--matrix-green)';
+            vItems[n].querySelector('video').style.opacity = '1';
+            mainVid.src = vItems[n].getAttribute('data-src');
+            mainVid.play();
+            currentIdx = n;
+        }
+        vItems.forEach((item, i) => { item.onclick = () => updateVideo(i); });
+        function changeImage(el) {
+            const bigDisplay = document.getElementById('activeImg');
+            bigDisplay.style.opacity = '0';
+            bigDisplay.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                bigDisplay.src = el.src;
+                bigDisplay.style.opacity = '1';
+                bigDisplay.style.transform = 'scale(1)';
+                document.querySelectorAll('.thumb').forEach(t => t.style.borderColor = '#222');
+                el.style.borderColor = 'var(--gold)';
+            }, 300);
+        }
+    </script>
 </body>
 </html>
