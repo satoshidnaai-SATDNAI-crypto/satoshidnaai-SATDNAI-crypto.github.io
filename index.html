@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SATOSHI DNA AI | NEXT-GEN INTELLIGENCE</title>
+    <title>SATOSHI DNA AI | MATRIX INTELLIGENCE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
         }
 
         body {
@@ -21,12 +20,19 @@
             color: #eef;
         }
 
-        /* premium scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #00FF41; border-radius: 10px; }
+        /* matrix canvas layer */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.75;
+            pointer-events: none;
+        }
 
-        /* 3D canvas background */
+        /* 3d background layer */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -39,10 +45,15 @@
 
         .content {
             position: relative;
-            z-index: 10;
+            z-index: 15;
         }
 
-        /* ---- social radial sidebar ---- */
+        /* premium scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #00FF41; border-radius: 10px; }
+
+        /* social sidebar */
         .social-orbital {
             position: fixed;
             right: 28px;
@@ -154,7 +165,7 @@
         }
         .wallet-btn:hover { transform: scale(1.02); box-shadow: 0 0 15px #00FF41; }
 
-        /* Hero section with glitch */
+        /* Hero section with logo */
         .hero {
             height: 100vh;
             display: flex;
@@ -162,9 +173,21 @@
             justify-content: center;
             text-align: center;
             position: relative;
+            flex-direction: column;
+        }
+        .token-logo {
+            width: 280px;
+            max-width: 65%;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 25px #00ff41);
+            animation: floatGlow 3s infinite alternate;
+        }
+        @keyframes floatGlow {
+            0% { transform: translateY(0px); filter: drop-shadow(0 0 10px #00ff41);}
+            100% { transform: translateY(-12px); filter: drop-shadow(0 0 30px #ffd700);}
         }
         .hero h1 {
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 900;
             background: linear-gradient(45deg, #fff, #00FF41, #FFD700);
             -webkit-background-clip: text;
@@ -182,12 +205,13 @@
             color: #00ffa3;
         }
 
-        /* about rings 3d-ish */
+        /* about rings */
         .rings-3d {
             display: flex;
             justify-content: center;
             gap: 45px;
             margin: 60px 0;
+            flex-wrap: wrap;
         }
         .ring-card {
             width: 170px;
@@ -240,6 +264,7 @@
         .video-premium {
             max-width: 1100px;
             margin: 80px auto;
+            padding: 0 20px;
         }
         .main-player {
             border-radius: 32px;
@@ -329,11 +354,15 @@
             .nav-links a { margin: 0 10px; font-size: 0.6rem; }
             .hero h1 { font-size: 2rem; }
             .ring-card { width: 110px; height: 110px; font-size: 0.9rem; }
+            .token-logo { width: 180px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Matrix Canvas Layer (ماتریکس) -->
+    <canvas id="matrixCanvas"></canvas>
+    <!-- Three.js 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
     <div class="content">
@@ -353,13 +382,13 @@
         </nav>
 
         <div class="hero">
-            <div>
-                <h1>SATOSHI DNA AI</h1>
-                <div class="hero-sub">DECENTRALIZED · INTELLIGENCE · EVOLUTION</div>
-                <div class="contract-box" style="margin-top: 45px;">
-                    <code style="color:#0f0">0xSatDNA•Ai•8f2D...aE9F</code>
-                    <button class="copy-btn" id="copyContract">COPY CA</button>
-                </div>
+            <!-- LOGO TOKEN -->
+            <img src="logo.png" alt="SATOSHI DNA AI LOGO" class="token-logo" onerror="this.src='https://placehold.co/500x500/111111/00FF41?text=SATDNAAI'">
+            <h1>SATOSHI DNA AI</h1>
+            <div class="hero-sub">DECENTRALIZED · INTELLIGENCE · EVOLUTION</div>
+            <div class="contract-box" style="margin-top: 45px;">
+                <code style="color:#0f0">0xSatDNA•Ai•8f2D...aE9F</code>
+                <button class="copy-btn" id="copyContract">COPY CA</button>
             </div>
         </div>
 
@@ -423,7 +452,16 @@
         </footer>
     </div>
 
-    <!-- Three.js + GSAP effects -->
+    <!-- Social Sidebar -->
+    <div class="social-orbital">
+        <div class="social-ring"><a href="https://x.com/SatoDnaAi" target="_blank"><i class="fab fa-x-twitter"></i></a></div>
+        <div class="social-ring"><a href="https://www.instagram.com/satoshidnaai" target="_blank"><i class="fab fa-instagram"></i></a></div>
+        <div class="social-ring"><a href="https://youtube.com/@satdnai" target="_blank"><i class="fab fa-youtube"></i></a></div>
+        <div class="social-ring"><a href="https://www.facebook.com/share/1GSWN2rL4q/" target="_blank"><i class="fab fa-facebook-f"></i></a></div>
+        <div class="social-ring"><a href="https://www.snapchat.com/add/satoshidnaai" target="_blank"><i class="fab fa-snapchat-ghost"></i></a></div>
+    </div>
+
+    <!-- Three.js Module -->
     <script type="importmap">
         {
             "imports": {
@@ -439,7 +477,7 @@
         scene.background = new THREE.Color(0x000000);
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 12);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: false });
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         
@@ -506,6 +544,43 @@
         });
     </script>
 
+    <!-- Matrix Effect Script (حفظ افکت ماتریکس اصلی) -->
+    <script>
+        const matrixCanvas = document.getElementById('matrixCanvas');
+        const ctx = matrixCanvas.getContext('2d');
+        function resizeMatrix() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeMatrix);
+        resizeMatrix();
+        
+        const japanese = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+        const chinese = "龙币人工智能DNA";
+        const english = "SATOSHIDNAAI0123456789";
+        const allChars = japanese + chinese + english;
+        const fontSize = 18;
+        const columns = Math.floor(matrixCanvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+        
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.045)";
+            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            ctx.font = fontSize + "px 'Courier New', monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const char = allChars.charAt(Math.floor(Math.random() * allChars.length));
+                if (english.includes(char)) ctx.fillStyle = "#FFFFFF"; 
+                else if (chinese.includes(char)) ctx.fillStyle = "#FFD700"; 
+                else ctx.fillStyle = "#00FF41"; 
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+        drawMatrix();
+    </script>
+
     <script type="text/javascript">
         // Video playlist logic
         const mainVideo = document.getElementById('mainVideo');
@@ -552,28 +627,21 @@
         const copyBtn = document.getElementById('copyContract');
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText('0xSatDNA•Ai•8f2D...aE9F');
-            alert('✅ Contract address copied (demo) | SATDNAAI');
+            alert('✅ Contract address copied | SATDNAAI');
         });
         
-        // Wallet connection simulation with toast
+        // Wallet connection
         const walletBtn = document.getElementById('connectWalletBtn');
         walletBtn.addEventListener('click', () => {
             alert('🔐 WALLET MODULE: Connect MetaMask / Phantom to access SATDNAAI dashboard & staking.');
         });
         
-        // scroll reveal for rings
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.style.opacity = '1';
-                else entry.target.style.opacity = '0.7';
-            });
-        }, { threshold: 0.2 });
-        document.querySelectorAll('.ring-card, .tax-item').forEach(el => observer.observe(el));
-        
-        // handle missing images placeholder
+        // fix missing images
         const imgs = document.querySelectorAll('img');
         imgs.forEach(img => {
-            img.onerror = function() { this.src = 'https://placehold.co/400x400/111/00FF41?text=SAT+DNA'; };
+            img.onerror = function() { 
+                if(!this.src.includes('placehold')) this.src = 'https://placehold.co/500x500/111/00FF41?text=SAT+DNA'; 
+            };
         });
     </script>
 </body>
